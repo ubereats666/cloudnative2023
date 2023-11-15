@@ -22,20 +22,32 @@ body {
   .flex-end {
     @apply flex items-center justify-end;
   }
+
+  .full-screen-container {
+    @apply relative h-screen w-screen overflow-hidden;
+  }
 }
 
 @layer components {
   .logo-text {
-    @apply font-bold text-4xl text-green-6;
+    @apply font-bold text-2xl bg-gradient-to-r from-green-6 from-20% to-green-8 to-80% bg-clip-text text-transparent select-none;
   }
 
   .login-slogan-title {
-    @apply font-bold text-8xl text-gray-1;
+    @apply font-bold text-7xl text-gray-1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
 
   .login-slogan-subtitle {
-    @apply font-bold text-3xl text-gray-1;
+    @apply font-bold text-2xl text-gray-1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .title {
+    @apply font-bold text-2xl text-gray-8;
+  }
+
+  .subtitle {
+    @apply font-bold text-xl text-gray-6;
   }
 }
