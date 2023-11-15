@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Landing() {
   return (
-    <div>
+    <main>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    </main>
   );
 }
