@@ -1,4 +1,4 @@
-import Logo from "@/components/logo";
+import Logo from "@/components/shared/logo";
 import LoginForm from "./login-form";
 
 // sm: Cover image as background under the form
