@@ -10,6 +10,19 @@ body {
   @apply bg-gray-100;
 }
 
+@layer base {
+  .input {
+    @apply flex w-full border border-slate-200 bg-gray-2 ring-offset-white;
+    @apply file:border-0 file:bg-transparent file:text-sm file:font-medium;
+    @apply placeholder:text-gray-6 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-8 focus-visible:ring-offset-2;
+    @apply dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-gray-2 dark:focus-visible:ring-gray-2;
+
+    @apply rounded-sm px-3 py-2 text-sm;
+    @apply sm:rounded-md sm:px-4 sm:py-3 sm:text-base;
+  }
+}
+
 @layer utilities {
   .flex-between {
     @apply flex items-center justify-between;
@@ -30,24 +43,50 @@ body {
 
 @layer components {
   .logo-text {
-    @apply font-bold text-2xl bg-gradient-to-r from-green-6 from-20% to-green-8 to-80% bg-clip-text text-transparent select-none;
+    @apply font-bold text-xl bg-clip-text text-transparent select-none;
+    @apply bg-gradient-to-r from-green-6 from-20% to-green-8 to-80%;
+    @apply sm:text-2xl;
+  }
+
+  .login-form {
+    @apply absolute flex flex-col px-8 py-12 bg-invert inset-12 rounded-lg shadow-lg;
+    @apply xs:px-16 xs:py-12 xs:rounded-lg;
+    @apply sm:relative sm:w-full sm:h-full sm:px-12 sm:inset-0 sm:rounded-none sm:shadow-none;
+    @apply md:px-20;
+  }
+
+  .login-cover-image {
+    @apply flex flex-col justify-end p-12 h-full w-full min-w-[50vw];
+    @apply bg-login-cover bg-cover bg-no-repeat;
+    @apply lg:min-w-[60vw];
   }
 
   .login-slogan-title {
-    @apply font-bold text-7xl text-gray-1;
+    @apply hidden;
+    @apply sm:block sm:font-bold sm:text-5xl sm:text-t-invert;
+    @apply md:text-6xl;
+    @apply lg:text-7xl;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
 
   .login-slogan-subtitle {
-    @apply font-bold text-2xl text-gray-1;
+    @apply hidden;
+    @apply sm:block sm:font-bold sm:text-base sm:text-t-invert;
+    @apply md:text-lg;
+    @apply lg:text-xl;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
 
+  .login-divider {
+    @apply h-[1px] w-full from-green-4 from-0% to-white/0 to-100%;
+  }
+
   .title {
-    @apply font-bold text-2xl text-gray-8;
+    @apply font-bold text-lg text-t-title;
+    @apply sm:text-2xl;
   }
 
   .subtitle {
-    @apply font-bold text-xl text-gray-6;
+    @apply font-bold text-xl text-t-subtitle;
   }
 }

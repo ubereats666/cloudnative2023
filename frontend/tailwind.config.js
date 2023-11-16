@@ -22,8 +22,17 @@ module.exports = {
     },
     extend: {
       colors: {
+        // Text Color
+        t: {
+          title: "#484848",
+          subtitle: "#7E7E7E",
+          paragraph: "#484848",
+          invert: "#F8F8F8",
+        },
+        // Box Color (Container Color)
         primary: "#278E0E",
-        secondary: "#FFB620",
+        secondary: "#66E347",
+        invert: "#F8F8F8",
         white: "#FFFFFF",
         green: {
           1: "#C9FFBC",
@@ -50,8 +59,13 @@ module.exports = {
         "login-cover": "url('/images/login-cover.png')",
       },
       screens: {
+        // Mobile
+        xs: "425px",
+        // Tablet
         sm: "640px",
+        // Laptop
         md: "768px",
+        // Large Screen
         lg: "1024px",
       },
     },
