@@ -1,18 +1,22 @@
 import Logo from "@/components/logo";
 import LoginForm from "./login-form";
 
+// sm: Cover image as background under the form
+// md: Cover image on the right side (width 50%)
+// lg: Cover image on the right side (width 60%)
+
 const Login = () => {
   return (
     <section className="full-screen-container flex">
       {/* Left: Login Form */}
-      <div className="flex flex-col w-full h-full px-28 py-12">
+      <div className="login-form">
         <Logo />
 
         <LoginForm />
       </div>
 
       {/* Right: Cover Image & Slogan */}
-      <div className="flex flex-col justify-end py-24 px-12 h-full w-[50vw] min-w-[50vw] bg-login-cover bg-cover bg-no-repeat">
+      <div className="login-cover-image">
         <h1 className="login-slogan-title">Click & Park</h1>
         <h2 className="login-slogan-subtitle">
           Your Time, Your Space, Your Parkoasis.
