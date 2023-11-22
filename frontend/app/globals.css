@@ -41,7 +41,7 @@ body {
   }
 
   .full-screen-container {
-    @apply relative h-screen w-screen overflow-hidden;
+    @apply flex relative w-full overflow-hidden;
   }
 }
 
