@@ -12,7 +12,7 @@ const Navbar = () => {
           <AvatarImage src="/images/login-cover.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <p className="text-t-paragraph text-lg">User Profile</p>
+        <p className="text-t-paragraph text-20">User Profile</p>
         <ChevronDown color={"#484848"} size={24} />
       </Button>
     </nav>

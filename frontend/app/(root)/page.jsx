@@ -37,10 +37,10 @@ export default function Home() {
                   size="md"
                   className="flex items-start justify-between"
                 >
-                  <h2 className="text-2xl">{space.label}</h2>
+                  <h2 className="text-28">{space.label}</h2>
                   <div className="flex flex-col grow">
-                    <p className="text-6xl">{space.num_remained}</p>
-                    <p className="text-xs">剩餘車位</p>
+                    <p className="text-48">{space.num_remained}</p>
+                    <p className="text-12">剩餘車位</p>
                   </div>
                 </Button>
               );

@@ -39,7 +39,7 @@ const LoginForm = () => {
 
       <div className="flex-between w-full gap-2">
         <div className="login-divider bg-gradient-to-l" />
-        <p className="text-t-subtitle text-xs whitespace-nowrap">或是</p>
+        <p className="text-t-subtitle text-12 whitespace-nowrap">或是</p>
         <div className="login-divider bg-gradient-to-r" />
       </div>
 
