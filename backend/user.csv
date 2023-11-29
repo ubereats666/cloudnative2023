@@ -1,0 +1,25 @@
+user_id,name,priority,email,cellphone_number,plate,preference_floor
+John Doe,1,john.doe@example.com,0912345678,ABC123,1
+Jane Smith,0,jane.smith@example.com,0923456789,XYZ789,1
+Bob Jones,1,bob.jones@example.com,0934567890,DEF456,1
+Alice Johnson,0,alice.johnson@example.com,0945678901,GHI789,1
+Charlie Brown,0,charlie.brown@example.com,0956789012,JKL012,1
+Emma White,1,emma.white@example.com,0967890123,MNO456,1
+David Black,0,david.black@example.com,0978901234,PQR789,1
+Sophie Green,0,sophie.green@example.com,0989012345,STU012,1
+Michael Red,0,michael.red@example.com,0990123456,VWX345,1
+Olivia Blue,0,olivia.blue@example.com,0911234567,YZA678,1
+William Yellow,0,william.yellow@example.com,0922345678,BCD901,1
+Ava Purple,1,ava.purple@example.com,0933456789,EFG234,1
+Ethan Orange,0,ethan.orange@example.com,0944567890,HIJ567,1
+Isabella Brown,0,isabella.brown@example.com,0955678901,KLM890,1
+Liam Gray,0,liam.gray@example.com,0966789012,NOP123,2
+Mia Silver,0,mia.silver@example.com,0977890123,QRS456,1
+Noah Gold,1,noah.gold@example.com,0988901234,TUV789,3
+Emma Diamond,0,emma.diamond@example.com,0999012345,WXY012,1
+James Ruby,0,james.ruby@example.com,0910123456,ZAB345,4
+Sophia Pearl,0,sophia.pearl@example.com,0921234567,CDE678,2
+Jackson Sapphire,1,jackson.sapphire@example.com,0932345678,FGH901,1
+Ava Topaz,0,ava.topaz@example.com,0943456789,IJK234,4
+Liam Emerald,0,liam.emerald@example.com,0954567890,LMN567,1
+Olivia Amethyst,0,olivia.amethyst@example.com,0965678901,OPQ890,1
