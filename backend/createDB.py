@@ -67,9 +67,9 @@ else:
     cursor.execute("INSERT INTO parking_spaces (parking_space_id, floor, number, priority) VALUES (%s, %s, %s, %d);", (row["paking_space_id"], row["floor"], row["number"], row["priority"]))
   
   # Insert parking_space_status
-  parking_space_status = pd.read_csv("parking_space_status", names=["parking_space_id", "status"])
-  for index, row in parking_space_status.iterrows():
-    cursor.execute("INSERT INTO parking_spaces_status (parking_space_id, status) VALUES (%s, %d);", (row["paking_space_id"], row["status"]))
+#   parking_space_status = pd.read_csv("parking_space_status", names=["parking_space_id", "status"])
+#   for index, row in parking_space_status.iterrows():
+#     cursor.execute("INSERT INTO parking_spaces_status (parking_space_id, status) VALUES (%s, %d);", (row["paking_space_id"], row["status"]))
 
   # Inserr record
   record = pd.read_csv("record.csv", names=["record_id","user_id" ,"parking_space_id","enter_time","exit_time","reserve_time"])
