@@ -1,11 +1,11 @@
-import { Rosario } from "next/font/google";
+import { Inter } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/shared/navbar";
 import Footer from "@/components/shared/footer";
 
-const rosario = Rosario({
+const inter = Inter({
   weight: ["300", "500", "700"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   subsets: ["latin"],
 });
 
@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={rosario.className}>
+      <body className={inter.className}>
         <Navbar />
         <main>{children}</main>
       </body>
