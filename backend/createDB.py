@@ -39,7 +39,7 @@ else:
   # print("Finished creating table.")
 
   # create user
-  cursor.execute("CREATE TABLE users (user_id CHAR(16) PRIMARY KEY,name VARCHAR(32),priority INTEGER,email VARCHAR(64),cellphone_number VARCHAR(16),plate VARCHAR(16),preference_floor CHAR(2));")
+  cursor.execute("CREATE TABLE users (user_id serial PRIMARY KEY,name VARCHAR(32),priority INTEGER,email VARCHAR(64),cellphone_number VARCHAR(16),plate VARCHAR(16),preference_floor CHAR(2));")
 
   # create parking_spaces
   cursor.execute("CREATE TABLE parking_spaces (parking_space_id CHAR(16) PRIMARY KEY,floor CHAR(2),number VARCHAR(8),priority INTEGER);")
@@ -48,7 +48,7 @@ else:
   cursor.execute("CREATE TABLE parking_space_status (parking_space_id CHAR(16) PRIMARY KEY,status INTEGER);")
 
   # create record
-  cursor.execute("CREATE TABLE record (record_id CHAR(16) PRIMARY KEY,user_id CHAR(16),parking_space_id CHAR(16),enter_time DATETIME,exit_time DATETIME,reserve_time DATETIME,FOREIGN KEY (user_id) REFERENCES users(user_id),FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(parking_space_id));")
+  cursor.execute("CREATE TABLE record (record_id serial PRIMARY KEY,user_id CHAR(16),parking_space_id CHAR(16),enter_time DATETIME,exit_time DATETIME,reserve_time DATETIME,FOREIGN KEY (user_id) REFERENCES users(user_id),FOREIGN KEY (parking_space_id) REFERENCES parking_spaces(parking_space_id));")
   
   #------------------------------------------------------------------------------------
   # Insert some data into table
@@ -58,7 +58,7 @@ else:
   # Insert user
   user = pd.read_csv("user.csv", names=["name" ,"priority","email" ,"cellphone_number" ,"plate" ,"preference_floor"])
   for index, row in user.iterrows():
-    cursor.execute("INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES (%s,  %s, %s, %s, %s, %s, %s);", (index, row["name"], row["priority"], row["email"], row["cellphone_number"], row['plate'], row["preference_floor"]))
+    cursor.execute("INSERT INTO users (name, priority, email, cellphone_number, plate, preference_floor) VALUES (%s, %s, %s, %s, %s, %s);", (row["name"], row["priority"], row["email"], row["cellphone_number"], row['plate'], row["preference_floor"]))
 
 
   # Insert parking_spaces
@@ -75,7 +75,7 @@ else:
   # Inserr record
   record = pd.read_csv("record.csv", names=["record_id","user_id" ,"parking_space_id","enter_time","exit_time","reserve_time"])
   for index, row in record.iterrows():
-    cursor.execute("INSERT INTO record (record_id, user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES (%s, %s, %s, %s, %s, %s);", (row["record_id"], row["user_id"], row['parking_space_id'], row['enter_time'], row["exit_time"], row['reserve_time']))
+    cursor.execute("INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES (%s, %s, %s, %s, %s);", (row["user_id"], row['parking_space_id'], row['enter_time'], row["exit_time"], row['reserve_time']))
 
 #---------------------------------------------------------------------------------------
   # Cleanup
