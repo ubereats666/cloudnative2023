@@ -24,6 +24,10 @@ const buttonVariants = cva(
           "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         ghost:
           "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        setting:
+          "bg-[#75B066] text-gray-1 rounded-full px-6 py-2",
+        setting_outline:
+          "border-2 border-[#75B066] text-[#75B066] rounded-full px-6 py-2",
       },
       size: {
         default: "rounded-md px-3 py-2 sm:round-md",
