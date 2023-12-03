@@ -51,8 +51,8 @@ const Setting = () => {
           </Card>
         </div>
         <div className="flex gap-x-3 px-9 py-3">
-          <Button variant="setting_outline" size="none">取消</Button>
-          <Button variant="setting" size="none">儲存變更</Button>
+          <Button variant="setting_outline" size="none"><p className="text-20">取消</p></Button>
+          <Button variant="setting" size="none"><p className="text-20">儲存變更</p></Button>
         </div>
       </div>
     </>
