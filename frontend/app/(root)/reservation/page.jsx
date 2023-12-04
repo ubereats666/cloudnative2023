@@ -6,6 +6,10 @@ import {
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
+import Graph from "./graph";
+import data from "./spaceData";
+import { isObjectLiteralElement } from "typescript";
+
 
 const Reservation = () => {
   const remainColorMapping = (remain) => (
@@ -18,18 +22,19 @@ const Reservation = () => {
       )
   );
 
-  const remains = {
-    "2F": 5,
-    "1F": 3,
-    "B1": 20,
-    "B2": 9
-  };
+  const remains = Object.keys(data).reduce((result, key) => {
+    const remain = Object.values(data[key]).filter(value => value === true).length
+    result[key] = remain
+    return result
+  }, {})
 
   const remainsClassName = {};
   for (const floor in remains) {
     const remain = remains[floor];
     remainsClassName[floor] = "text-36 font-normal " + remainColorMapping(remain);
   }
+
+  const current = "B2"
 
   return (
     <div className="flex flex-col h-screen">
@@ -95,7 +100,7 @@ const Reservation = () => {
             </CardContent>
           </Card>
         </div>
-        <div className="rounded-3xl bg-slate-200 flex-1"></div>
+        <Graph data={data} current={current} />
       </div>
       <div className="flex flex-auto w-screen justify-center items-center">
         <Button variant="setting" size="none">
