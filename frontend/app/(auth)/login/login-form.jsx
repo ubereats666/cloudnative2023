@@ -47,7 +47,7 @@ const LoginForm = () => {
       <div className="flex-between flex-col w-full gap-4 xs:flex-row xs:gap-6">
         <Button variant="white" className="w-full gap-2">
           <Image
-            src="./icons/google.svg"
+            src="/google.svg"
             className="w-4 h-4"
             width={16}
             height={16}
@@ -57,7 +57,7 @@ const LoginForm = () => {
         </Button>
         <Button variant="white" className="w-full gap-2">
           <Image
-            src="./icons/facebook.svg"
+            src="/facebook.svg"
             className="w-4 h-4"
             width={16}
             height={16}

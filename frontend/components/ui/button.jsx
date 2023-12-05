@@ -33,7 +33,7 @@ const buttonVariants = cva(
         default: "rounded-md px-3 py-2 sm:round-md",
         md: "w-full px-6 py-3 rounded-md",
         lg: "rounded-md px-8 py-2",
-        full: "rounded-full px-3 py-2",
+        full: "rounded-full px-3 py-1 md:px-3 md:py-2",
         none: "p-none",
         icon: "w-10",
       },

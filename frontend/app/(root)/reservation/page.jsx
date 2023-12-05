@@ -1,40 +1,35 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import Graph from "./graph";
-import data from "./spaceData";
-import { isObjectLiteralElement } from "typescript";
-
+import { SPACE_DATA } from "@/constants";
 
 const Reservation = () => {
-  const remainColorMapping = (remain) => (
+  const remainColorMapping = (remain) =>
     remain <= 5
       ? "text-red-500"
-      : (
-        remain <= 10
-          ? "text-amber-400"
-          : "text-green-600"
-      )
-  );
+      : remain <= 10
+      ? "text-amber-400"
+      : "text-green-600";
 
-  const remains = Object.keys(data).reduce((result, key) => {
-    const remain = Object.values(data[key]).filter(value => value === true).length
-    result[key] = remain
-    return result
-  }, {})
+  const remains = Object.keys(SPACE_DATA).reduce((result, key) => {
+    const remain = Object.values(SPACE_DATA[key]).filter(
+      (value) => value === true
+    ).length;
+    result[key] = remain;
+    return result;
+  }, {});
 
   const remainsClassName = {};
   for (const floor in remains) {
     const remain = remains[floor];
-    remainsClassName[floor] = "text-36 font-normal " + remainColorMapping(remain);
+    remainsClassName[floor] =
+      "text-36 font-normal " + remainColorMapping(remain);
   }
 
-  const current = "B2"
+  const current = "B2";
 
   return (
     <div className="flex flex-col h-screen">
@@ -100,7 +95,7 @@ const Reservation = () => {
             </CardContent>
           </Card>
         </div>
-        <Graph data={data} current={current} />
+        <Graph data={SPACE_DATA} current={current} />
       </div>
       <div className="flex flex-auto w-screen justify-center items-center">
         <Button variant="setting" size="none">

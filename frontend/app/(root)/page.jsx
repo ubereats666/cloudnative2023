@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const REMAIN_SPACES = [
   { key: "space-1", label: "F1", num_remained: 28 },
@@ -10,19 +12,37 @@ const REMAIN_SPACES = [
 export default function Home() {
   return (
     <section className="full-screen-container">
-      <div className="flex-col flex-between grow px-8 pt-24 pb-16 gap-8 md:gap-12 bg-slate-600">
+      <div className="flex-col flex-between grow px-8 pt-24 pb-16 gap-8 md:gap-12">
         <div className="flex flex-col gap-8 w-full md:flex-row md:grow">
-          <div className="w-full aspect-[2] bg-black md:aspect-[0]">
+          <div
+            className={cn(
+              "flex-center w-full aspect-[2] bg-green-1 rounded-2xl",
+              "md:aspect-[0]"
+            )}
+          >
             <h1>早安</h1>
           </div>
 
           <div className="flex-between w-full gap-6">
-            <Button className="w-full aspect-square md:aspect-[0] md:h-full">
+            <Link
+              href="/reservation"
+              className={cn(
+                "flex-center w-full aspect-[2] bg-white shadow-md rounded-lg",
+                "md:aspect-[0] md:h-full"
+              )}
+            >
               快速停車
-            </Button>
-            <Button className="w-full aspect-square md:aspect-[0] md:h-full">
+            </Link>
+
+            <Link
+              href="/reservation"
+              className={cn(
+                "flex-center w-full aspect-[2] bg-white shadow-md rounded-lg",
+                "md:aspect-[0] md:h-full"
+              )}
+            >
               自訂停車
-            </Button>
+            </Link>
           </div>
         </div>
 
@@ -46,11 +66,6 @@ export default function Home() {
               );
             })}
           </div>
-        </div>
-      </div>
-      <div className="relative w-[33%] h-screen bg-orange-700">
-        <div className="absolute">
-          <h2>我的預約</h2>
         </div>
       </div>
     </section>

@@ -7,12 +7,12 @@
 }
 
 body {
-  @apply bg-gray-100;
+  @apply bg-gray-1;
 }
 
 @layer base {
   .input {
-    @apply flex w-full border border-slate-200 bg-gray-2 ring-offset-white;
+    @apply flex w-full border border-gray-2 bg-gray-2 ring-offset-white;
     @apply file:border-0 file:bg-transparent file:text-14 file:font-medium;
     @apply placeholder:text-gray-6 disabled:cursor-not-allowed disabled:opacity-50;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-8 focus-visible:ring-offset-2;
@@ -47,9 +47,9 @@ body {
 
 @layer components {
   .logo-text {
-    @apply font-bold text-24 bg-clip-text text-transparent select-none;
+    @apply font-bold text-28 bg-clip-text text-transparent select-none;
     @apply bg-gradient-to-r from-green-6 from-20% to-green-8 to-80%;
-    @apply sm:text-28;
+    @apply md:text-32;
   }
 
   .login-form {
