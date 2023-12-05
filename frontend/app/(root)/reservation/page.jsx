@@ -32,18 +32,21 @@ const Reservation = () => {
   const current = "B2";
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex gap-x-16 w-screen">
+    <div className="flex flex-col w-screen h-screen pt-28 md:pt-32 px-8 md:px-16 pb-8 gap-y-10">
+      <div className="flex flex-col lg:flex-row gap-x-16 gap-y-6 w-full">
         <div>
           <h2 className="text-24 p-3">自訂車位</h2>
           <Card variant="reservation">
             <CardContent className="p-0">
-              <RadioGroup defaultValue="2F" className="flex flex-col gap-y-3">
+              <RadioGroup
+                defaultValue="2F"
+                className="flex flex-wrap justify-between lg:flex-col lg:w-fit gap-y-3"
+              >
                 <div>
                   <RadioGroupItem value="2F" id="2F" className="peer sr-only" />
                   <Label
                     htmlFor="2F"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl px-9 py-3 w-60"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">2F</p>
                     <div className="flex flex-col items-center">
@@ -56,7 +59,7 @@ const Reservation = () => {
                   <RadioGroupItem value="1F" id="1F" className="peer sr-only" />
                   <Label
                     htmlFor="1F"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl px-9 py-3 w-60"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">1F</p>
                     <div className="flex flex-col items-center">
@@ -69,7 +72,7 @@ const Reservation = () => {
                   <RadioGroupItem value="B1" id="B1" className="peer sr-only" />
                   <Label
                     htmlFor="B1"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl px-9 py-3 w-60"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">B1</p>
                     <div className="flex flex-col items-center">
@@ -82,7 +85,7 @@ const Reservation = () => {
                   <RadioGroupItem value="B2" id="B2" className="peer sr-only" />
                   <Label
                     htmlFor="B2"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl px-9 py-3 w-60"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">B2</p>
                     <div className="flex flex-col items-center">
@@ -97,7 +100,7 @@ const Reservation = () => {
         </div>
         <Graph data={SPACE_DATA} current={current} />
       </div>
-      <div className="flex flex-auto w-screen justify-center items-center">
+      <div className="flex w-full justify-center items-center">
         <Button variant="setting" size="none">
           <p className="text-20">確認車位</p>
         </Button>

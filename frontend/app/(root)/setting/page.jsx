@@ -15,8 +15,8 @@ import Image from 'next/image'
 const Setting = () => {
   return (
     <>
-      <div className="flex flex-col-reverse gap-y-5 md:flex-row w-screen h-screen md:gap-x-16 pt-28 md:pt-32 px-8 md:px-16 pb-8">
-        <div className="flex flex-col justify-between w-full md:w-fit h-full">
+      <div className="flex flex-col-reverse gap-y-5 lg:flex-row w-screen h-fit lg:gap-x-16 pt-28 lg:pt-32 px-8 lg:px-16 pb-8">
+        <div className="flex flex-col w-full lg:w-fit justify-between">
           <div className="flex flex-col gap-y-5">
             <h2 className="text-24 p-3">個人設定</h2>
             <Card variant="setting">
