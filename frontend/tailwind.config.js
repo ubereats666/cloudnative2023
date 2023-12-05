@@ -7,18 +7,18 @@ module.exports = {
   ],
   theme: {
     fontSize: {
-      12: "0.75rem",
-      14: "0.875rem",
-      16: "1rem",
-      20: "1.25rem",
-      24: "1.5rem",
-      28: "1.75rem",
-      32: "2rem",
-      36: "2.25rem",
-      40: "2.5rem",
-      48: "3rem",
-      64: "4rem",
-      72: "4.5rem",
+      12: ["0.75rem", { fontWeight: "700" }],
+      14: ["0.875rem", { fontWeight: "700" }],
+      16: ["1rem", { fontWeight: "700" }],
+      20: ["1.25rem", { fontWeight: "700" }],
+      24: ["1.5rem", { fontWeight: "700" }],
+      28: ["1.75rem", { fontWeight: "700" }],
+      32: ["2rem", { fontWeight: "700" }],
+      36: ["2.25rem", { fontWeight: "700" }],
+      40: ["2.5rem", { fontWeight: "700" }],
+      48: ["3rem", { fontWeight: "700" }],
+      64: ["4rem", { fontWeight: "700" }],
+      72: ["4.5rem", { fontWeight: "700" }],
     },
     extend: {
       colors: {
@@ -70,5 +70,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
