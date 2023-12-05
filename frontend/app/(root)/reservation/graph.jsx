@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-const Graph = ({ data, current }) => {
+const Graph = ({ data, current, setSelected }) => {
   const spaces = data[current]
 
   return (
     <div className="rounded-3xl bg-neutral-200 p-3 lg:p-5 flex-1 flex flex-col justify-center">
-      <RadioGroup className="flex justify-between items-center">
+      <RadioGroup
+        className="flex justify-between items-center"
+        onValueChange={(value) => { setSelected(value) }}
+      >
         <div className="flex flex-col">
           {
             Object.keys(spaces).slice(0, 6).map((key) => (

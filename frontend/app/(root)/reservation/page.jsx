@@ -1,3 +1,6 @@
+'use client'
+import { useState } from 'react'
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -7,12 +10,16 @@ import Graph from "./graph";
 import { SPACE_DATA } from "@/constants";
 
 const Reservation = () => {
-  const remainColorMapping = (remain) =>
+  const [current, setCurrent] = useState("2F");
+  const [selected, setSelected] = useState(undefined);
+
+  const remainColorMapping = (remain) => (
     remain <= 5
       ? "text-red-500"
       : remain <= 10
-      ? "text-amber-400"
-      : "text-green-600";
+        ? "text-amber-400"
+        : "text-green-600"
+  )
 
   const remains = Object.keys(SPACE_DATA).reduce((result, key) => {
     const remain = Object.values(SPACE_DATA[key]).filter(
@@ -29,8 +36,6 @@ const Reservation = () => {
       "text-36 font-normal " + remainColorMapping(remain);
   }
 
-  const current = "B2";
-
   return (
     <div className="flex flex-col w-screen h-screen pt-28 md:pt-32 px-8 md:px-16 pb-8 gap-y-10">
       <div className="flex flex-col lg:flex-row gap-x-16 gap-y-6 w-full">
@@ -39,8 +44,9 @@ const Reservation = () => {
           <Card variant="reservation">
             <CardContent className="p-0">
               <RadioGroup
-                defaultValue="2F"
+                defaultValue={current}
                 className="flex flex-wrap justify-between lg:flex-col lg:w-fit gap-y-3"
+                onValueChange={(value) => { setCurrent(value) }}
               >
                 <div>
                   <RadioGroupItem value="2F" id="2F" className="peer sr-only" />
@@ -98,10 +104,15 @@ const Reservation = () => {
             </CardContent>
           </Card>
         </div>
-        <Graph data={SPACE_DATA} current={current} />
+        <Graph data={SPACE_DATA} current={current} setSelected={setSelected} />
       </div>
       <div className="flex w-full justify-center items-center">
-        <Button variant="setting" size="none">
+        <Button
+          variant="setting"
+          size="none"
+          disabled={!selected}
+          onClick={() => { console.log(current, selected) }}
+        >
           <p className="text-20">確認車位</p>
         </Button>
       </div>
