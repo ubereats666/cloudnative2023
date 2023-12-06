@@ -198,7 +198,7 @@ def get_reserve_info():
     3. /get_reserve_info (使用者查看預約的停車位資訊)
 	參數: {user_id} 回傳: {expire_time, floor, number}
     '''
-    user_id = request.session.get('user_id')
+    user_id = request.args.get('user_id')
 
     # Construct connection string
     try:
@@ -235,6 +235,54 @@ def get_reserve_info():
         dic["floor"] = row[0]
         dic["number"] = row[1]
         dic["expire_time"] = str(row[2])
+        json_string += json.dumps(dic)
+
+    # 回傳 json
+    response = json_string
+    return response,200,{"Content-Type":"application/json"}
+
+@app.route('/get_car_info', methods=['GET'])
+def get_car_info():
+    '''
+    4. /get_car_info 
+	參數: {user_id} 回傳: parking_space_id
+    '''
+
+    user_id = request.args.get('user_id')
+
+    # Construct connection string
+    try:
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        sql =  "SELECT parking_space.parking_space_id "
+        sql += "FROM record  "
+        sql += "WHERE record.user_id = '" + user_id + "';"
+
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        
+        #Cleanup
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+    # 包成 json 回傳
+    json_string = ""
+    for row in rows:
+        dic = {}
+        dic["parking_space_id"] = row[0]
         json_string += json.dumps(dic)
 
     # 回傳 json
