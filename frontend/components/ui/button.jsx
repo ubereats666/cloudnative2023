@@ -23,17 +23,18 @@ const buttonVariants = cva(
         outline:
           "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         ghost:
-          "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+          "text-t-title hover:bg-gray-1 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         setting:
           "border-2 border-[#75B066] bg-[#75B066] text-gray-1 rounded-full px-6 py-2",
         setting_outline:
           "border-2 border-[#75B066] text-[#75B066] rounded-full px-6 py-2",
       },
       size: {
-        default: "rounded-md px-3 py-2 sm:round-md",
+        default: "rounded-md px-3 py-2",
+        square: "rounded p-2",
         md: "w-full px-6 py-3 rounded-md",
         lg: "rounded-md px-8 py-2",
-        full: "rounded-full px-3 py-2",
+        full: "rounded-full px-3 py-1 md:px-3 md:py-2",
         none: "p-none",
         icon: "w-10",
       },

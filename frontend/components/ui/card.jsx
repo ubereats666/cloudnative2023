@@ -4,16 +4,16 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "text-slate-950 shadow-sm",
+  "text-slate-950",
   {
     variants: {
       variant: {
         default:
-          "rounded-lg border border-slate-200 bg-white  dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
+          "rounded-lg border border-slate-200 bg-white  dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 shadow-sm",
         setting:
           "rounded-3xl border-2 border-[#75B066]",
         reservation:
-          "rounded-3xl bg-[#F1F9E7] px-9 py-6 w-fit"
+          "rounded-3xl bg-[#F1F9E7] p-5 lg:px-9 lg:py-6 w-fit"
       }
     },
     defaultVariants: {

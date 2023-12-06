@@ -1,0 +1,33 @@
+{
+  "get_empty_parking_space": [
+    {
+      "key": "space-1",
+      "floor": "F1",
+      "num_parking_space": 28,
+      "list_of_status": []
+    },
+    {
+      "key": "space-2",
+      "floor": "F2",
+      "num_parking_space": 11,
+      "list_of_status": []
+    },
+    {
+      "key": "space-3",
+      "floor": "F3",
+      "num_parking_space": 3,
+      "list_of_status": []
+    },
+    {
+      "key": "space-4",
+      "floor": "F4",
+      "num_parking_space": 5,
+      "list_of_status": []
+    }
+  ],
+  "get_reserve_info": {
+    "expire_time": "",
+    "floor": "F1",
+    "number": "123"
+  }
+}
