@@ -113,5 +113,14 @@
     "expire_time": "",
     "floor": "F1",
     "number": "123"
+  },
+  "get_user_info": {
+    "user_id": "",
+    "name": "",
+    "priority": 1,
+    "email": "",
+    "cellphone_number": "",
+    "plate": "ABC-1234",
+    "preference_floor": "1F"
   }
 }
