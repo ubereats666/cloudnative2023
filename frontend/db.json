@@ -2,27 +2,111 @@
   "get_empty_parking_space": [
     {
       "key": "space-1",
-      "floor": "F1",
-      "num_parking_space": 28,
-      "list_of_status": []
+      "floor": "2F",
+      "num_parking_space": 5,
+      "list_of_status": [
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "key": "space-2",
-      "floor": "F2",
-      "num_parking_space": 11,
-      "list_of_status": []
+      "floor": "1F",
+      "num_parking_space": 3,
+      "list_of_status": [
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "key": "space-3",
-      "floor": "F3",
-      "num_parking_space": 3,
-      "list_of_status": []
+      "floor": "B1",
+      "num_parking_space": 20,
+      "list_of_status": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "key": "space-4",
-      "floor": "F4",
-      "num_parking_space": 5,
-      "list_of_status": []
+      "floor": "B2",
+      "num_parking_space": 9,
+      "list_of_status": [
+        false,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        false,
+        true,
+        false,
+        false
+      ]
     }
   ],
   "get_reserve_info": {
