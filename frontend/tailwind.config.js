@@ -56,7 +56,7 @@ module.exports = {
         card: "0px 4px 12px 0px rgba(0, 0, 0, 0.50)",
       },
       backgroundImage: {
-        "login-cover": "url('/images/login-cover.png')",
+        "login-cover": "url('/login-cover.png')",
       },
       screens: {
         // Mobile

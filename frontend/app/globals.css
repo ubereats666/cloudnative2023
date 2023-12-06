@@ -42,6 +42,7 @@ body {
 
   .full-screen-container {
     @apply flex relative w-full overflow-hidden;
+    height: 100svh;
   }
 }
 

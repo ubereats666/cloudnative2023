@@ -3,7 +3,11 @@ import React from "react";
 
 const Feature = () => {
   return (
-    <section className="flex py-16 px-12">
+    <section className="flex flex-col gap-12 py-16 px-12">
+      <h1 className="text-32">
+        使用<span className="logo-text text-32"> Parkoasis </span> <br />
+        量身打造您的停車體驗
+      </h1>
       <div className="flex flex-col gap-12">
         <div className="flex gap-6">
           <Image
@@ -13,9 +17,9 @@ const Feature = () => {
             alt="your-time"
             className="w-36 h-36 rounded-3xl"
           />
-          <div className="flex flex-col justify-between items-end h-full">
+          <div className="flex flex-col justify-between h-full">
             <h2 className="text-24 text-green-9">Your Time</h2>
-            <p className="text-16 text-right">
+            <p className="text-16">
               <span className="logo-text text-16">Parkoasis </span>
               提供即時停車位預約的便利體驗。僅需點擊幾下，即可輕鬆地保留您的停車位，為您省下大量時間。
             </p>
