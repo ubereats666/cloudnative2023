@@ -1,10 +1,6 @@
 import "../globals.css";
-
-export const metadata = {
-  title: "Parkoasis",
-  description: "Parkoasis - Where Reservation Meets Acceleration.",
-};
+import LandingNavbar from "@/components/landing/landing-navbar";
 
 export default function AuthLayout({ children }) {
-  return <main>{children}</main>;
+  return <>{children}</>;
 }

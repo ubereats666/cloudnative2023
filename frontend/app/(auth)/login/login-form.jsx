@@ -6,10 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
+
+  const onLogin = () => {
+    router.push("/home");
+  };
 
   return (
     <div className="flex flex-col items-start justify-center flex-grow gap-4 xs:gap-6 sm:gap-8">
@@ -33,7 +40,7 @@ const LoginForm = () => {
         </Button>
       </div>
 
-      <Button variant="primary" className="w-full">
+      <Button variant="primary" className="w-full" onClick={onLogin}>
         登入
       </Button>
 

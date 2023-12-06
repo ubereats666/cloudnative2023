@@ -1,3 +1,9 @@
+export const NAV_LINKS = [
+  { key: "nav-about", label: "關於", variant: "ghost", href: "/" },
+  { key: "nav-contact", label: "聯絡我們", variant: "ghost", href: "/" },
+  { key: "nav-login", label: "登入", variant: "primary", href: "/login" },
+];
+
 export const SPACE_DATA = {
   "2F": {
     201: false,

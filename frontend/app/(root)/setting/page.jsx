@@ -12,7 +12,7 @@ const Setting = () => {
         <Form />
         <div className="flex flex-1 justify-center items-start">
           <AspectRatio ratio={16 / 9}>
-            <Image src="/images/16-9.png" fill={true} alt="Image" className="rounded-md object-cover" />
+            <Image src="/images/setting.png" fill={true} alt="Image" className="rounded-md object-cover" />
           </AspectRatio>
         </div>
 
