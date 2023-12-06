@@ -215,10 +215,14 @@ def get_reserve_info():
             err_msg = err
             return err
     else:
+        # sql 現在找不到東西，有可能是DB假資料不夠，待改
         cursor = conn.cursor()
         sql =  "SELECT parking_space.floor, parking_space.number, record.reverse_time "
-        sql += "FROM record INNER JOIN parking_space ON record.parking_space_id = parking_space.parking_space_id "
-        sql += "WHERE record.user_id = '" + user_id + "';"
+        sql += "FROM record "
+        sql += "INNER JOIN parking_space ON record.parking_space_id = parking_space.parking_space_id "
+        sql += "INNER JOIN parking_space_status ON record.parking_space_id = parking_space_status.parking_space_id"
+        sql += "WHERE record.user_id = '" + user_id + " "
+        sql += "AND parking_space_status = 1;"
 
         cursor.execute(sql)
         rows = cursor.fetchall()
@@ -228,14 +232,19 @@ def get_reserve_info():
         cursor.close()
         conn.close()
 
-    # 包成 json 回傳
-    json_string = ""
-    for row in rows:
-        dic = {}
-        dic["floor"] = row[0]
-        dic["number"] = row[1]
-        dic["expire_time"] = str(row[2])
-        json_string += json.dumps(dic)
+        # 包成 JSON 回傳
+        json_string = ""
+        for row in rows:
+            dic = {}
+            dic["floor"] = row[0]
+            dic["number"] = row[1]
+
+            # Calculate the expired time by adding 30 minutes to the reverse_time
+            reverse_time = datetime.strptime(str(row[2]), '%Y-%m-%d %H:%M:%S')
+            expired_time = reverse_time + timedelta(minutes=30)
+
+            dic["expired_time"] = expired_time.strftime('%Y-%m-%d %H:%M:%S')
+            json_string += json.dumps(dic)
 
     # 回傳 json
     response = json_string
@@ -266,9 +275,10 @@ def get_car_info():
             return err
     else:
         cursor = conn.cursor()
-        sql =  "SELECT parking_space.parking_space_id "
+        sql =  "SELECT record.parking_space_id "
         sql += "FROM record  "
-        sql += "WHERE record.user_id = '" + user_id + "';"
+        sql += "WHERE record.user_id = '" + user_id + " "
+        sql += "AND record.exit_time IS NULL;"
 
         cursor.execute(sql)
         rows = cursor.fetchall()
