@@ -31,10 +31,10 @@ const Hero = () => {
 
         <div className="flex gap-6">
           <Button variant="primary" className="gap-2">
-            開始體驗 <ArrowRight />
+            開始體驗 <ArrowRight size={20} />
           </Button>
           <Button variant="white" className="gap-2">
-            <Wand2 /> 其他特色
+            <Wand2 size={20} /> 其他特色
           </Button>
         </div>
       </article>

@@ -6,7 +6,7 @@ const useFetch = (url = "") => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}${url}`);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
