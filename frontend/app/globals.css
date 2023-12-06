@@ -47,9 +47,9 @@ body {
 
 @layer components {
   .logo-text {
-    @apply font-bold text-28 bg-clip-text text-transparent select-none;
+    @apply bg-clip-text text-transparent select-none;
     @apply bg-gradient-to-r from-green-6 from-20% to-green-8 to-80%;
-    @apply md:text-32;
+    @apply text-24 sm:text-28 md:text-32;
   }
 
   .login-form {
