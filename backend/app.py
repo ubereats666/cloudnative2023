@@ -243,7 +243,8 @@ def get_reserve_info():
             reverse_time = datetime.strptime(str(row[2]), '%Y-%m-%d %H:%M:%S')
             expired_time = reverse_time + timedelta(minutes=30)
 
-            dic["expired_time"] = expired_time.strftime('%Y-%m-%d %H:%M:%S')
+            # 2023-04-01T05:00:30
+            dic["expired_time"] = expired_time.isoformat(timespec='seconds')
             json_string += json.dumps(dic)
 
     # 回傳 json
