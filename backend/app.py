@@ -1,7 +1,5 @@
 # import package
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, render_template, request, jsonify 
 import mysql.connector
 from mysql.connector import errorcode
 import json
@@ -22,6 +20,24 @@ app = Flask(__name__)
 @app.route('/')
 def jimijim123():
     pass
+
+def execute_query(query, params = None):
+    '''
+    執行 sql query，並回傳結果，看這樣能不能簡化其他地方的 code
+    目前只有用在 delete_user 和 delete_record
+    '''
+    try:
+        with mysql.connector.connect(**config) as conn:
+            with conn.cursor() as cursor:
+                if params:
+                    cursor.execute(query, params)
+                else:
+                    cursor.execute(query)
+                rows = cursor.fetchall()
+                return rows
+    except mysql.connector.Error as err:
+        print("Something went wrong: {}".format(err))
+        return None
 
 @app.route('/get_space_history')
 def get_space_history():
@@ -215,7 +231,7 @@ def get_reserve_info():
             err_msg = err
             return err
     else:
-        # sql 現在找不到東西，有可能是DB假資料不夠，待改
+        # TODO sql 現在找不到東西，有可能是DB假資料不夠，待改
         cursor = conn.cursor()
         sql =  "SELECT parking_space.floor, parking_space.number, record.reverse_time "
         sql += "FROM record "
@@ -299,3 +315,37 @@ def get_car_info():
     # 回傳 json
     response = json_string
     return response,200,{"Content-Type":"application/json"}
+
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
+    '''admin 刪除使用者'''
+
+    user_id = request.args.get('user_id')
+
+    try:
+        delete_sql =  "DELETE FROM users "
+        delete_sql += "WHERE user_id = '" + user_id + "';"
+        execute_query(delete_sql)
+        
+        # Provide a success message
+        response_message = "Record deleted successfully"
+        return jsonify({'message': response_message}), 200
+    except Exception as e:
+        response_message = "User deletion failed"
+        return jsonify({'message': response_message}), 400
+
+@app.route('/delete_record', methods=['DELETE'])
+def delete_record():
+    '''(取消預約or時間到)時，刪除record資料表的資料'''
+
+    try:
+        # TODO 這邊的 sql 也還沒寫好
+        delete_sql = "DELETE FROM record WHERE your_condition_here;"
+        execute_query(delete_sql)
+        
+        # Provide a success message
+        response_message = "Record deleted successfully"
+        return jsonify({'message': response_message}), 200
+    except Exception as e:
+        response_message = "Record deletion failed"
+        return jsonify({'message': response_message}), 400
