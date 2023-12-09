@@ -315,3 +315,323 @@ def get_car_info():
     # 回傳 json
     response = json_string
     return response,200,{"Content-Type":"application/json"}
+
+
+
+@app.route('/get_user_info', methods=['GET'])
+def get_user_info():
+
+ 
+    user_id = request.args.get('user_id')
+
+    # Construct connection string
+    try:
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        sql =  "SELECT * "
+        sql += "FROM users  "
+        sql += "WHERE users.user_id = '" + user_id + "';"
+
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        
+        #Cleanup
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+    json_string = ""
+    for row in rows:
+
+
+
+        dic = {}
+        dic["name"] = row[1]
+        dic["priority"] = row[2]
+        dic["email"] = row[3]
+        dic["cellphone"] = (row[4])
+        dic["plate"] = (row[5])
+        dic["preference_floor"] = (row[6])
+        json_string += json.dumps(dic)
+
+    # 回傳 json
+    response = json_string  
+    return response,200,{"Content-Type":"application/json"}
+
+
+@app.route('/get_empty_parking_space', methods=['GET'])
+def get_empty_parking_space():
+
+    # if slot is priority should it be counted in the available slots?
+    # Construct connection string
+    try:
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+
+        sql =  "SELECT floor,status FROM parking_space_status INNER JOIN parking_spaces ON parking_space_status.parking_space_id = parking_spaces.parking_space_id;"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+    json_string = ""
+
+
+    dic = []
+    for row in rows:
+        
+        floor = row[0]
+        status = row[1]
+        if floor not in [s['floor'] for s in dic]:
+            dic.append({"floor": floor, "num_parking_space": 0, "list_of_status": []})
+        
+        ele = [s for s in dic if s['floor'] == floor][0]
+        if status == 0:
+            ele['num_parking_space'] += 1
+        
+        ele['list_of_status'].append(status)
+    response = json.dumps(dic)  
+    return response,200,{"Content-Type":"application/json"}
+
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    body = request.get_json()
+    params = body.keys()
+    if 'name' not in params or 'priority' not in params or 'email' not in params or 'cellphone_number' not in params or 'plate' not in params:
+        return json.dumps({'isSuccess':False}), 400
+    
+    #TODO
+    user_id = body.get('user_id')
+    name = body.get('name')
+    priority = body.get('priority')
+    email = body.get('email')
+    cellphone_number = body.get('cellphone_number')
+    plate = body.get('plate')
+    # Construct connection string
+    try:
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        sql =  f"INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES ( '{str(user_id)}'  ,  '{name}' , '{str(priority)}' , '{email}' , '{str(cellphone_number)}' , '{plate}' , '{1}');"
+        cursor.execute(sql)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return json.dumps({'isSuccess': True}), 200
+    
+
+@app.route('/create_record', methods=['POST'])
+def create_record():
+    body = request.get_json()
+    if not body.get('user_id'):
+        return json.dumps({'error': 'user id not provided'}), 200
+
+    user_id = body.get('user_id')
+    if body.get('parking_space_id'):
+        parking_space_id = body.get('parking_space_id')
+    else:
+        parking_space_id = None
+
+    
+    
+
+    try:
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        slot = None
+        if parking_space_id:
+            cursor.execute(f"SELECT status FROM parking_space_status WHERE parking_space_id = '{parking_space_id}';")
+            rows = cursor.fetchall()
+            if rows[0][0] == 1:
+                return json.dumps({'error': 'parking space is not available'}), 200
+            else:
+                
+                cursor.execute(f"SELECT floor,number FROM parking_spaces WHERE parking_space_id = '{parking_space_id}';")
+                rows = cursor.fetchall()
+                floor = rows[0][0]
+                number = rows[0][1]
+                now_tm = datetime.now()
+                now_str = now_tm.strftime('%Y-%m-%d %H:%M:%S') 
+                expire_tm = now_tm + timedelta(minutes=15)
+                expire_str = expire_tm.strftime('%Y-%m-%dT%H:%M:%S')
+                #cursor.execute(f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';")
+                #conn.commit()
+                print(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
+                cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
+                conn.commit()
+                return json.dumps({'expire_time': expire_str, 'floor':floor,'number':number}), 200
+
+        else:
+            # quick parking 
+            cursor.execute(f"SELECT preference_floor FROM users WHERE user_id = '{user_id}';")
+            rows = cursor.fetchall()
+            preference_floor = rows[0][0]
+     
+            cursor.execute(f"SELECT priority FROM users WHERE user_id = '{user_id}';")
+            priority_row = cursor.fetchall()
+            get_status_sql = '''SELECT parking_space_status.parking_space_id, floor,status, priority, number
+                             FROM parking_space_status INNER JOIN parking_spaces
+                             ON parking_space_status.parking_space_id = parking_spaces.parking_space_id;'''
+            cursor.execute(get_status_sql)
+            status = cursor.fetchall()
+
+
+            if priority_row[0][0] == 1:
+                # ( for priority user )
+                available_priority_parking_space = []
+                available_priority_parking_space_floor = []
+
+                for row in status:
+                    if row[2] == 0 and row[3] == 1:
+                        if row[1] == preference_floor:
+                            available_priority_parking_space_floor.append(row)
+                        available_priority_parking_space.append(row) 
+                if len(available_priority_parking_space_floor) != 0:
+                    slot = available_priority_parking_space_floor[0]
+                elif len(available_priority_parking_space) != 0:
+                    slot = available_priority_parking_space[0]
+
+            if priority_row[0][0] == 0 or (slot is None):
+                # if a person (specified slot or priority) still still has no slot
+                # then find a normal slot for him
+                # ( for normal user )
+                available_normal_parking_space = []
+                available_normal_parking_space_floor = []
+
+                for row in status:
+                    if row[2] == 0 and row[3] == 0:
+                        if row[1] == preference_floor:
+                            available_normal_parking_space_floor.append(row)
+                        available_normal_parking_space.append(row)
+                if len(available_normal_parking_space_floor) != 0:
+                    slot = available_normal_parking_space_floor[0]
+                elif len(available_normal_parking_space) != 0:
+                    slot = available_normal_parking_space[0]
+            
+            # if available parking space is not found (may be different for priority and normal user)
+            # return error message
+            if slot is None:
+                return json.dumps({'error': 'parking space is not available'}), 200
+            else:
+                    
+
+                # record_id | user_id | parking_space_id | enter_time          | exit_time           | reserve_time  
+                now_tm = datetime.now()
+                now_str = now_tm.strftime('%Y-%m-%d %H:%M:%S') 
+                expire_tm = now_tm + timedelta(minutes=15)
+                expire_str = expire_tm.strftime('%Y-%m-%dT%H:%M:%S')
+                cursor.execute(f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';")
+                conn.commit()
+                cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
+                conn.commit()
+                return json.dumps({'expire_time': expire_str, 'floor':slot[1],'number':slot[4]}), 200
+                
+            
+@app.route('/update_user_preference', methods=['POST'])
+def update_user_preference():
+    try:
+        # user_id, floor (optional), plate (optional)
+        # Get the JSON data from the request body
+        json_string = ""
+        body = request.get_json()
+        user_id = body.get('user_id')
+        if body.get('floor') != None:
+            floor = body.get('floor')
+        else:
+            floor = None
+        
+        if body.get('plate') != None:
+            plate = body.get('plate')
+        else:
+            plate = None
+        # Access data from the JSON payload
+        if not floor and not plate:
+            json_string += json.dumps('Please provide floor or plate')
+            return (json_string, 404)
+        # Process the data (you can perform any logic here)
+        else:
+            # Construct connection string
+            try:
+                conn = mysql.connector.connect(**config)
+                print("Connection established")
+            except mysql.connector.Error as err:
+                if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                    err_msg = "Something is wrong with the user name or password"
+                    return err_msg
+                elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                    err_msg = "Database does not exist"
+                    return err_msg
+                else:
+                    err_msg = err
+                    return err
+            else:
+                cursor = conn.cursor()
+                if floor and plate:
+                    sql =  "UPDATE users SET preference_floor = '" + str(floor) + "', plate = '" + str(plate) + "' WHERE user_id = '" + str(user_id) + "';"
+                elif floor:
+                    sql =  "UPDATE users SET preference_floor = '" + str(floor) + "' WHERE user_id = '" + str(user_id) + "';"
+                else:
+                    sql =  "UPDATE users SET plate = '" + str(plate) + "' WHERE user_id = '" + str(user_id) + "';"
+                cursor.execute(sql)
+                conn.commit()
+                cursor.close()
+                conn.close()
+                json_string += json.dumps('Update successfully')
+                return (json_string, 200)
+
+    except Exception as e:
+        # Handle exceptions (e.g., invalid JSON format)
+        error_message = {'error': f'Error processing the request: {str(e)}'}
+        return json.dumps(error_message), 400
+
+
