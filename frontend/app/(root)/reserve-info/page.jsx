@@ -6,15 +6,18 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
-import Image from 'next/image';
 import StaticGraph from "./staticGraph";
 
 import useFetch from "@/hooks/useFetch";
+import { useRouter } from 'next/navigation';
+import { useToast } from "@/components/ui/use-toast";
 
 const ReserveInfo = () => {
   const [remainingTime, setRemainingTime] = useState(undefined)
   // const [remainingTime, setRemainingTime] = useState(30 * 60)
 
+  const { toast } = useToast();
+  const router = useRouter();
 
   const { data, isLoading, error } = useFetch("get_reserve_info");
 
@@ -53,6 +56,29 @@ const ReserveInfo = () => {
   }
 
   if (remainingTime > 0) {
+    const onComplete = () => {
+      setRemainingTime(0);
+      // TODO: delete reservation
+    };
+
+    const onCancel = () => {
+      // TODO: delete reservation
+
+      const isSuccess = false;
+
+      if (isSuccess) {
+        toast({
+          description: "您的預約已取消",
+        });
+        router.replace("/home");
+      } else {
+        toast({
+          variant: "destructive",
+          description: "發生錯誤，請稍後再試",
+        });
+      }
+    };
+
     return (
       <div className="flex flex-col-reverse gap-y-5 lg:flex-row w-screen h-fit lg:gap-x-16 pt-28 lg:pt-32 px-8 lg:px-16 pb-8">
         <div className="flex-col gap-y-5">
@@ -64,7 +90,7 @@ const ReserveInfo = () => {
                 duration={30 * 60}
                 initialRemainingTime={remainingTime}
                 colors={"#278E0E"}
-                onComplete={() => setRemainingTime(0)}    // TODO: delete reservation
+                onComplete={onComplete}
               >
                 {({ remainingTime }) => {
                   const minutes = Math.floor(remainingTime / 60)
@@ -88,7 +114,7 @@ const ReserveInfo = () => {
             <Button
               variant="setting"
               size="none"
-            // onClick={() => router.back()} // TODO: delete reservation
+              onClick={onCancel}
             >
               <p className="text-20">取消預約</p>
             </Button>

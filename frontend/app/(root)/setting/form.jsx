@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 import {
   Card,
@@ -12,10 +11,29 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Button } from "@/components/ui/button";
 
-const Form = ({ plate, floor, setPlate, setFloor }) => {
-  const router = useRouter()
+const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
   const [changed, setChanged] = useState(false)
 
+
+  const onUpdate = () => {
+    console.log(plate, floor);
+
+    // TODO: POST update_user_preference
+
+    const isSuccess = false;
+
+    if (isSuccess) {
+      toast({
+        description: "您的偏好已更新",
+      });
+      setChanged(false);
+    } else {
+      toast({
+        variant: "destructive",
+        description: "發生錯誤，請稍後再試",
+      });
+    }
+  }
 
   return (
     <div className="flex flex-col w-full lg:w-fit justify-between">
@@ -80,7 +98,7 @@ const Form = ({ plate, floor, setPlate, setFloor }) => {
           variant="setting"
           size="none"
           disabled={!changed}
-          onClick={() => console.log(plate, floor)}
+          onClick={onUpdate}
         >
           <p className="text-20">儲存變更</p>
         </Button>

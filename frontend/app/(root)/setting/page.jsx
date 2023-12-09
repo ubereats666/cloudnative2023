@@ -10,10 +10,16 @@ import Image from 'next/image';
 import Form from "./form";
 
 import useFetch from '@/hooks/useFetch'
+import { useRouter } from 'next/navigation'
+import { useToast } from "@/components/ui/use-toast"
+
 
 const Setting = () => {
   const [plate, setPlate] = useState("")
   const [floor, setFloor] = useState("2F")
+
+  const { toast } = useToast();
+  const router = useRouter();
 
   const { data, isLoading, error } = useFetch("get_user_info");
 
@@ -49,6 +55,8 @@ const Setting = () => {
         floor={floor}
         setPlate={setPlate}
         setFloor={setFloor}
+        toast={toast}
+        router={router}
       />
       <div className="flex flex-1 justify-center items-start">
         <AspectRatio ratio={16 / 9}>
