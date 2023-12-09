@@ -17,11 +17,21 @@ const Reservation = () => {
   const { data, isLoading, error } = useFetch("get_empty_parking_space");
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <Skeleton className="w-full h-full" />
+      </div>
+    )
   }
 
   if (error) {
-    return <h1>Error</h1>
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <div className="bg-slate-200 rounded-3xl text-20 font-normal h-full w-full flex justify-center items-center">
+          發生錯誤，請稍後再試
+        </div>
+      </div>
+    )
   }
 
   const getRemain = (f) => data.filter(d => d.floor === f)[0].num_parking_space;

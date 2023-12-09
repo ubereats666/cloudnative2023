@@ -110,9 +110,9 @@
     }
   ],
   "get_reserve_info": {
-    "expire_time": "",
-    "floor": "F1",
-    "number": "123"
+    "expire_time": "2023-12-09T22:06:00",
+    "floor": "2F",
+    "number": "2F11"
   },
   "get_user_info": {
     "user_id": "",

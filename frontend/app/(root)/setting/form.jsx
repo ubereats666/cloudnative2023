@@ -1,7 +1,5 @@
-'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import useFetch from '@/hooks/useFetch'
 
 import {
   Card,
@@ -14,30 +12,10 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Button } from "@/components/ui/button";
 
-const Form = () => {
+const Form = ({ plate, floor, setPlate, setFloor }) => {
   const router = useRouter()
-
-  // get these states first
-  const [plate, setPlate] = useState("")
-  const [floor, setFloor] = useState("2F")
   const [changed, setChanged] = useState(false)
 
-  const { data, isLoading, error } = useFetch("get_user_info");
-
-  useEffect(() => {
-    if (data) {
-      setPlate(data.plate)
-      setFloor(data.preference_floor)
-    }
-  }, [data])
-
-  if (isLoading) {
-    return <h1>Loading</h1>
-  }
-
-  if (error) {
-    return <h1>Error</h1>
-  }
 
   return (
     <div className="flex flex-col w-full lg:w-fit justify-between">
