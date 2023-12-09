@@ -36,8 +36,9 @@ def execute_query(query, params = None):
                 rows = cursor.fetchall()
                 return rows
     except mysql.connector.Error as err:
-        print("Something went wrong: {}".format(err))
+        print("Database not connected: {}".format(err))
         return None
+        # return json.dumps({'error': 'database not connected'}), 200
 
 @app.route('/get_space_history')
 def get_space_history():
@@ -214,7 +215,11 @@ def get_reserve_info():
     3. /get_reserve_info (使用者查看預約的停車位資訊)
 	參數: {user_id} 回傳: {expire_time, floor, number}
     '''
-    user_id = request.args.get('user_id')
+    body = request.get_json()
+    if not body.get('user_id'):
+        return json.dumps({'error': 'user id not provided'}), 200
+
+    user_id = body.get('user_id')
 
     # Construct connection string
     try:
@@ -237,7 +242,7 @@ def get_reserve_info():
         sql += "FROM record "
         sql += "INNER JOIN parking_space ON record.parking_space_id = parking_space.parking_space_id "
         sql += "INNER JOIN parking_space_status ON record.parking_space_id = parking_space_status.parking_space_id"
-        sql += "WHERE record.user_id = '" + user_id + " "
+        sql += "WHERE record.user_id = '" + str(user_id) + " "
         sql += "AND parking_space_status = 1;"
 
         cursor.execute(sql)
@@ -273,8 +278,11 @@ def get_car_info():
     4. /get_car_info 
 	參數: {user_id} 回傳: parking_space_id
     '''
+    body = request.get_json()
+    if not body.get('user_id'):
+        return json.dumps({'error': 'user id not provided'}), 200
 
-    user_id = request.args.get('user_id')
+    user_id = body.get('user_id')
 
     # Construct connection string
     try:
@@ -294,7 +302,7 @@ def get_car_info():
         cursor = conn.cursor()
         sql =  "SELECT record.parking_space_id "
         sql += "FROM record  "
-        sql += "WHERE record.user_id = '" + user_id + " "
+        sql += "WHERE record.user_id = '" + str(user_id) + " "
         sql += "AND record.exit_time IS NULL;"
 
         cursor.execute(sql)
@@ -635,3 +643,36 @@ def update_user_preference():
         return json.dumps(error_message), 400
 
 
+@app.route('/delete_user', methods=['DELETE'])
+def delete_user():
+    user_id = request.args.get('user_id')
+    try:
+        delete_sql =  "DELETE FROM users "
+        delete_sql += "WHERE user_id = '" + str(user_id) + "';"
+        
+        execute_query(delete_sql)
+
+        # Provide a success message
+        response_message = (f"user_id:{user_id} is deleted successfully")
+        return jsonify({'message': response_message, 'isSuccess': True}), 200
+    except Exception as e:
+        response_message = "User deletion failed"
+        return jsonify({'message': response_message, 'isSuccess': False}), 400
+
+@app.route('/delete_record', methods=['DELETE'])
+def delete_record():
+    '''(取消預約or時間到)時，刪除record資料表的資料'''
+
+    try:
+
+
+        # TODO 這邊的 sql 也還沒寫好
+        delete_sql = "DELETE FROM record WHERE your_condition_here;"
+        execute_query(delete_sql)
+
+        # Provide a success message
+        response_message = (f"Record deleted successfully.")
+        return jsonify({'message': response_message}), 200
+    except Exception as e:
+        response_message = "Record deletion failed"
+        return jsonify({'message': response_message, 'isSuccess': False}), 400
