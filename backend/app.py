@@ -92,7 +92,7 @@ def get_space_history():
     response = json_string  
     return response,200,{"Content-Type":"application/json"}
 
-app.route('/get_abnormal_space')
+@app.route('/get_abnormal_space')
 def get_abnormal_space():
     # Construct connection string
     try:
@@ -143,7 +143,7 @@ def get_abnormal_space():
     response = json_string
     return response,200,{"Content-Type":"application/json"}
 
-app.route('/get_space_usage_rate')
+@app.route('/get_space_usage_rate')
 def get_space_usage_rate():
     # 接收 request
     selected_date = request.args.get('date')
