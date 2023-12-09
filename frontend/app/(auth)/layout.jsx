@@ -1,11 +1,6 @@
 import "../globals.css";
-import LandingNavbar from "@/components/auth/landing-navbar";
+import LandingNavbar from "@/components/landing/landing-navbar";
 
 export default function AuthLayout({ children }) {
-  return (
-    <>
-      <LandingNavbar />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

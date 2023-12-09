@@ -7,7 +7,7 @@ import LoginForm from "./login-form";
 
 const Login = () => {
   return (
-    <section className="full-screen-container flex">
+    <section className="full-screen-container">
       {/* Left: Login Form */}
       <div className="login-form">
         <Logo />

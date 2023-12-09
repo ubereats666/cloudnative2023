@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
 import Hero from "@/components/landing/hero";
-import LandingNavbar from "@/components/auth/landing-navbar";
+import LandingNavbar from "@/components/landing/landing-navbar";
 import Feature from "@/components/landing/feature";
 
 export default function Landing() {

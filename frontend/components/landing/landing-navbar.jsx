@@ -26,8 +26,6 @@ const LandingNavbar = () => {
     }
   );
 
-  console.log(scrollY);
-
   return (
     <motion.nav
       style={{ backgroundColor: navbarBackgroundColor }}
@@ -60,9 +58,11 @@ const LandingNavbar = () => {
         <>
           <div className="hidden md:flex flex-row gap-8">
             {NAV_LINKS.map((navLink) => (
-              <Button key={navLink.key} variant={navLink.variant}>
-                <p>{navLink.label}</p>
-              </Button>
+              <Link key={navLink.key} href={navLink.href}>
+                <Button variant={navLink.variant}>
+                  <p>{navLink.label}</p>
+                </Button>
+              </Link>
             ))}
           </div>
 

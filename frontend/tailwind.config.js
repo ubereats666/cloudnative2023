@@ -5,6 +5,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: ["text-danger", "text-warning", "text-safe"],
   theme: {
     fontSize: {
       12: ["0.75rem", { fontWeight: "700" }],
@@ -32,6 +33,9 @@ module.exports = {
         // Box Color (Container Color)
         primary: "#278E0E",
         secondary: "#66E347",
+        warning: "#FFB703",
+        danger: "#FA4949",
+        safe: "#278E0E",
         invert: "#F8F8F8",
         white: "#FFFFFF",
         green: {
@@ -56,7 +60,8 @@ module.exports = {
         card: "0px 4px 12px 0px rgba(0, 0, 0, 0.50)",
       },
       backgroundImage: {
-        "login-cover": "url('/images/login-cover.png')",
+        "login-cover": "url('/login-cover.png')",
+        "home-welcome": "url('/IMG_6677.jpg')",
       },
       screens: {
         // Mobile
