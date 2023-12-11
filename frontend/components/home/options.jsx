@@ -8,7 +8,7 @@ export default function Options() {
       <Link
         href="/reservation"
         className={cn(
-          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-lg",
+          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-[32px]",
           "md:aspect-[0] md:h-full"
         )}
       >
@@ -24,7 +24,7 @@ export default function Options() {
       <Link
         href="/reservation"
         className={cn(
-          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-lg",
+          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-[32px]",
           "md:aspect-[0] md:h-full"
         )}
       >

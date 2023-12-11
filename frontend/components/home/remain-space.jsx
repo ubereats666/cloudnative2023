@@ -20,7 +20,7 @@ export default function RemainSpace() {
     <div className="flex-col flex-between w-full gap-4">
       <h1 className="w-full text-24">剩餘車位</h1>
 
-      <div className="grid grid-cols-2 w-full gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-6">
         {data.map((space) => {
           return (
             <Button

@@ -45,9 +45,22 @@ body {
     height: 100svh;
   }
 
+  .navbar {
+    @apply fixed top-0 z-30 flex-between w-full px-12 py-6;
+  }
+
+  .gradient-section,
   .gradient-background {
-    @apply fixed top-0 w-full h-[100vh] -z-50;
+    @apply fixed top-0 w-full;
     @apply bg-gradient-to-b from-[#BFD0BB] from-0% via-[#F7F3CF] via-40% to-white to-100%;
+  }
+
+  .gradient-section {
+    @apply absolute h-full -z-10;
+  }
+
+  .gradient-background {
+    @apply h-[100vh] -z-50;
   }
 }
 

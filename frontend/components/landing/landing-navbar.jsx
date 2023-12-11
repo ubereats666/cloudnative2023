@@ -18,9 +18,11 @@ const LandingNavbar = () => {
   const opacityVariant = {
     hidden: {
       opacity: 0,
+      y: -30,
     },
     visible: {
       opacity: 1,
+      y: 0,
     },
   };
 
@@ -29,8 +31,8 @@ const LandingNavbar = () => {
       variants={opacityVariant}
       initial="hidden"
       animate="visible"
-      transition={{ duration: 2, delay: 2 }}
-      className="fixed top-0 z-30 flex-between w-full px-12 py-6"
+      transition={{ duration: 1.2, delay: 1 }}
+      className="navbar"
     >
       <Logo />
 

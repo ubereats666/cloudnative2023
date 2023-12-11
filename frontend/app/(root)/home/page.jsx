@@ -1,24 +1,35 @@
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
-import RemainSpace from "@/components/home/remain-space";
 import Options from "@/components/home/options";
+import RemainSpace from "@/components/home/remain-space";
+
+import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  const isUser = true;
+
+  if (!isUser) {
+    redirect("/login");
+  }
+
   return (
-    <section className="relative flex w-full">
-      <div className="flex-col flex-between w-full px-8 pt-24 pb-16 gap-8 md:gap-12">
-        <div className="flex flex-col gap-6 w-full">
+    <section className="full-screen-container">
+      <div className="flex-col flex-between w-full h-full px-12 pt-28 pb-16 gap-8 md:gap-10">
+        {/* Welcome & Options */}
+        <div className={cn("flex flex-col gap-6 w-full h-full", "lg:flex-row")}>
+          {/* Welcome */}
           <div
             className={cn(
-              "relative flex-center w-full aspect-[2] bg-green-1 overflow-hidden rounded-lg"
+              "relative flex-center w-full h-full overflow-hidden rounded-[32px]",
+              "lg:w-full"
             )}
           >
+            <div className="gradient-section" />
             <Image
-              src={"/IMG_6677.jpg"}
-              width={1920}
+              src={"/home-welcome.png"}
+              width={1280}
               height={0}
-              className="absolute -top-8 w-full object-top"
+              className="absolute top-4 w-full h-auto object-top"
             />
             <h1 className="text-32 text-t-title text-center z-10 ">
               早安！ <br />

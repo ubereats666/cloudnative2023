@@ -216,7 +216,7 @@ const Feature = () => {
         >
           <h2 className="text-24 lg:text-36 text-green-9">Your Time</h2>
           <p className="text-16 lg:text-24">
-            <span className="logo-text text-16 lg:text-24">Parkoasis </span>
+            <span className="logo-text text-16 lg:text-24"> Parkoasis </span>
             提供即時停車位預約的便利體驗。僅需點擊幾下，即可輕鬆地保留您的停車位，為您省下大量時間。
           </p>
           <Button variant="primary" className="gap-2 w-fit">

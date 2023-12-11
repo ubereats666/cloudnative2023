@@ -11,7 +11,7 @@ import Logo from "./logo";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 z-30 flex-between w-full px-8 py-6">
+    <nav className="navbar">
       <Logo />
 
       <Button size="full" variant="white" className="gap-4">
