@@ -18,6 +18,7 @@ module.exports = {
       36: ["2.25rem", { fontWeight: "700" }],
       40: ["2.5rem", { fontWeight: "700" }],
       48: ["3rem", { fontWeight: "700" }],
+      56: ["3.5rem", { fontWeight: "700" }],
       64: ["4rem", { fontWeight: "700" }],
       72: ["4.5rem", { fontWeight: "700" }],
     },
