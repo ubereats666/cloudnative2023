@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({
   weight: ["300", "500", "700"],
@@ -16,12 +17,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="gradient-background" />
-        <main>{children}</main>
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{    // hide signup option
+        elements: {
+          footer: "hidden",
+        },
+      }}
+    >
+      <html lang="en">
+        <body className={inter.className}>
+          <div className="gradient-background" />
+          <main>{children}</main>
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

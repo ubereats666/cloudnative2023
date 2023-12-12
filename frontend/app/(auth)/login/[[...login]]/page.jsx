@@ -1,5 +1,6 @@
 import Logo from "@/components/shared/logo";
 import LoginForm from "./login-form";
+import { SignIn } from "@clerk/nextjs";
 
 // sm: Cover image as background under the form
 // md: Cover image on the right side (width 50%)
@@ -12,7 +13,10 @@ const Login = () => {
       <div className="login-form">
         <Logo />
 
-        <LoginForm />
+        {/* <LoginForm /> */}
+        <div className="flex flex-col items-start justify-center flex-grow gap-4 xs:gap-6 sm:gap-8">
+          <SignIn afterSignInUrl="/home" />
+        </div>
       </div>
 
       {/* Right: Cover Image & Slogan */}
