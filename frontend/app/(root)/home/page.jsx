@@ -16,20 +16,27 @@ export default function Home() {
     <section className="full-screen-container">
       <div className="flex-col flex-between w-full h-full px-12 pt-28 pb-16 gap-8 md:gap-10">
         {/* Welcome & Options */}
-        <div className={cn("flex flex-col gap-6 w-full h-full", "lg:flex-row")}>
+        <div
+          className={cn(
+            "flex flex-col gap-6 w-full",
+            "md:h-full md:flex-row md:gap-8",
+            "lg:gap-12"
+          )}
+        >
           {/* Welcome */}
           <div
             className={cn(
-              "relative flex-center w-full h-full overflow-hidden rounded-[32px]",
-              "lg:w-full"
+              "relative flex-center w-full h-[180px] overflow-hidden",
+              "md:rounded-[32px] md:h-full md:w-full"
             )}
           >
             <div className="gradient-section" />
             <Image
               src={"/home-welcome.png"}
-              width={1280}
+              width={1440}
               height={0}
-              className="absolute top-4 w-full h-auto object-top"
+              alt="welcome"
+              className="absolute top-4 w-full h-auto"
             />
             <h1 className="text-32 text-t-title text-center z-10 ">
               早安！ <br />
@@ -41,6 +48,14 @@ export default function Home() {
         </div>
 
         <RemainSpace />
+
+        {/* <Image
+          src={"/oasis.png"}
+          width={1440}
+          height={0}
+          alt="welcome"
+          className="fixed bottom-0 translate-y-24 w-full h-auto -z-30"
+        /> */}
       </div>
     </section>
   );

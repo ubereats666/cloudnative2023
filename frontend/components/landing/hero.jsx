@@ -117,7 +117,7 @@ const Hero = () => {
             scale: backgroundScale,
             opacity: backgroundImageOpacity,
           }}
-          src="/landing-oasis.png"
+          src="/oasis.png"
           alt="background"
           className="fixed bottom-0 h-auto w-full object-cover -z-10"
         />

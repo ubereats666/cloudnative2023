@@ -258,7 +258,7 @@ const Feature = () => {
         {/* Footer Image */}
         <motion.img
           style={{ opacity: footerOpacity, y: footerY, scale: footerScale }}
-          src="/landing-oasis.png"
+          src="/oasis.png"
           alt="background"
           className="fixed bottom-0 w-full h-auto object-cover z-10"
         />

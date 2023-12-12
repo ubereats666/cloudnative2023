@@ -112,4 +112,24 @@ body {
   .subtitle {
     @apply font-bold text-24 text-t-subtitle;
   }
+
+  /* Home */
+  .home-options-button {
+    @apply relative flex justify-center w-full;
+    @apply overflow-hidden shadow-md rounded-2xl;
+    @apply rounded-2xl md:rounded-[32px];
+    @apply h-[160px] sm:h-[200px] md:h-full;
+    @apply pt-4 md:pt-12;
+  }
+
+  .home-options-button-text {
+    @apply bg-clip-text text-transparent select-none z-10;
+    @apply bg-gradient-to-r from-green-4 from-20% to-green-8 to-80%;
+    @apply text-20 xs:text-24 sm:text-28 md:text-32 lg:text-36;
+  }
+
+  .home-options-image {
+    @apply absolute bottom-0 w-full h-auto opacity-90;
+    @apply translate-y-12 xs:translate-y-20 sm:translate-y-32 md:translate-y-36;
+  }
 }

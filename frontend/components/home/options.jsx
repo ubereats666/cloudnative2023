@@ -1,40 +1,29 @@
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Options() {
   return (
-    <div className="flex-between w-full gap-6">
-      <Link
-        href="/reservation"
-        className={cn(
-          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-[32px]",
-          "md:aspect-[0] md:h-full"
-        )}
-      >
+    <div className="flex-between w-full gap-6 md:gap-8 lg:gap-12">
+      <Link href="/reservation" className="home-options-button">
+        <div className="gradient-section" />
+        <p className="home-options-button-text">快速停車</p>
         <Image
-          src={"/IMG_6679.jpg"}
-          width={1920}
+          src={"/home-quick-parking.png"}
+          width={1440}
           height={0}
-          className="absolute -top-4 w-full object-top"
+          className="home-options-image"
         />
-        <p className=" z-10">快速停車</p>
       </Link>
 
-      <Link
-        href="/reservation"
-        className={cn(
-          "relative flex-center w-full aspect-[2] bg-white overflow-hidden shadow-md rounded-[32px]",
-          "md:aspect-[0] md:h-full"
-        )}
-      >
+      <Link href="/reservation" className="home-options-button">
+        <div className="gradient-section" />
+        <p className="home-options-button-text">自訂停車</p>
         <Image
-          src={"/IMG_6680.jpg"}
-          width={1920}
+          src={"/home-preference-parking.png"}
+          width={1440}
           height={0}
-          className="absolute -top-4 w-full object-top"
+          className="home-options-image"
         />
-        <p className=" z-10">自訂停車</p>
       </Link>
     </div>
   );
