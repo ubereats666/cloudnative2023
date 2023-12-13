@@ -1,5 +1,6 @@
 # import package
 from flask import Flask, render_template, request, jsonify 
+from flask_cors import CORS
 import mysql.connector
 from mysql.connector import errorcode
 import json
@@ -16,6 +17,7 @@ config = {
 }
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def jimijim123():
@@ -37,8 +39,7 @@ def execute_query(query, params = None):
                 return rows
     except mysql.connector.Error as err:
         print("Database not connected: {}".format(err))
-        return None
-        # return json.dumps({'error': 'database not connected'}), 200
+        return json.dumps({'error': 'database not connected'}), 200
 
 @app.route('/get_space_history')
 def get_space_history():
@@ -241,7 +242,7 @@ def get_reserve_info():
         sql =  "SELECT parking_space.floor, parking_space.number, record.reverse_time "
         sql += "FROM record "
         sql += "INNER JOIN parking_space ON record.parking_space_id = parking_space.parking_space_id "
-        sql += "INNER JOIN parking_space_status ON record.parking_space_id = parking_space_status.parking_space_id"
+        sql += "INNER JOIN parking_space_status ON record.parking_space_id = parking_space_status.parking_space_id "
         sql += "WHERE record.user_id = '" + str(user_id) + " "
         sql += "AND parking_space_status = 1;"
 
@@ -325,7 +326,6 @@ def get_car_info():
     return response,200,{"Content-Type":"application/json"}
 
 
-
 @app.route('/get_user_info', methods=['GET'])
 def get_user_info():
 
@@ -404,7 +404,7 @@ def get_empty_parking_space():
         cursor.execute(sql)
         rows = cursor.fetchall()
 
-        
+    
         conn.commit()
         cursor.close()
         conn.close()
@@ -661,18 +661,18 @@ def delete_user():
 
 @app.route('/delete_record', methods=['DELETE'])
 def delete_record():
-    '''(取消預約or時間到)時，刪除record資料表的資料'''
-
+    '''(取消預約or時間到)時，刪除record資料表的資料'''   
+    user_id = request.args.get('user_id')
     try:
-
-
-        # TODO 這邊的 sql 也還沒寫好
-        delete_sql = "DELETE FROM record WHERE your_condition_here;"
+        # if (click_delete_button):
+        #     delete_sql = "DELETE FROM record WHERE user_id = '" + str(user_id) + "';"
+        # else:
+        delete_sql = "DELETE FROM record WHERE (reserve_time + INTERVAL 30 MINUTE) < CURRENT_TIMESTAMP ;"
         execute_query(delete_sql)
 
         # Provide a success message
         response_message = (f"Record deleted successfully.")
-        return jsonify({'message': response_message}), 200
+        return jsonify({'isSuccess':True}), 200
     except Exception as e:
         response_message = "Record deletion failed"
         return jsonify({'message': response_message, 'isSuccess': False}), 400
