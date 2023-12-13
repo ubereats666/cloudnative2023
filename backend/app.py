@@ -18,13 +18,11 @@ config = {
 }
 
 app = Flask(__name__)
-CORS(app, support_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-
-@cross_origin(supports_credentials=True)
-@app.route("/")
+@app.route('/')
 def EntryPage():
-    return "Hello, World!"
+    return 'Hello, World!'
 
 
 def execute_query(query, params=None):
