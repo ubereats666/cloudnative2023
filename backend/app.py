@@ -18,10 +18,9 @@ config = {
 }
 
 app = Flask(__name__)
-CORS(app, support_credentials=True)
+CORS(app)
 
 
-@cross_origin(supports_credentials=True)
 @app.route("/")
 def EntryPage():
     return "Hello, World!"
