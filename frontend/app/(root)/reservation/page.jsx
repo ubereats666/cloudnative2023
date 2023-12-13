@@ -14,7 +14,7 @@ import Graph from "./graph";
 // import { SPACE_DATA } from "@/constants";
 
 const Reservation = () => {
-  const [current, setCurrent] = useState("2F");
+  const [current, setCurrent] = useState("4");
   const [selected, setSelected] = useState(undefined);
 
   const { toast } = useToast();
@@ -57,10 +57,10 @@ const Reservation = () => {
 
   const getGraphData = (data) => {
     let graphData = new Object();
-    graphData["2F"] = data.filter(d => d.floor === "2F")[0].list_of_status;
-    graphData["1F"] = data.filter(d => d.floor === "1F")[0].list_of_status;
-    graphData["B1"] = data.filter(d => d.floor === "B1")[0].list_of_status;
-    graphData["B2"] = data.filter(d => d.floor === "B2")[0].list_of_status;
+    graphData["4"] = data.filter(d => d.floor === "4")[0].list_of_status;
+    graphData["3"] = data.filter(d => d.floor === "3")[0].list_of_status;
+    graphData["2"] = data.filter(d => d.floor === "2")[0].list_of_status;
+    graphData["1"] = data.filter(d => d.floor === "1")[0].list_of_status;
     return graphData;
   };
 
@@ -100,54 +100,54 @@ const Reservation = () => {
                 onValueChange={(value) => { setCurrent(value) }}
               >
                 <div>
-                  <RadioGroupItem value="2F" id="2F" className="peer sr-only" />
+                  <RadioGroupItem value="4" id="4" className="peer sr-only" />
                   <Label
-                    htmlFor="2F"
+                    htmlFor="4"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
+                  >
+                    <p className="text-36 font-normal">4F</p>
+                    <div className="flex flex-col items-center">
+                      <p className={getRemainCN("4")}>{getRemain("4")}</p>
+                      <p className="text-12 font-light">剩餘車位</p>
+                    </div>
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem value="3" id="3" className="peer sr-only" />
+                  <Label
+                    htmlFor="3"
+                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
+                  >
+                    <p className="text-36 font-normal">3F</p>
+                    <div className="flex flex-col items-center">
+                      <p className={getRemainCN("3")}>{getRemain("3")}</p>
+                      <p className="text-12 font-light">剩餘車位</p>
+                    </div>
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem value="2" id="2" className="peer sr-only" />
+                  <Label
+                    htmlFor="2"
                     className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">2F</p>
                     <div className="flex flex-col items-center">
-                      <p className={getRemainCN("2F")}>{getRemain("2F")}</p>
-                      <p className="text-12 font-light">available</p>
+                      <p className={getRemainCN("2")}>{getRemain("2")}</p>
+                      <p className="text-12 font-light">剩餘車位</p>
                     </div>
                   </Label>
                 </div>
                 <div>
-                  <RadioGroupItem value="1F" id="1F" className="peer sr-only" />
+                  <RadioGroupItem value="1" id="1" className="peer sr-only" />
                   <Label
-                    htmlFor="1F"
+                    htmlFor="1"
                     className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
                   >
                     <p className="text-36 font-normal">1F</p>
                     <div className="flex flex-col items-center">
-                      <p className={getRemainCN("1F")}>{getRemain("1F")}</p>
-                      <p className="text-12 font-light">available</p>
-                    </div>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="B1" id="B1" className="peer sr-only" />
-                  <Label
-                    htmlFor="B1"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">B1</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("B1")}>{getRemain("B1")}</p>
-                      <p className="text-12 font-light">available</p>
-                    </div>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="B2" id="B2" className="peer sr-only" />
-                  <Label
-                    htmlFor="B2"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">B2</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("B2")}>{getRemain("B2")}</p>
-                      <p className="text-12 font-light">available</p>
+                      <p className={getRemainCN("1")}>{getRemain("1")}</p>
+                      <p className="text-12 font-light">剩餘車位</p>
                     </div>
                   </Label>
                 </div>
