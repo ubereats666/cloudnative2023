@@ -53,14 +53,17 @@ def get_space_history():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
 
@@ -101,14 +104,17 @@ def get_abnormal_space():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
 
@@ -155,14 +161,17 @@ def get_space_usage_rate():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
         beg = selected_date + " 00:00:00 "
