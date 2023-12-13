@@ -1,11 +1,13 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 
 const useFetch = (url = "", queryParams = {}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
