@@ -18,14 +18,11 @@ config = {
 }
 
 app = Flask(__name__)
-CORS(app)
-<<<<<<< HEAD
+CORS(app, support_credentials=True)
 
 
+@cross_origin(supports_credentials=True)
 @app.route("/")
-=======
-@app.route('/')
->>>>>>> parent of 12ea53d (cors support credential)
 def EntryPage():
     return "Hello, World!"
 
