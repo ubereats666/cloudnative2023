@@ -1,5 +1,4 @@
 import Logo from "@/components/shared/logo";
-import LoginForm from "./login-form";
 import { SignIn } from "@clerk/nextjs";
 
 // sm: Cover image as background under the form

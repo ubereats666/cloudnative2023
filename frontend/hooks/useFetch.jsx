@@ -7,7 +7,8 @@ const useFetch = (url = "", queryParams = {}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useUser();
+
+  console.log(queryParams);
 
   useEffect(() => {
     const fetchData = async () => {

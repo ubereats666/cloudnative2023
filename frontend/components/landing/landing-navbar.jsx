@@ -1,19 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown, MenuIcon } from "lucide-react";
-
+import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Link from "next/link";
+import Logo from "@/components/shared/logo";
 import { NAV_LINKS } from "@/constants";
-import Logo from "../shared/logo";
+import { ChevronDown, MenuIcon } from "lucide-react";
+import UserDropdown from "../shared/user-dropdown";
 
 const LandingNavbar = () => {
-  const [isUser, setIsUser] = useState(false);
+  const { isSignedIn } = useUser();
 
   const opacityVariant = {
     hidden: {
@@ -36,28 +39,15 @@ const LandingNavbar = () => {
     >
       <Logo />
 
-      {isUser && (
-        <Button size="full" variant="white" className="gap-4">
-          <Avatar>
-            <AvatarImage src="/images/login-cover.png" />
-            <AvatarFallback>
-              <Image
-                src="/google.svg"
-                width={0}
-                height={0}
-                alt="user photo"
-                className="h-6 w-6"
-              />
-            </AvatarFallback>
-          </Avatar>
-          <p className="hidden md:inline text-t-paragraph text-20">
-            User Profile
-          </p>
-          <ChevronDown color={"#484848"} size={24} />
-        </Button>
+      {isSignedIn && (
+        <Link href={"/home"}>
+          <Button variant="primary">
+            <p>我的首頁</p>
+          </Button>
+        </Link>
       )}
 
-      {!isUser && (
+      {!isSignedIn && (
         <>
           <div className="hidden md:flex flex-row gap-8">
             {NAV_LINKS.map((navLink) => (

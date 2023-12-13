@@ -3,11 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { getRemainSpaceColor } from "@/constants/function";
 import useFetch from "@/hooks/useFetch";
-import { cn } from "@/lib/utils";
+import { useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function RemainSpace() {
-  const { data, isLoading, error } = useFetch("get_empty_parking_space");
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+
+  // In case the user signs out while on the page.
+  if (!isLoaded || !userId) {
+    return null;
+  }
+
+  const { data, isLoading, error } = useFetch("get_empty_parking_space", {
+    userId: userId,
+  });
 
   if (isLoading) {
     return <h1>Loading</h1>;
