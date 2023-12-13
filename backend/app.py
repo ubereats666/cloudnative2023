@@ -19,9 +19,13 @@ config = {
 
 app = Flask(__name__)
 CORS(app)
+<<<<<<< HEAD
 
 
 @app.route("/")
+=======
+@app.route('/')
+>>>>>>> parent of 12ea53d (cors support credential)
 def EntryPage():
     return "Hello, World!"
 
