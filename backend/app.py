@@ -590,7 +590,7 @@ def create_record():
                 number = rows[0][1]
                 now_tm = datetime.now()
                 now_str = now_tm.strftime("%Y-%m-%d %H:%M:%S")
-                expire_tm = now_tm + timedelta(minutes=15)
+                expire_tm = now_tm + timedelta(minutes=30)
                 expire_str = expire_tm.strftime("%Y-%m-%dT%H:%M:%S")
                 # cursor.execute(f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';")
                 # conn.commit()
@@ -674,7 +674,7 @@ def create_record():
                 # record_id | user_id | parking_space_id | enter_time          | exit_time           | reserve_time
                 now_tm = datetime.now()
                 now_str = now_tm.strftime("%Y-%m-%d %H:%M:%S")
-                expire_tm = now_tm + timedelta(minutes=15)
+                expire_tm = now_tm + timedelta(minutes=30)
                 expire_str = expire_tm.strftime("%Y-%m-%dT%H:%M:%S")
                 cursor.execute(
                     f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';"
