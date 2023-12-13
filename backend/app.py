@@ -5,7 +5,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import json
 from datetime import *
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 # set up config
 config = {
@@ -18,7 +18,8 @@ config = {
 }
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, support_credentials=True)
+@cross_origin(supports_credentials=True)
 @app.route('/')
 def EntryPage():
     return 'Hello, World!'
