@@ -5,6 +5,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import json
 from datetime import *
+from flask_cors import CORS
 
 # set up config
 config = {
@@ -18,10 +19,9 @@ config = {
 
 app = Flask(__name__)
 CORS(app)
-
 @app.route('/')
-def jimijim123():
-    pass
+def EntryPage():
+    return 'Hello, World!'
 
 def execute_query(query, params = None):
     '''
@@ -54,14 +54,17 @@ def get_space_history():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
 
@@ -92,7 +95,7 @@ def get_space_history():
 
     # 回傳 json
     response = json_string  
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_abnormal_space')
 def get_abnormal_space():
@@ -102,14 +105,17 @@ def get_abnormal_space():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
 
@@ -143,7 +149,7 @@ def get_abnormal_space():
             json_string += json.dumps(dic)
 
     response = json_string
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_space_usage_rate')
 def get_space_usage_rate():
@@ -156,14 +162,17 @@ def get_space_usage_rate():
         print("Connection established")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            err_msg = "Something is wrong with the user name or password"
-            return err_msg
+            dic = {'err_msg':"Something is wrong with the user name or password"}
+            json_string = json.dumps(dic)
+            return json_string
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            err_msg = "Database does not exist"
-            return err_msg
+            dic = {'err_msg':"Database does not exist"}
+            json_string = json.dumps(dic)
+            return json_string
         else:
-            err_msg = err
-            return err
+            dic = {'err_msg':str(err)}
+            json_string = json.dumps(dic)
+            return json_string
     else:
         cursor = conn.cursor()
         beg = selected_date + " 00:00:00 "
@@ -208,7 +217,7 @@ def get_space_usage_rate():
     json_string += json.dumps(dic1)
 
     response = json_string
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_reserve_info', methods=['GET'])
 def get_reserve_info():
@@ -501,7 +510,7 @@ def create_record():
             cursor.execute(f"SELECT status FROM parking_space_status WHERE parking_space_id = '{parking_space_id}';")
             rows = cursor.fetchall()
             if rows[0][0] == 1:
-                return json.dumps({'error': 'parking space is not available'}), 200
+                return json.dumps({'isSuccess':False,'error': 'parking space is not available'}), 200
             else:
                 
                 cursor.execute(f"SELECT floor,number FROM parking_spaces WHERE parking_space_id = '{parking_space_id}';")
@@ -517,7 +526,7 @@ def create_record():
                 print(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 conn.commit()
-                return json.dumps({'expire_time': expire_str, 'floor':floor,'number':number}), 200
+                return json.dumps({'isSuccess':True,'expire_time': expire_str, 'floor':floor,'number':number}), 200
 
         else:
             # quick parking 
@@ -569,7 +578,7 @@ def create_record():
             # if available parking space is not found (may be different for priority and normal user)
             # return error message
             if slot is None:
-                return json.dumps({'error': 'parking space is not available'}), 200
+                return json.dumps({'isSuccess':False,'error': 'parking space is not available'}), 200
             else:
                     
 
@@ -582,7 +591,7 @@ def create_record():
                 conn.commit()
                 cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 conn.commit()
-                return json.dumps({'expire_time': expire_str, 'floor':slot[1],'number':slot[4]}), 200
+                return json.dumps({'isSuccess':True,'expire_time': expire_str, 'floor':slot[1],'number':slot[4]}), 200
                 
             
 @app.route('/update_user_preference', methods=['POST'])
