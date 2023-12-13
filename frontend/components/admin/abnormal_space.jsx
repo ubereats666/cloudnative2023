@@ -38,19 +38,19 @@ const AbnormalSpace = () => {
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                停靠樓層
+                車牌號碼
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                車主姓名
               </th>
               <th
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 停靠車位
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                車牌號碼
               </th>
               <th
                 scope="col"
@@ -63,11 +63,11 @@ const AbnormalSpace = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row, index) => (
               <tr key={index} className="text-center">
-                <td className="px-6 py-4 whitespace-nowrap">{row.floor}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{row.plate}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{row.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {row.parking_space_id}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{row.plate}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {convertToHoursAndMinutes(row.duration)}
                 </td>

@@ -247,27 +247,27 @@
   ],
   "get_abnormal_space": [
     {
-      "floor": "2F",
-      "parking_space_id": "2F01",
       "plate": "4637-FY",
+      "name": "Luka Doncic",
+      "parking_space_id": "2F01",
       "duration": 528
     },
     {
-      "floor": "B1",
-      "parking_space_id": "B108",
       "plate": "3918-RD",
+      "name": "Kawhi Leonard",
+      "parking_space_id": "B108",
       "duration": 773
     },
     {
-      "floor": "1F",
-      "parking_space_id": "1F14",
       "plate": "8451-JS",
+      "name": "LeBron James",
+      "parking_space_id": "1F14",
       "duration": 567
     },
     {
-      "floor": "B2",
-      "parking_space_id": "B218",
       "plate": "6957-DU",
+      "name": "Stephen Curry",
+      "parking_space_id": "B218",
       "duration": 912
     }
   ],

@@ -3,6 +3,7 @@ import RemainSpace from "@/components/admin/remain-space";
 import ParkingLot from "@/components/admin/parking-lot";
 import SpaceHistory from "@/components/admin/space_history";
 import AbnormalSpace from "@/components/admin/abnormal_space";
+import SpaceUsageRate from "@/components/admin/space_usage_rate";
 
 const Admin = () => {
   return (
@@ -24,8 +25,11 @@ const Admin = () => {
           </div>
         </div>
         <div className="flex flex-row grow gap-6">
-          <div className="flex flex-1 shrink-0 bg-slate-300">
+          <div className="relative flex flex-col flex-1 bg-slate-300">
             <h2 className="p-2 text-20 text-t-title">車位使用率</h2>
+            <div className="">
+              <SpaceUsageRate />
+            </div>
           </div>
           <div className="relative flex flex-col flex-1 bg-slate-300">
             <h2 className="p-2 text-20 text-t-title">停車異常</h2>
