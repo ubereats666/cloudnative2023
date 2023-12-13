@@ -54,16 +54,15 @@ const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
-            <DropdownMenuItem>
+            <DropdownMenuItem className="flex justify-center">
               <Link href="/setting">個人設定</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <SignOutButton signOutCallback={() => { router.replace("/") }}>
+              <SignOutButton signOutCallback={() => { router.replace("/") }} className="w-full justify-start">
                 登出
               </SignOutButton>
             </DropdownMenuItem>
-
           </DropdownMenuContent>
         </DropdownMenu>
       )}
