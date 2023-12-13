@@ -1,11 +1,14 @@
 'use client'
-import { useState } from 'react'
+import { useState } from 'react';
 import useFetch from '@/hooks/useFetch';
+import { useRouter } from 'next/navigation';
+import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Skeleton } from '@/components/ui/skeleton';
 
 import Graph from "./graph";
 // import { SPACE_DATA } from "@/constants";
@@ -14,14 +17,27 @@ const Reservation = () => {
   const [current, setCurrent] = useState("2F");
   const [selected, setSelected] = useState(undefined);
 
+  const { toast } = useToast();
+  const router = useRouter();
+
   const { data, isLoading, error } = useFetch("get_empty_parking_space");
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <Skeleton className="w-full h-full" />
+      </div>
+    );
   }
 
   if (error) {
-    return <h1>Error</h1>
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <div className="bg-slate-200 rounded-3xl text-20 font-normal h-full w-full flex justify-center items-center">
+          發生錯誤，請稍後再試
+        </div>
+      </div>
+    );
   }
 
   const getRemain = (f) => data.filter(d => d.floor === f)[0].num_parking_space;
@@ -32,7 +48,7 @@ const Reservation = () => {
       : remain <= 10
         ? "text-amber-400"
         : "text-green-600"
-  )
+  );
 
   const getRemainCN = (floor) => {
     const remain = getRemain(floor);
@@ -49,6 +65,27 @@ const Reservation = () => {
   };
 
   const graphData = getGraphData(data);
+
+  const onReserve = () => {
+    console.log(current, selected);
+
+    // TODO: POST create_record
+
+    const isSuccess = false;
+
+    if (isSuccess) {
+      toast({
+        description: "預約成功",
+      });
+      router.replace("/reserve-info");
+    } else {
+      toast({
+        variant: "destructive",
+        description: "發生錯誤，請稍後再試",
+      });
+      router.replace("/home");
+    }
+  };
 
   return (
     <div className="flex flex-col w-screen h-screen pt-28 md:pt-32 px-8 md:px-16 pb-8 gap-y-10">
@@ -125,7 +162,7 @@ const Reservation = () => {
           variant="setting"
           size="none"
           disabled={!selected}
-          onClick={() => { console.log(current, selected) }}
+          onClick={onReserve}
         >
           <p className="text-20">確認車位</p>
         </Button>

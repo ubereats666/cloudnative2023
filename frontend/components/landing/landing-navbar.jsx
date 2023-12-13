@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown, MenuIcon } from "lucide-react";
 
-import { motion, useScroll, useTransform, easeInOut } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
@@ -15,21 +15,24 @@ import Logo from "../shared/logo";
 const LandingNavbar = () => {
   const [isUser, setIsUser] = useState(false);
 
-  const { scrollY } = useScroll();
-
-  const navbarBackgroundColor = useTransform(
-    scrollY,
-    [0, 120],
-    ["transparent", "#FFFFFF"],
-    {
-      ease: easeInOut,
-    }
-  );
+  const opacityVariant = {
+    hidden: {
+      opacity: 0,
+      y: -30,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  };
 
   return (
     <motion.nav
-      style={{ backgroundColor: navbarBackgroundColor }}
-      className="fixed top-0 z-30 flex-between w-full px-8 py-4"
+      variants={opacityVariant}
+      initial="hidden"
+      animate="visible"
+      transition={{ duration: 1.2, delay: 1 }}
+      className="navbar"
     >
       <Logo />
 

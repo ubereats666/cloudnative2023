@@ -7,24 +7,18 @@ import LandingNavbar from "@/components/landing/landing-navbar";
 import Feature from "@/components/landing/feature";
 
 export default function Landing() {
-  const { data: userData, isLoading, error } = useFetch("");
+  // const { data: userData, isLoading, error } = useFetch("");
 
-  if (userData) {
-    redirect("/home");
-  }
+  // if (userData) {
+  //   redirect("/home");
+  // }
 
   return (
-    <>
-      {/* <Image
-        src={"/city.jpg"}
-        width={1400}
-        height={0}
-        alt="cover"
-        className="w-full "
-      /> */}
+    <section className="relative flex flex-col w-full overflow-x-hidden">
+      <div className="gradient-background" />
       <LandingNavbar />
       <Hero />
       <Feature />
-    </>
+    </section>
   );
 }

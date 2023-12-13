@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { getRemainSpaceColor } from "@/constants/function";
 import useFetch from "@/hooks/useFetch";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function RemainSpace() {
   const { data, isLoading, error } = useFetch("get_empty_parking_space");
@@ -17,30 +18,42 @@ export default function RemainSpace() {
   }
 
   return (
-    <div className="flex-col flex-between w-full gap-4">
-      <h1 className="w-full text-24">剩餘車位</h1>
+    <div className="flex-between w-full gap-24">
+      <Image
+        src={"/home-car.png"}
+        width={1440}
+        height={0}
+        alt="bg"
+        className="hidden sm:block h-[200px] w-auto"
+      />
 
-      <div className="grid grid-cols-2 w-full gap-6">
-        {data.map((space) => {
-          return (
-            <Button
-              key={space.key}
-              size="md"
-              variant="white"
-              className="flex items-start justify-between"
-            >
-              <h2 className="text-28 text-t-title">{space.floor}</h2>
-              <div
-                className={`flex flex-col grow ${getRemainSpaceColor(
-                  space.num_parking_space
-                )}`}
+      <div className="flex-col flex-between grow gap-4">
+        <h1 className="w-full text-20 md:text-24 lg:text-28">剩餘車位</h1>
+
+        <div className="grid grid-cols-2 w-full gap-4 md:gap-6 lg:grid-cols-4 lg:gap-12">
+          {data.map((space) => {
+            return (
+              <Button
+                key={space.key}
+                variant="white"
+                className="flex items-start justify-center w-full px-3 py-2 gap-2"
               >
-                <p className={cn("text-48")}>{space.num_parking_space}</p>
-                <p className="text-14 text-t-subtitle">剩餘車位</p>
-              </div>
-            </Button>
-          );
-        })}
+                <h2 className="text-20 lg:text-28 text-t-title">
+                  {space.floor}
+                </h2>
+                <div className="flex-center flex-col">
+                  <p
+                    className={`flex flex-col text-36 lg:text-48
+                     ${getRemainSpaceColor(space.num_parking_space)}`}
+                  >
+                    {space.num_parking_space}
+                  </p>
+                  <p className="text-14 text-t-subtitle">剩餘車位</p>
+                </div>
+              </Button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

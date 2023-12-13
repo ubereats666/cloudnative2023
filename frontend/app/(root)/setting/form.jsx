@@ -1,7 +1,4 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import useFetch from '@/hooks/useFetch'
+import { useState } from 'react'
 
 import {
   Card,
@@ -14,29 +11,28 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Button } from "@/components/ui/button";
 
-const Form = () => {
-  const router = useRouter()
-
-  // get these states first
-  const [plate, setPlate] = useState("")
-  const [floor, setFloor] = useState("2F")
+const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
   const [changed, setChanged] = useState(false)
 
-  const { data, isLoading, error } = useFetch("get_user_info");
 
-  useEffect(() => {
-    if (data) {
-      setPlate(data.plate)
-      setFloor(data.preference_floor)
+  const onUpdate = () => {
+    console.log(plate, floor);
+
+    // TODO: POST update_user_preference
+
+    const isSuccess = false;
+
+    if (isSuccess) {
+      toast({
+        description: "您的偏好已更新",
+      });
+      setChanged(false);
+    } else {
+      toast({
+        variant: "destructive",
+        description: "發生錯誤，請稍後再試",
+      });
     }
-  }, [data])
-
-  if (isLoading) {
-    return <h1>Loading</h1>
-  }
-
-  if (error) {
-    return <h1>Error</h1>
   }
 
   return (
@@ -102,7 +98,7 @@ const Form = () => {
           variant="setting"
           size="none"
           disabled={!changed}
-          onClick={() => console.log(plate, floor)}
+          onClick={onUpdate}
         >
           <p className="text-20">儲存變更</p>
         </Button>
