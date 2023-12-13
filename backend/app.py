@@ -510,7 +510,7 @@ def create_record():
             cursor.execute(f"SELECT status FROM parking_space_status WHERE parking_space_id = '{parking_space_id}';")
             rows = cursor.fetchall()
             if rows[0][0] == 1:
-                return json.dumps({'error': 'parking space is not available'}), 200
+                return json.dumps({'isSuccess':False,'error': 'parking space is not available'}), 200
             else:
                 
                 cursor.execute(f"SELECT floor,number FROM parking_spaces WHERE parking_space_id = '{parking_space_id}';")
@@ -526,7 +526,7 @@ def create_record():
                 print(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 conn.commit()
-                return json.dumps({'expire_time': expire_str, 'floor':floor,'number':number}), 200
+                return json.dumps({'isSuccess':True,'expire_time': expire_str, 'floor':floor,'number':number}), 200
 
         else:
             # quick parking 
@@ -578,7 +578,7 @@ def create_record():
             # if available parking space is not found (may be different for priority and normal user)
             # return error message
             if slot is None:
-                return json.dumps({'error': 'parking space is not available'}), 200
+                return json.dumps({'isSuccess':False,'error': 'parking space is not available'}), 200
             else:
                     
 
@@ -591,7 +591,7 @@ def create_record():
                 conn.commit()
                 cursor.execute(f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');")
                 conn.commit()
-                return json.dumps({'expire_time': expire_str, 'floor':slot[1],'number':slot[4]}), 200
+                return json.dumps({'isSuccess':True,'expire_time': expire_str, 'floor':slot[1],'number':slot[4]}), 200
                 
             
 @app.route('/update_user_preference', methods=['POST'])
