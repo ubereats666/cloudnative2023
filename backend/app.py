@@ -422,18 +422,25 @@ def get_empty_parking_space():
 
 
     dic = []
+    key1 = 0
+    key2 = 0
+    # 0: available, 1: occupied, 2: reserved
+    mapping = {0: True, 1: False, 2: False}
     for row in rows:
         
         floor = row[0]
         status = row[1]
         if floor not in [s['floor'] for s in dic]:
-            dic.append({"floor": floor, "num_parking_space": 0, "list_of_status": []})
-        
+            
+            dic.append({"key":f"space-{key1}","floor": floor, "num_parking_space": 0, "list_of_status": []})
+            key1 += 1
+
         ele = [s for s in dic if s['floor'] == floor][0]
         if status == 0:
             ele['num_parking_space'] += 1
         
-        ele['list_of_status'].append(status)
+        key2 += 1
+        ele['list_of_status'].append({"key":f"status-{key2}", "status": mapping[status]})
     response = json.dumps(dic)  
     return response,200,{"Content-Type":"application/json"}
 
