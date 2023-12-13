@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const useFetch = (url = "") => {
+const useFetch = (url = "", queryParams = {}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,12 @@ const useFetch = (url = "") => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`);
+        const queryString = new URLSearchParams(queryParams).toString();
+        const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}${
+          queryString ? `?${queryString}` : ""
+        }`;
+
+        const res = await fetch(requestUrl);
         if (!res.ok) {
           throw new Error("請檢查網路連線");
         }

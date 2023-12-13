@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider
-      appearance={{    // hide signup option
+      appearance={{
         elements: {
           footer: "hidden",
         },
