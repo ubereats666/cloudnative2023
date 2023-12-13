@@ -76,26 +76,29 @@ def get_space_history():
 
         cursor.execute(sql)
         rows = cursor.fetchall()
-
-        # Cleanup
-        conn.commit()
-        cursor.close()
-        conn.close()
         
     # 包成 json 回傳
-    json_string = ""
+    res = {"get_space_history": []}
     for row in rows:
         dic = {}
-        dic["record_id"] = row[0]
-        dic["user_id"] = row[1]
-        dic["parking_space_id"] = row[2]
-        dic["enter_time"] = str(row[3])
-        dic["exit_time"] = str(row[4])
-        dic["reserve_time"] = str(row[5])
-        json_string += json.dumps(dic)
+        sql = "SELECT plate FROM users WHERE user_id = '"+str(row[1])+"';"
+        cursor.execute(sql)
+        single = cursor.fetchone()
+        dic['plate'] = single[0]
+        dic['enter_time'] = str(row[3])
+        dic['exit_time'] = str(row[4])
+        dic['duration'] = (row[4] - row[3]).total_seconds()/60
+        j = json.dumps(dic)
+        res['get_space_history'].append(j)
+        
+    # Cleanup
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print("Done.")
 
     # 回傳 json
-    response = json_string  
+    response = res  
     return response
 
 @app.route('/get_abnormal_space')
@@ -136,7 +139,7 @@ def get_abnormal_space():
         
     # 抓超過一天的加進要回傳的 json
     now = datetime.now()
-    json_string = ""
+    res = {"get_abnormal_space": []}
     for row in rows:
         diff = now - row[4]
         if diff.days >= 1: 
@@ -147,9 +150,10 @@ def get_abnormal_space():
             dic["plate"] = row[3]
             dic["enter_time"] = str(row[4])
             dic["parking_space_id"] = row[5]
-            json_string += json.dumps(dic)
+            json_string = json.dumps(dic)
+            res['get_abnormal_space'].append(json_string)
 
-    response = json_string
+    response = res
     return response
 
 @app.route('/get_space_usage_rate')
@@ -214,10 +218,25 @@ def get_space_usage_rate():
     for idx, value in enumerate(time_stamp):
         dic1["PS" + str(idx+1).zfill(3)] = value
 
-    json_string = json.dumps(dic2)
-    json_string += json.dumps(dic1)
+    # 包成json
+    f2 = sum(time_stamp[60:80])/2000
+    f1 = sum(time_stamp[40:60])/2000
+    b1 = sum(time_stamp[20:40])/2000
+    b2 = sum(time_stamp[0:20])/2000
+    res = {"get_space_usage_rate": []}
+    d0 = {"floor": "all","occupied":(f2+f1+b1+b2)/4 ,"vacant": 0.33}
+    d1 = {"floor": "2F","occupied": f2,"vacant": 1-f2}
+    d2 = {"floor": "1F","occupied": f1,"vacant": 1-f1}
+    d3 = {"floor": "B1","occupied": b1,"vacant": 1-b1}
+    d4 = {"floor": "B2","occupied": b2,"vacant": 1-b2}
 
-    response = json_string
+    res["get_space_usage_rate"].append(json.dumps(d0))
+    res["get_space_usage_rate"].append(json.dumps(d1))
+    res["get_space_usage_rate"].append(json.dumps(d2))
+    res["get_space_usage_rate"].append(json.dumps(d3))
+    res["get_space_usage_rate"].append(json.dumps(d4))
+
+    response = res
     return response
 
 @app.route('/get_reserve_info', methods=['GET'])
