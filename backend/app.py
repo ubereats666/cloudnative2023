@@ -18,8 +18,8 @@ config = {
 app = Flask(__name__)
 
 @app.route('/')
-def jimijim123():
-    pass
+def EntryPage():
+    return 'Hello, World!'
 
 def execute_query(query, params = None):
     '''
