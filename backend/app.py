@@ -94,7 +94,7 @@ def get_space_history():
 
     # 回傳 json
     response = json_string  
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_abnormal_space')
 def get_abnormal_space():
@@ -148,7 +148,7 @@ def get_abnormal_space():
             json_string += json.dumps(dic)
 
     response = json_string
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_space_usage_rate')
 def get_space_usage_rate():
@@ -216,7 +216,7 @@ def get_space_usage_rate():
     json_string += json.dumps(dic1)
 
     response = json_string
-    return response,200,{"Content-Type":"application/json"}
+    return response
 
 @app.route('/get_reserve_info', methods=['GET'])
 def get_reserve_info():
