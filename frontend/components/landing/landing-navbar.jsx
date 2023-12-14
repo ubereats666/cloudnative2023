@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import { NAV_LINKS } from "@/constants";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, Home, MenuIcon } from "lucide-react";
 import UserDropdown from "../shared/user-dropdown";
 
 const LandingNavbar = () => {
@@ -40,11 +40,18 @@ const LandingNavbar = () => {
       <Logo />
 
       {isSignedIn && (
-        <Link href={"/home"}>
-          <Button variant="primary">
-            <p>我的首頁</p>
-          </Button>
-        </Link>
+        <div className="flex gap-6">
+          <Link href={"/home"}>
+            <Button variant="primary" className="gap-2">
+              <Home size={20} /> 我的首頁
+            </Button>
+          </Link>
+          <SignOutButton>
+            <Button variant="ghost">
+              <p>登出</p>
+            </Button>
+          </SignOutButton>
+        </div>
       )}
 
       {!isSignedIn && (

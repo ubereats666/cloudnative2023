@@ -303,13 +303,30 @@
     "floor": "2F",
     "number": "2F11"
   },
-  "get_user_info": {
-    "user_id": "",
-    "name": "",
-    "priority": 1,
-    "email": "",
-    "cellphone_number": "",
-    "plate": "ABC-1234",
-    "preference_floor": "1F"
-  }
+  "get_user_info": [
+    {
+      "id": "replace to your user id",
+      "priority": 2,
+      "email": "",
+      "cellphone_number": "",
+      "plate": "ABC-5678",
+      "preference_floor": "2F"
+    },
+    {
+      "id": "user_2ZTk0Ha1Z2qFlT35NO46sW2OnAj",
+      "priority": 1,
+      "email": "",
+      "cellphone_number": "",
+      "plate": "ABC-1234",
+      "preference_floor": "B1F"
+    },
+    {
+      "id": "replace to your user id",
+      "priority": 1,
+      "email": "",
+      "cellphone_number": "",
+      "plate": "XYZ-1234",
+      "preference_floor": "B1F"
+    }
+  ]
 }

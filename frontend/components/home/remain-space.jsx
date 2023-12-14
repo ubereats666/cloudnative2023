@@ -7,7 +7,7 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default function RemainSpace() {
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { isLoaded, userId } = useAuth();
 
   // In case the user signs out while on the page.
   if (!isLoaded || !userId) {

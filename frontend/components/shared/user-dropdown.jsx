@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, LogOut, MenuIcon, UserCog } from "lucide-react";
 
 import { SignOutButton, useUser } from "@clerk/nextjs";
 
@@ -44,7 +44,17 @@ const UserDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48">
         <DropdownMenuItem>
-          <Link href="/setting">個人設定</Link>
+          <Link href="/setting" className="w-full">
+            <Button
+              variant="transparent"
+              size="none"
+              textSize="sm"
+              className="w-full justify-start gap-2"
+            >
+              <UserCog size={16} />
+              個人設定
+            </Button>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
@@ -53,7 +63,15 @@ const UserDropdown = () => {
               router.replace("/");
             }}
           >
-            登出
+            <Button
+              variant="transparent"
+              size="none"
+              textSize="sm"
+              className="w-full justify-start gap-2"
+            >
+              <LogOut size={16} />
+              登出
+            </Button>
           </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,7 +1,8 @@
 export const NAV_LINKS = [
   { key: "nav-about", label: "關於", variant: "ghost", href: "/" },
   { key: "nav-contact", label: "聯絡我們", variant: "ghost", href: "/" },
-  { key: "nav-login", label: "登入", variant: "primary", href: "/login" },
+  { key: "nav-sign-up", label: "註冊帳號", variant: "ghost", href: "/sign-up" },
+  { key: "nav-sign-in", label: "登入", variant: "primary", href: "/sign-in" },
 ];
 
 export const SPACE_DATA = {

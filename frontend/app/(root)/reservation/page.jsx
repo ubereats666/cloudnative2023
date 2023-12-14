@@ -1,21 +1,50 @@
-'use client'
-import { useState } from 'react';
-import useFetch from '@/hooks/useFetch';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
 
 import Graph from "./graph";
+import { getRemainSpaceColor } from "@/constants/function";
 // import { SPACE_DATA } from "@/constants";
+
+const FloorRadioButton = ({ data, index }) => {
+  return (
+    <div>
+      <RadioGroupItem
+        value={index + 1}
+        id={data.key}
+        className="peer sr-only"
+      />
+      <Label
+        htmlFor={data.key}
+        className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
+      >
+        <p className="text-36 font-normal">{data.floor}</p>
+        <div className="flex flex-col items-center">
+          <p
+            className={`text-36 font-normal ${getRemainSpaceColor(
+              data.num_parking_space
+            )}`}
+          >
+            {data.num_parking_space}
+          </p>
+          <p className="text-12 font-light">剩餘車位</p>
+        </div>
+      </Label>
+    </div>
+  );
+};
 
 const Reservation = () => {
   const [current, setCurrent] = useState("4");
-  const [selected, setSelected] = useState(undefined);
+  const [selected, setSelected] = useState(null);
 
   const { toast } = useToast();
   const router = useRouter();
@@ -40,31 +69,37 @@ const Reservation = () => {
     );
   }
 
-  const getRemain = (f) => data.filter(d => d.floor === f)[0].num_parking_space;
+  // const getRemain = (f) =>
+  //   data.filter((d) => d.floor === f)[0].num_parking_space;
 
-  const remainColorMapping = (remain) => (
-    remain <= 5
-      ? "text-red-500"
-      : remain <= 10
-        ? "text-amber-400"
-        : "text-green-600"
-  );
+  // const remainColorMapping = (remain) =>
+  //   remain <= 5
+  //     ? "text-red-500"
+  //     : remain <= 10
+  //     ? "text-amber-400"
+  //     : "text-green-600";
 
-  const getRemainCN = (floor) => {
-    const remain = getRemain(floor);
-    return "text-36 font-normal " + remainColorMapping(remain);
-  };
+  // const getRemainCN = (floor) => {
+  //   const remain = getRemain(floor);
+  //   return "text-36 font-normal " + remainColorMapping(remain);
+  // };
 
-  const getGraphData = (data) => {
-    let graphData = new Object();
-    graphData["4"] = data.filter(d => d.floor === "4")[0].list_of_status;
-    graphData["3"] = data.filter(d => d.floor === "3")[0].list_of_status;
-    graphData["2"] = data.filter(d => d.floor === "2")[0].list_of_status;
-    graphData["1"] = data.filter(d => d.floor === "1")[0].list_of_status;
-    return graphData;
-  };
+  // const getGraphData = (data) => {
+  //   let graphData = new Object();
 
-  const graphData = getGraphData(data);
+  //   graphData["2F"] = data.filter((d) => {
+  //     d.floor === "2F";
+  //   })[0].list_of_status;
+  //   graphData["1F"] = data.filter((d) => d.floor === "1F")[0].list_of_status;
+  //   graphData["B1F"] = data.filter((d) => d.floor === "B1F")[0].list_of_status;
+  //   graphData["B2F"] = data.filter((d) => d.floor === "B2F")[0].list_of_status;
+  //   return graphData;
+  // };
+
+  const graphData = data.reduce((result, floor, index) => {
+    result[index + 1] = floor.list_of_status;
+    return result;
+  }, {});
 
   const onReserve = () => {
     console.log(current, selected);
@@ -97,60 +132,13 @@ const Reservation = () => {
               <RadioGroup
                 defaultValue={current}
                 className="flex flex-wrap justify-between lg:flex-col lg:w-fit gap-y-3"
-                onValueChange={(value) => { setCurrent(value) }}
+                onValueChange={(value) => {
+                  setCurrent(value);
+                }}
               >
-                <div>
-                  <RadioGroupItem value="4" id="4" className="peer sr-only" />
-                  <Label
-                    htmlFor="4"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">4F</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("4")}>{getRemain("4")}</p>
-                      <p className="text-12 font-light">剩餘車位</p>
-                    </div>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="3" id="3" className="peer sr-only" />
-                  <Label
-                    htmlFor="3"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">3F</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("3")}>{getRemain("3")}</p>
-                      <p className="text-12 font-light">剩餘車位</p>
-                    </div>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="2" id="2" className="peer sr-only" />
-                  <Label
-                    htmlFor="2"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">2F</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("2")}>{getRemain("2")}</p>
-                      <p className="text-12 font-light">剩餘車位</p>
-                    </div>
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem value="1" id="1" className="peer sr-only" />
-                  <Label
-                    htmlFor="1"
-                    className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
-                  >
-                    <p className="text-36 font-normal">1F</p>
-                    <div className="flex flex-col items-center">
-                      <p className={getRemainCN("1")}>{getRemain("1")}</p>
-                      <p className="text-12 font-light">剩餘車位</p>
-                    </div>
-                  </Label>
-                </div>
+                {data?.map((floorData, index) => (
+                  <FloorRadioButton data={floorData} index={index} />
+                ))}
               </RadioGroup>
             </CardContent>
           </Card>
