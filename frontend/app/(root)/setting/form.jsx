@@ -1,19 +1,13 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 
 const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
-  const [changed, setChanged] = useState(false)
-
+  const [changed, setChanged] = useState(false);
 
   const onUpdate = () => {
     console.log(plate, floor);
@@ -33,7 +27,7 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
         description: "發生錯誤，請稍後再試",
       });
     }
-  }
+  };
 
   return (
     <div className="flex flex-col w-full lg:w-fit justify-between">
@@ -47,9 +41,11 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
             <Input
               variant="setting"
               value={plate}
-              onChange={e => {
-                setPlate(e.target.value)
-                if (!changed) { setChanged(true) }
+              onChange={(e) => {
+                setPlate(e.target.value);
+                if (!changed) {
+                  setChanged(true);
+                }
               }}
             />
           </CardContent>
@@ -61,9 +57,11 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
           <CardContent>
             <RadioGroup
               defaultValue={floor}
-              onValueChange={v => {
-                setFloor(v)
-                if (!changed) { setChanged(true) }
+              onValueChange={(v) => {
+                setFloor(v);
+                if (!changed) {
+                  setChanged(true);
+                }
               }}
             >
               <div className="flex items-center space-x-2">
@@ -104,7 +102,7 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
