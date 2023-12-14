@@ -20,7 +20,7 @@ export default function Home() {
           className={cn(
             "flex flex-col gap-6 w-full",
             "md:h-full md:flex-row md:gap-8",
-            "lg:gap-12"
+            "lg:gap-12 d"
           )}
         >
           {/* Welcome */}

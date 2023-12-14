@@ -109,6 +109,195 @@
       ]
     }
   ],
+  "get_parking_lot": [
+    {
+      "key": "space-1",
+      "floor": "2F",
+      "num_parking_space": 5,
+      "list_of_status": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "key": "space-2",
+      "floor": "1F",
+      "num_parking_space": 3,
+      "list_of_status": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "key": "space-3",
+      "floor": "B1",
+      "num_parking_space": 20,
+      "list_of_status": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "key": "space-4",
+      "floor": "B2",
+      "num_parking_space": 9,
+      "list_of_status": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "get_space_history": [
+    {
+      "plate": "4637-FY",
+      "enter_time": "08:48",
+      "exit_time": "17:36",
+      "duration": 528
+    },
+    {
+      "plate": "3918-RD",
+      "enter_time": "06:45",
+      "exit_time": "19:38",
+      "duration": 773
+    },
+    {
+      "plate": "8451-JS",
+      "enter_time": "07:29",
+      "exit_time": "16:56",
+      "duration": 567
+    },
+    {
+      "plate": "6957-DU",
+      "enter_time": "06:37",
+      "exit_time": "21:49",
+      "duration": 912
+    }
+  ],
+  "get_abnormal_space": [
+    {
+      "plate": "4637-FY",
+      "name": "Luka Doncic",
+      "parking_space_id": "2F01",
+      "duration": 528
+    },
+    {
+      "plate": "3918-RD",
+      "name": "Kawhi Leonard",
+      "parking_space_id": "B108",
+      "duration": 773
+    },
+    {
+      "plate": "8451-JS",
+      "name": "LeBron James",
+      "parking_space_id": "1F14",
+      "duration": 567
+    },
+    {
+      "plate": "6957-DU",
+      "name": "Stephen Curry",
+      "parking_space_id": "B218",
+      "duration": 912
+    }
+  ],
+  "get_space_usage_rate": [
+    {
+      "floor": "all",
+      "occupied": 0.67,
+      "vacant": 0.33
+    },
+    {
+      "floor": "2F",
+      "occupied": 0.56,
+      "vacant": 0.44
+    },
+    {
+      "floor": "1F",
+      "occupied": 0.74,
+      "vacant": 0.26
+    },
+    {
+      "floor": "B1",
+      "occupied": 0.82,
+      "vacant": 0.18
+    },
+    {
+      "floor": "B2",
+      "occupied": 0.42,
+      "vacant": 0.58
+    }
+  ],
   "get_reserve_info": {
     "expire_time": "2023-12-09T23:50:00",
     "floor": "2F",

@@ -1,22 +1,10 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Instance folder
-instance/
-
-# Configuration files
-.env
-
-# IDE-specific files
-.vscode/
 .idea/
-
-# Compiled files
-*.pyc
-*.pyo
-
-# Environment variables file
-.env
+.vscode/
+__pycache__/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+docs/_build/
+dist/
+venv/
