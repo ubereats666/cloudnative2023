@@ -14,10 +14,14 @@ import Graph from "./graph";
 import { getRemainSpaceColor } from "@/constants/function";
 // import { SPACE_DATA } from "@/constants";
 
-const FloorRadioButton = ({ data }) => {
+const FloorRadioButton = ({ data, index }) => {
   return (
     <div>
-      <RadioGroupItem value={data.key} id={data.key} className="peer sr-only" />
+      <RadioGroupItem
+        value={index + 1}
+        id={data.key}
+        className="peer sr-only"
+      />
       <Label
         htmlFor={data.key}
         className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
