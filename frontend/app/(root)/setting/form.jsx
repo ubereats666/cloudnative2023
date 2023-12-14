@@ -6,15 +6,17 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 
-const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
+import updatePreference from "./updatePreference";
+
+const Form = ({ userId, plate, floor, setPlate, setFloor, toast, router }) => {
   const [changed, setChanged] = useState(false);
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
+    // TODO: confirm the floor index is correct
     console.log(plate, floor);
 
-    // TODO: POST update_user_preference
-
-    const isSuccess = false;
+    const { isSuccess, message } = await updatePreference({ userId, plate, floor })
+    console.log(isSuccess, message)
 
     if (isSuccess) {
       toast({
