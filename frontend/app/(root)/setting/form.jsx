@@ -65,20 +65,20 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
               }}
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2F" id="r1" variant="setting" />
-                <Label htmlFor="r1">2F</Label>
+                <RadioGroupItem value="1" id="1" variant="setting" />
+                <Label htmlFor="1">2F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1F" id="r2" variant="setting" />
-                <Label htmlFor="r2">1F</Label>
+                <RadioGroupItem value="2" id="2" variant="setting" />
+                <Label htmlFor="2">1F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="B1F" id="r3" variant="setting" />
-                <Label htmlFor="r3">B1F</Label>
+                <RadioGroupItem value="3" id="3" variant="setting" />
+                <Label htmlFor="3">B1F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="B2F" id="r4" variant="setting" />
-                <Label htmlFor="r4">B2F</Label>
+                <RadioGroupItem value="4" id="4" variant="setting" />
+                <Label htmlFor="4">B2F</Label>
               </div>
             </RadioGroup>
           </CardContent>
