@@ -38,6 +38,8 @@ def execute_query(query, params=None):
                 else:
                     cursor.execute(query)
                 rows = cursor.fetchall()
+                conn.commit()
+                
                 return rows
     except mysql.connector.Error as err:
         print("Database not connected: {}".format(err))
@@ -500,8 +502,8 @@ def create_user():
     body = request.get_json()
     params = body.keys()
     if (
-        "name" not in params
-        or "priority" not in params
+        "user_id" not in params 
+        or "name" not in params 
         or "email" not in params
         or "cellphone_number" not in params
         or "plate" not in params
@@ -511,10 +513,10 @@ def create_user():
     # TODO
     user_id = body.get("user_id")
     name = body.get("name")
-    priority = body.get("priority")
     email = body.get("email")
     cellphone_number = body.get("cellphone_number")
     plate = body.get("plate")
+    preference_floor = body.get("preference")
     # Construct connection string
     try:
         conn = mysql.connector.connect(**config)
@@ -531,8 +533,15 @@ def create_user():
             return err
     else:
         cursor = conn.cursor()
-        sql = f"INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES ( '{str(user_id)}'  ,  '{name}' , '{str(priority)}' , '{email}' , '{str(cellphone_number)}' , '{plate}' , '{1}');"
-        cursor.execute(sql)
+        if preference_floor:
+            sql = f"INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES ( '{str(user_id)}'  ,  '{name}' , '0' , '{email}' , '{str(cellphone_number)}' , '{plate}' , '{preference_floor}');"
+        else:
+            sql = f"INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES ( '{str(user_id)}'  ,  '{name}' , '0' , '{email}' , '{str(cellphone_number)}' , '{plate}' , '{1}');"
+
+        try:
+            cursor.execute(sql)
+        except mysql.connector.errors.IntegrityError:
+            return json.dumps({"isSuccess": False,'error_msg':'The account has been registered.'}), 400
         conn.commit()
         cursor.close()
         conn.close()
@@ -775,12 +784,13 @@ def update_user_preference():
 
 @app.route("/delete_user", methods=["DELETE"])
 def delete_user():
-    user_id = request.args.get("user_id")
+    body = request.get_json()
+    user_id = body.get("user_id")
     try:
         delete_sql = "DELETE FROM users "
         delete_sql += "WHERE user_id = '" + str(user_id) + "';"
-
-        execute_query(delete_sql)
+        print(delete_sql)
+        print(execute_query(delete_sql))
 
         # Provide a success message
         response_message = f"user_id:{user_id} is deleted successfully"
