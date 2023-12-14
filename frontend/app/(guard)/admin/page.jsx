@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import RemainSpace from "@/components/admin/remain-space";
 import ParkingLot from "@/components/admin/parking-lot";
 import SpaceHistory from "@/components/admin/space_history";
@@ -11,13 +12,13 @@ const Admin = () => {
       <RemainSpace />
       <div className="flex flex-col w-full pt-[24px] h-screen gap-[30px]">
         <div className="flex flex-row gap-[24px]">
-          <div className="relative flex flex-col flex-1 bg-slate-300">
+          <div className="relative flex flex-col flex-1 rounded-2xl bg-[#fafafa]">
             <h2 className="p-2 text-20 text-t-title">停車場平面圖</h2>
             <div className="">
               <ParkingLot />
             </div>
           </div>
-          <div className="relative flex flex-col flex-1 bg-slate-300">
+          <div className="relative flex flex-col flex-1 rounded-2xl bg-[#fafafa]">
             <h2 className="p-2 text-20 text-t-title">停車歷程</h2>
             <div className="">
               <SpaceHistory />
@@ -25,13 +26,13 @@ const Admin = () => {
           </div>
         </div>
         <div className="flex flex-row grow gap-6">
-          <div className="relative flex flex-col flex-1 bg-slate-300">
+          <div className="relative flex flex-col flex-1 rounded-2xl bg-[#fafafa]">
             <h2 className="p-2 text-20 text-t-title">車位使用率</h2>
             <div className="">
               <SpaceUsageRate />
             </div>
           </div>
-          <div className="relative flex flex-col flex-1 bg-slate-300">
+          <div className="relative flex flex-col flex-1 rounded-2xl bg-[#fafafa]">
             <h2 className="p-2 text-20 text-t-title">停車異常</h2>
             <div className="">
               <AbnormalSpace />
@@ -40,6 +41,7 @@ const Admin = () => {
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 export default Admin;

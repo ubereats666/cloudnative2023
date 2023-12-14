@@ -1,5 +1,5 @@
 import "../globals.css";
-import Navbar from "@/components/shared/navbar";
+import Navbar from "@/components/admin/guard_navbar";
 
 export default function UserLayout({ children }) {
   return (
