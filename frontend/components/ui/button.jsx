@@ -5,12 +5,10 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center text-14 md:text-16 lg:text-20 font-bold whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
+  "inline-flex items-center justify-center font-bold whitespace-nowrap ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
   {
     variants: {
       variant: {
-        default:
-          "bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
         primary:
           "bg-primary text-gray-1 hover:bg-primary/90 dark:bg-gray-1 dark:text-primary dark:hover:bg-gray-1/90",
         secondary:
@@ -24,6 +22,7 @@ const buttonVariants = cva(
           "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         ghost:
           "text-t-title hover:bg-gray-1 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        transparent: "text-t-title",
         setting:
           "border-2 border-[#75B066] bg-[#75B066] text-gray-1 rounded-full px-6 py-2",
         setting_outline:
@@ -38,10 +37,15 @@ const buttonVariants = cva(
         none: "p-none",
         icon: "w-10",
       },
+      textSize: {
+        default: "text-14 md:text-16 lg:text-20",
+        sm: "text-16",
+      },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
+      textSize: "default",
     },
   }
 );
@@ -52,7 +56,7 @@ const Button = React.forwardRef(
       className,
       variant,
       size,
-      text,
+      textSize,
       asChild = false,
       onClick = null,
       ...props
@@ -62,7 +66,7 @@ const Button = React.forwardRef(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, textSize, className }))}
         ref={ref}
         onClick={onClick}
         {...props}
