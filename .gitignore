@@ -2,3 +2,4 @@
 
 # editer
 .vscode/
+/backend/__pycache__
