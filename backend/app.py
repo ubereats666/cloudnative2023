@@ -155,16 +155,25 @@ def get_abnormal_space():
     res = {"get_abnormal_space": []}
     for row in rows:
         diff = now - row[4]
-        if diff.days >= 1:
+        if diff.days >= 1: 
             dic = {}
-            dic["name"] = row[0]
-            dic["cellphone_number"] = row[1]
-            dic["email"] = row[2]
+            num = int(row[5][-2:])
+            if num <= 20:
+                park = "B2"+str(num).zfill(2)
+            elif num <=40:
+                park = "B1"+str(num-20).zfill(2)
+            elif num<=60:
+                park = "1F"+str(num-40).zfill(2)
+            else:
+                park = "2F"+str(num-60).zfill(2)
+                
             dic["plate"] = row[3]
-            dic["enter_time"] = str(row[4])
-            dic["parking_space_id"] = row[5]
+            dic["name"] = row[0]
+            dic["parking_space_id"] = park
+            dic['duration'] = int((now - row[4]).total_seconds()/60)
             json_string = json.dumps(dic)
-            res["get_abnormal_space"].append(json_string)
+            res['get_abnormal_space'].append(json_string)
+
 
     response = res
     return response
