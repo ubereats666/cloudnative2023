@@ -275,11 +275,9 @@ def get_reserve_info():
     3. /get_reserve_info (使用者查看預約的停車位資訊)
         參數: {user_id} 回傳: {expire_time, floor, number}
     """
-    body = request.get_json()
-    if not body.get("user_id"):
-        return json.dumps({"error": "user id not provided"}), 200
-
-    user_id = body.get("user_id")
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return json.dumps({"error": "user id not provided"}), 400
 
     # Construct connection string
     try:
@@ -296,18 +294,17 @@ def get_reserve_info():
             err_msg = err
             return err
     else:
-        # TODO sql 現在找不到東西，有可能是DB假資料不夠，待改
         cursor = conn.cursor()
-        sql = "SELECT parking_space.floor, parking_space.number, record.reverse_time "
+
+        sql = "SELECT parking_spaces.floor, parking_spaces.number, record.reserve_time "
         sql += "FROM record "
-        sql += "INNER JOIN parking_space ON record.parking_space_id = parking_space.parking_space_id "
+        sql += "INNER JOIN parking_spaces ON record.parking_space_id = parking_spaces.parking_space_id "
         sql += "INNER JOIN parking_space_status ON record.parking_space_id = parking_space_status.parking_space_id "
-        sql += "WHERE record.user_id = '" + str(user_id) + " "
-        sql += "AND parking_space_status = 1;"
+        sql += "WHERE record.user_id = %s AND parking_space_status.status = 1;"
 
-        cursor.execute(sql)
+        cursor.execute(sql, (str(user_id),))        
         rows = cursor.fetchall()
-
+        print(rows)
         # Cleanup
         conn.commit()
         cursor.close()
@@ -339,11 +336,9 @@ def get_car_info():
     4. /get_car_info
         參數: {user_id} 回傳: parking_space_id
     """
-    body = request.get_json()
-    if not body.get("user_id"):
-        return json.dumps({"error": "user id not provided"}), 200
-
-    user_id = body.get("user_id")
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return json.dumps({"error": "user id not provided"}), 400
 
     # Construct connection string
     try:
@@ -361,12 +356,8 @@ def get_car_info():
             return err
     else:
         cursor = conn.cursor()
-        sql = "SELECT record.parking_space_id "
-        sql += "FROM record  "
-        sql += "WHERE record.user_id = '" + str(user_id) + " "
-        sql += "AND record.exit_time IS NULL;"
-
-        cursor.execute(sql)
+        sql = "SELECT record.parking_space_id FROM record WHERE record.user_id = %s AND record.exit_time IS NULL;"
+        cursor.execute(sql, (str(user_id),))
         rows = cursor.fetchall()
 
         # Cleanup
