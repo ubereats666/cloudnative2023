@@ -51,7 +51,17 @@ def get_space_history():
     # 接收 request
     selected_date = request.args.get("date")
     parking_space_id = request.args.get("parking_space_id")
+    pre = parking_space_id[:2]
+    post = int(parking_space_id[2:])
 
+    if pre == 'B2':
+        parking_space_id = "PS" + str(post).zfill(3)
+    elif pre == 'B1':
+        parking_space_id = "PS" + str(post+20).zfill(3)
+    elif pre == '1F':
+        parking_space_id = "PS" + str(post+40).zfill(3)
+    else:
+        parking_space_id = "PS" + str(post+60).zfill(3)
     # Construct connection string
 
     try:
@@ -380,7 +390,16 @@ def get_car_info():
     json_string = ""
     for row in rows:
         dic = {}
-        dic["parking_space_id"] = row[0]
+        num = int(row[0][-2:])
+        if num <= 20:
+            park = "B2"+str(num).zfill(2)
+        elif num <=40:
+            park = "B1"+str(num-20).zfill(2)
+        elif num<=60:
+            park = "1F"+str(num-40).zfill(2)
+        else:
+            park = "2F"+str(num-60).zfill(2)
+        dic["parking_space_id"] = park
         json_string += json.dumps(dic)
 
     # 回傳 json
