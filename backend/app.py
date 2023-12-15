@@ -350,7 +350,6 @@ def get_reserve_info():
     response = json_string
     return response, 200, {"Content-Type": "application/json"}
 
-
 @app.route("/get_car_info", methods=["GET"])
 def get_car_info():
     """
@@ -377,20 +376,38 @@ def get_car_info():
             return err
     else:
         cursor = conn.cursor()
-        sql = "SELECT record.parking_space_id FROM record WHERE record.user_id = %s AND record.exit_time IS NULL;"
+        sql = "SELECT users.plate, record.parking_space_id, record.exit_time, record.reserve_time "
+        sql += "FROM record INNER JOIN users on record.user_id = users.user_id "
+        sql += "WHERE record.user_id = %s;"
         cursor.execute(sql, (str(user_id),))
+        
         rows = cursor.fetchall()
-
         # Cleanup
         conn.commit()
         cursor.close()
         conn.close()
 
+    # 選出最新的 reserve_time 的 row
+    latest_reserve_time = None
+    latest_row = None
+    for row in rows:
+        plate, parking_space, exit_time, reserve_time = row
+
+        # Check if reserve_time is not None and is greater than the current latest_reserve_time
+        if (latest_reserve_time is None or reserve_time > latest_reserve_time):
+            latest_row = row
+    
     # 包成 json 回傳
     json_string = ""
-    for row in rows:
-        dic = {}
-        num = int(row[0][-2:])
+    plate, parking_space, exit_time, reserve_time = latest_row
+    dic = {}
+    dic["plate"] = plate
+
+    if exit_time is not None:
+        dic["parking_space_id"] = ""
+        json_string += json.dumps(dic)
+    else:
+        num = int(parking_space[-2:])
         if num <= 20:
             park = "B2"+str(num).zfill(2)
         elif num <=40:
