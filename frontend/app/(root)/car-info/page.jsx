@@ -8,13 +8,36 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
+import useFetchCarInfo from "./useFetchCarInfo";
 
 const CarInfo = () => {
-  const plate = "ABC123"
-  const parking_space_id = "B101"
 
   const router = useRouter();
 
+  const {
+    isLoading: isCarInfoLoading,
+    error,
+    plate,
+    parkingSpaceId
+  } = useFetchCarInfo();
+
+  if (isCarInfoLoading) {
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <Skeleton className="w-full h-full" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
+        <div className="bg-slate-200 rounded-3xl text-20 font-normal h-full w-full flex justify-center items-center">
+          發生錯誤，請稍後再試
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col-reverse gap-y-5 lg:flex-row w-screen h-fit lg:gap-x-16 pt-28 lg:pt-32 px-8 lg:px-16 pb-8">
@@ -27,7 +50,7 @@ const CarInfo = () => {
             </CardHeader>
             <CardContent>
               <p>車牌號碼: {plate}</p>
-              <p>車位編號: {parking_space_id}</p>
+              <p>車位編號: {parkingSpaceId}</p>
             </CardContent>
           </Card>
         </div>
