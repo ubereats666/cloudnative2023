@@ -329,5 +329,9 @@
       "preference_floor": "B1F"
     }
   ],
-  "update_user_preference": []
+  "update_user_preference": [],
+  "get_car_info": {
+    "plate": "ABC-1234",
+    "parking_space_id": "1F14"
+  }
 }

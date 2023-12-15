@@ -584,15 +584,16 @@ def create_user():
 
 @app.route("/create_record", methods=["POST"])
 def create_record():
+    mapping = {'2F': 4, '1F': 3, 'B1': 2, 'B2': 1}
     body = request.get_json()
     if not body.get("user_id"):
         return json.dumps({"error": "user id not provided"}), 200
 
     user_id = body.get("user_id")
     if body.get("parking_space_id"):
-        parking_space_id = body.get("parking_space_id")
+        parking_space_param = body.get("parking_space_id")
     else:
-        parking_space_id = None
+        parking_space_param = None
 
     try:
         conn = mysql.connector.connect(**config)
@@ -610,12 +611,19 @@ def create_record():
     else:
         cursor = conn.cursor()
         slot = None
-        if parking_space_id:
+        if parking_space_param:
+            desired_floor, desired_number = mapping[parking_space_param[:2]], int(parking_space_param[2:].lstrip('0'))
+            print(desired_floor)
+            print(desired_number)
             cursor.execute(
-                f"SELECT status FROM parking_space_status WHERE parking_space_id = '{parking_space_id}';"
+                f'''SELECT parking_space_status.parking_space_id, status FROM parking_space_status 
+                inner join parking_spaces ON parking_space_status.parking_space_id = parking_spaces.parking_space_id 
+                WHERE parking_spaces.floor = {desired_floor}
+                AND parking_spaces.number = {desired_number};'''
             )
             rows = cursor.fetchall()
-            if rows[0][0] == 1:
+            parking_space_id = rows[0][0]
+            if rows[0][1] == 1:
                 return (
                     json.dumps(
                         {"isSuccess": False, "error": "parking space is not available"}
@@ -640,6 +648,9 @@ def create_record():
                 )
                 cursor.execute(
                     f"INSERT INTO record (user_id, parking_space_id, enter_time, exit_time, reserve_time) VALUES ('{user_id}', '{parking_space_id}', NULL, NULL, '{now_str}');"
+                )
+                cursor.execute(
+                    f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';"
                 )
                 conn.commit()
                 return (
