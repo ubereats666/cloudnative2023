@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Graph = ({ data, current, setSelected }) => {
   const spaces = data[current];
-  const floor_name = { 1: "2", 2: "1", 3: "B1", 4: "B2" }
+  const floor_name = { 1: "B2", 2: "B1", 3: "1F", 4: "2F" }
 
   return (
     <div className="rounded-3xl bg-neutral-200 p-3 lg:p-5 flex-1 flex flex-col justify-center">
