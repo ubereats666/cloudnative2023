@@ -866,12 +866,23 @@ def delete_user():
 @app.route("/delete_record", methods=["DELETE"])
 def delete_record():
     """(取消預約or時間到)時，刪除record資料表的資料"""
-    user_id = request.args.get("user_id")
+    body = request.get_json()
+    user_id = body.get("user_id")
     try:
         # if (click_delete_button):
         #     delete_sql = "DELETE FROM record WHERE user_id = '" + str(user_id) + "';"
         # else:
-        delete_sql = "DELETE FROM record WHERE (reserve_time + INTERVAL 30 MINUTE) < CURRENT_TIMESTAMP ;"
+        #delete_sql = "DELETE FROM record WHERE (reserve_time + INTERVAL 30 MINUTE) < CURRENT_TIMESTAMP ;"
+        # TODO if user id not given, delete records that are expired( enter time is not null)
+        select_sql = "SELECT * FROM record WHERE user_id = '" + str(user_id) + "' AND enter_time IS NULL;"
+        rows = execute_query(select_sql)
+        if len(rows) == 0:
+            return jsonify({"message": "No record to delete", "isSuccess": False}), 400
+        
+        parking_space_id = rows[0][2]
+        update_sql = f"UPDATE parking_space_status SET status = 0 WHERE parking_space_id = '{parking_space_id}';"
+        execute_query(update_sql)
+        delete_sql = "DELETE FROM record WHERE user_id = '" + str(user_id) + "';"
         execute_query(delete_sql)
 
         # Provide a success message
@@ -880,3 +891,91 @@ def delete_record():
     except Exception as e:
         response_message = "Record deletion failed"
         return jsonify({"message": response_message, "isSuccess": False}), 400
+
+
+@app.route("/car_enter", methods=["POST"])
+def car_enter():
+    body = request.get_json()
+    user_id = body.get("user_id")
+    try:
+        # Construct connection string
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        sql = f"SELECT * FROM record WHERE user_id = '{user_id}' AND enter_time IS NULL AND (reserve_time + INTERVAL 30 MINUTE) > CURRENT_TIMESTAMP;"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return (
+                json.dumps({"isSuccess": False, "message": "user has no record"}),
+                200,
+            )
+        else:
+            record_id = rows[0][0]
+            parking_space_id = rows[0][2]
+            update_status = f"UPDATE parking_space_status SET status = 2 WHERE parking_space_id = '{parking_space_id}';"
+            cursor.execute(update_status)
+            record_sql = f"UPDATE record SET enter_time = CURRENT_TIMESTAMP WHERE record_id = '{record_id}';"
+            cursor.execute(record_sql)
+
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return json.dumps({"isSuccess": True, "message":"car parked successfully"}), 200
+        
+
+@app.route("/car_leave", methods=["POST"])
+def car_leave():
+    body = request.get_json()
+    user_id = body.get("user_id")
+    try:
+        # Construct connection string
+        conn = mysql.connector.connect(**config)
+        print("Connection established")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            err_msg = "Something is wrong with the user name or password"
+            return err_msg
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            err_msg = "Database does not exist"
+            return err_msg
+        else:
+            err_msg = err
+            return err
+    else:
+        cursor = conn.cursor()
+        sql = f"SELECT * FROM record WHERE user_id = '{user_id}' AND (enter_time IS NOT NULL) AND (exit_time IS NULL);"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        if len(rows) == 0:
+            return (
+                json.dumps({"isSuccess": False, "message": "user has no record"}),
+                200,
+            )
+        else:
+            record_id = rows[0][0]
+            parking_space_id = rows[0][2]
+            update_status = f"UPDATE parking_space_status SET status = 0 WHERE parking_space_id = '{parking_space_id}';"
+            cursor.execute(update_status)
+            record_sql = f"UPDATE record SET exit_time = CURRENT_TIMESTAMP WHERE record_id = '{record_id}';"
+            cursor.execute(record_sql)
+
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return json.dumps({"isSuccess": True, "message":"car leave successfully"}), 200
+        
+
+if __name__ == "__main__":
+    app.run(debug=True)
