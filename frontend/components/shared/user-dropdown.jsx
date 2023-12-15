@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, LogOut, MenuIcon, UserCog, Search } from "lucide-react";
+import { ChevronDown, LogOut, MenuIcon, UserCog, Search, Info } from "lucide-react";
 
 import { SignOutButton, useUser } from "@clerk/nextjs";
 
@@ -67,6 +67,20 @@ const UserDropdown = () => {
             >
               <Search size={16} />
               停車查詢
+            </Button>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/reserve-info" className="w-full">
+            <Button
+              variant="transparent"
+              size="none"
+              textSize="sm"
+              className="w-full justify-start gap-2"
+            >
+              <Info size={16} />
+              我的預約
             </Button>
           </Link>
         </DropdownMenuItem>
