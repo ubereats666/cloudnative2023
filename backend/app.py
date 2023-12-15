@@ -335,14 +335,7 @@ def get_reserve_info():
         json_string = ""
         for row in rows:
             dic = {}
-            if row[0] == 1:
-                dic["floor"] = "B2"
-            elif row[0] == 2:
-                dic["floor"] = "B1"
-            elif row[0] == 3:
-                dic["floor"] = "1F"
-            elif row[0] == 4:
-                dic["floor"] = "2F"
+            dic["floor"] = row[0]
             dic["number"] = row[1]
 
             # Calculate the expired time by adding 30 minutes to the reverse_time
@@ -397,7 +390,16 @@ def get_car_info():
     json_string = ""
     for row in rows:
         dic = {}
-        dic["parking_space_id"] = row[0]
+        num = int(row[0][-2:])
+        if num <= 20:
+            park = "B2"+str(num).zfill(2)
+        elif num <=40:
+            park = "B1"+str(num-20).zfill(2)
+        elif num<=60:
+            park = "1F"+str(num-40).zfill(2)
+        else:
+            park = "2F"+str(num-60).zfill(2)
+        dic["parking_space_id"] = park
         json_string += json.dumps(dic)
 
     # 回傳 json
