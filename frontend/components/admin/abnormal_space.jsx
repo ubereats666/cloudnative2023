@@ -25,12 +25,12 @@ const AbnormalSpace = () => {
   const numOfRecords = data.length;
 
   return (
-    <div className="flex flex-row flex-1 grow bg-danger">
-      <div className="flex flex-col flex-1 items-center justify-center px-4 bg-amber-300">
-        <p className="text-[60px] text-green-4">{numOfRecords}</p>
-        <p className="text-[30px] text-gray-6">records</p>
+    <div className="flex flex-row flex-1 grow ">
+      <div className="flex flex-col flex-1 items-center justify-center px-4">
+        <p className="text-[108px] h-[144px] text-green-4">{numOfRecords}</p>
+        <p className="text-[32px] text-gray-6">records</p>
       </div>
-      <div className="overflow-y-auto max-h-[216px]">
+      <div className="overflow-y-auto w-[550px] max-h-[216px]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 sticky top-0">
             <tr>

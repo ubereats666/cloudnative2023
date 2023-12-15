@@ -305,7 +305,7 @@
   },
   "get_user_info": [
     {
-      "id": "replace to your user id",
+      "user_id": "user_2ZTfYJW70E83xVobRMhaKhfqNXN",
       "priority": 2,
       "email": "",
       "cellphone_number": "",
@@ -313,7 +313,7 @@
       "preference_floor": "2F"
     },
     {
-      "id": "user_2ZTk0Ha1Z2qFlT35NO46sW2OnAj",
+      "user_id": "user_2ZTk0Ha1Z2qFlT35NO46sW2OnAj",
       "priority": 1,
       "email": "",
       "cellphone_number": "",
@@ -321,12 +321,13 @@
       "preference_floor": "B1F"
     },
     {
-      "id": "replace to your user id",
+      "user_id": "replace to your user id",
       "priority": 1,
       "email": "",
       "cellphone_number": "",
       "plate": "XYZ-1234",
       "preference_floor": "B1F"
     }
-  ]
+  ],
+  "update_user_preference": []
 }

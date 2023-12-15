@@ -1,5 +1,5 @@
 "use client";
-import { PieChart, Pie, Cell, Legend, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, Legend, Tooltip, Label } from "recharts";
 import React from "react";
 import useFetch from "@/hooks/useFetch";
 
@@ -75,17 +75,77 @@ const SpaceUsageRate = () => {
     { name: "Vacant", value: b2_floor_data.vacant },
   ];
 
+  const RADIAN = Math.PI / 180;
+  const allCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor="middle"
+        dominantBaseline="central"
+        style={{
+          fontSize: "28px",
+        }}
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+  const eachFloorCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor="middle"
+        dominantBaseline="central"
+        style={{
+          fontSize: "10px",
+        }}
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
   return (
-    <div className="flex flex-row items-center justify-center bg-danger">
-      <PieChart width={200} height={200}>
+    <div className="flex flex-row items-center gap-x-4">
+      <PieChart width={436} height={200}>
         <Pie
           data={all_pie_data}
           dataKey="value"
           nameKey="name"
           cx="50%"
           cy="50%"
-          outerRadius={50}
-          label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+          outerRadius={100}
+          label={allCustomizedLabel}
+          labelLine={false}
+
           // onMouseEnter={handleMouseEnter} // 設置為空函數
         >
           {all_pie_data.map((entry, index) => (
@@ -93,12 +153,12 @@ const SpaceUsageRate = () => {
           ))}
         </Pie>
         <text
-          x="50%"
-          y="42%"
+          x="35.5%"
+          y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
           style={{
-            fontSize: "24px",
+            fontSize: "32px",
             fontFamily: "serif",
             fontWeight: "bold",
             fill: "#696969",
@@ -108,26 +168,30 @@ const SpaceUsageRate = () => {
         </text>
         <Tooltip />
         <Legend
-          verticalAlign="bottom" // 設置圖例在底部
-          align="center" // 水平居中對齊
-          layout="horizontal" // 使用水平排列方式
-          wrapperStyle={{
-            paddingTop: "20px", // 調整圖例與圓餅圖的垂直距離
-            margin: "0 auto", // 調整圖例的外邊距，使其水平居中
-          }}
+          verticalAlign="middle" // 設置圖例在底部
+          align="right" // 水平居中對齊
+          layout="vertical" // 使用水平排列方式
+          wrapperStyle={{ fontSize: "20px" }}
+          iconSize={20}
+          iconType="square"
+          // wrapperStyle={{
+          //   paddingTop: "20px", // 調整圖例與圓餅圖的垂直距離
+          //   margin: "0 auto", // 調整圖例的外邊距，使其水平居中
+          // }}
         />
       </PieChart>
-      <div className="flex flex-col items-center justify-center bg-amber-300">
-        <div className="flex flex-row items-center justify-center bg-green-4">
-          <PieChart width={175} height={175}>
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-row items-center justify-center">
+          <PieChart width={108} height={100}>
             <Pie
               data={f2_pie_data}
               dataKey="value"
               nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={40}
-              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+              cx="42.5%"
+              cy="46%"
+              outerRadius={46}
+              label={eachFloorCustomizedLabel}
+              labelLine={false}
               // onMouseEnter={handleMouseEnter} // 設置為空函數
             >
               {f2_pie_data.map((entry, index) => (
@@ -138,12 +202,12 @@ const SpaceUsageRate = () => {
               ))}
             </Pie>
             <text
-              x="50%"
-              y="42%"
+              x="42.5%"
+              y="46%"
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontFamily: "serif",
                 fontWeight: "bold",
                 fill: "#696969",
@@ -153,15 +217,16 @@ const SpaceUsageRate = () => {
             </text>
             <Tooltip />
           </PieChart>
-          <PieChart width={175} height={175}>
+          <PieChart width={108} height={100}>
             <Pie
               data={f1_pie_data}
               dataKey="value"
               nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={40}
-              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+              cx="57.5%"
+              cy="46%"
+              outerRadius={46}
+              label={eachFloorCustomizedLabel}
+              labelLine={false}
               // onMouseEnter={handleMouseEnter} // 設置為空函數
             >
               {f1_pie_data.map((entry, index) => (
@@ -172,12 +237,12 @@ const SpaceUsageRate = () => {
               ))}
             </Pie>
             <text
-              x="50%"
-              y="42%"
+              x="57.5%"
+              y="46%"
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontFamily: "serif",
                 fontWeight: "bold",
                 fill: "#696969",
@@ -189,15 +254,16 @@ const SpaceUsageRate = () => {
           </PieChart>
         </div>
         <div className="flex flex-row items-center justify-center">
-          <PieChart width={175} height={175}>
+          <PieChart width={108} height={100}>
             <Pie
               data={b1_pie_data}
               dataKey="value"
               nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={40}
-              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+              cx="42.5%"
+              cy="54%"
+              outerRadius={46}
+              label={eachFloorCustomizedLabel}
+              labelLine={false}
               // onMouseEnter={handleMouseEnter} // 設置為空函數
             >
               {b1_pie_data.map((entry, index) => (
@@ -208,12 +274,12 @@ const SpaceUsageRate = () => {
               ))}
             </Pie>
             <text
-              x="50%"
-              y="42%"
+              x="42.5%"
+              y="54%"
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontFamily: "serif",
                 fontWeight: "bold",
                 fill: "#696969",
@@ -223,15 +289,16 @@ const SpaceUsageRate = () => {
             </text>
             <Tooltip />
           </PieChart>
-          <PieChart width={175} height={175}>
+          <PieChart width={108} height={100}>
             <Pie
               data={b2_pie_data}
               dataKey="value"
               nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={40}
-              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+              cx="57.5%"
+              cy="54%"
+              outerRadius={46}
+              label={eachFloorCustomizedLabel}
+              labelLine={false}
               // onMouseEnter={handleMouseEnter} // 設置為空函數
             >
               {b2_pie_data.map((entry, index) => (
@@ -242,12 +309,12 @@ const SpaceUsageRate = () => {
               ))}
             </Pie>
             <text
-              x="50%"
-              y="42%"
+              x="57.5%"
+              y="54%"
               textAnchor="middle"
               dominantBaseline="middle"
               style={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontFamily: "serif",
                 fontWeight: "bold",
                 fill: "#696969",

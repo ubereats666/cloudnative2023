@@ -51,7 +51,17 @@ def get_space_history():
     # 接收 request
     selected_date = request.args.get("date")
     parking_space_id = request.args.get("parking_space_id")
+    pre = parking_space_id[:2]
+    post = int(parking_space_id[2:])
 
+    if pre == 'B2':
+        parking_space_id = "PS" + str(post).zfill(3)
+    elif pre == 'B1':
+        parking_space_id = "PS" + str(post+20).zfill(3)
+    elif pre == '1F':
+        parking_space_id = "PS" + str(post+40).zfill(3)
+    else:
+        parking_space_id = "PS" + str(post+60).zfill(3)
     # Construct connection string
 
     try:
