@@ -36,10 +36,10 @@ const Reservation = () => {
   const graphData = getGraphData(data);
 
   return (
-    <div className="flex flex-row gap-x-16 w-full items-center">
+    <div className="flex flex-row w-full px-8 items-center gap-x-8">
       <div>
-        <Card className="border-none shadow-none">
-          <CardContent className="p-0 bg-slate-300">
+        <Card className="border-none shadow-none rounded-3xl">
+          <CardContent className="px-4 py-4 rounded-3xl bg-[#F1F9E7]">
             <RadioGroup
               defaultValue={current}
               className="flex flex-col justify-between"

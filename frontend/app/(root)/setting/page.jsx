@@ -17,6 +17,7 @@ const Setting = () => {
   const {
     isLoading: isUserSettingLoading,
     error,
+    userId,
     plate,
     floor,
     setPlate,
@@ -44,6 +45,7 @@ const Setting = () => {
   return (
     <div className="flex flex-col-reverse gap-y-5 lg:flex-row w-screen h-fit lg:gap-x-16 pt-28 lg:pt-32 px-8 lg:px-16 pb-8">
       <Form
+        userId={userId}
         plate={plate}
         floor={floor}
         setPlate={setPlate}

@@ -16,7 +16,7 @@ const useFetchSetting = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}get_user_info/${userId}`;
+        const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}get_user_info?user_id=${userId}`;
 
         const res = await fetch(requestUrl);
 
@@ -45,7 +45,7 @@ const useFetchSetting = () => {
     fetchData();
   }, []);
 
-  return { data, isLoading, error, plate, floor, setPlate, setFloor };
+  return { data, isLoading, error, userId, plate, floor, setPlate, setFloor };
 };
 
 export default useFetchSetting;

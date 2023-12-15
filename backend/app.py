@@ -518,7 +518,7 @@ def create_user():
         or "cellphone_number" not in params
         or "plate" not in params
     ):
-        return json.dumps({"isSuccess": False}), 400
+        return json.dumps({"isSuccess": False, "message":"parameters missing"}), 400
 
     # TODO
     user_id = body.get("user_id")
@@ -534,13 +534,11 @@ def create_user():
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             err_msg = "Something is wrong with the user name or password"
-            return err_msg
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
             err_msg = "Database does not exist"
-            return err_msg
         else:
             err_msg = err
-            return err
+        return json.dumps({"isSuccess": False,"message":err_msg}), 500
     else:
         cursor = conn.cursor()
         if preference_floor:
@@ -551,11 +549,11 @@ def create_user():
         try:
             cursor.execute(sql)
         except mysql.connector.errors.IntegrityError:
-            return json.dumps({"isSuccess": False,'error_msg':'The account has been registered.'}), 400
+            return json.dumps({"isSuccess": False,'message':'The account has been registered.'}), 400
         conn.commit()
         cursor.close()
         conn.close()
-        return json.dumps({"isSuccess": True}), 200
+        return json.dumps({"isSuccess": True,"message":"Insert Successfully"}), 200
 
 
 @app.route("/create_record", methods=["POST"])
@@ -733,8 +731,8 @@ def update_user_preference():
             plate = None
         # Access data from the JSON payload
         if not floor and not plate:
-            json_string += json.dumps("Please provide floor or plate")
-            return (json_string, 404)
+            json_string += json.dumps({"isSuccess": False,"message":"No data to update"})
+            return (json_string, 400)
         # Process the data (you can perform any logic here)
         else:
             # Construct connection string
@@ -750,7 +748,7 @@ def update_user_preference():
                     return err_msg
                 else:
                     err_msg = err
-                    return err
+                return json.dumps({"isSuccess": False,"message":err_msg}),500
             else:
                 cursor = conn.cursor()
                 if floor and plate:
@@ -783,12 +781,12 @@ def update_user_preference():
                 conn.commit()
                 cursor.close()
                 conn.close()
-                json_string += json.dumps("Update successfully")
+                json_string += json.dumps({"isSuccess": True,"message":"Update successfully"})
                 return (json_string, 200)
 
     except Exception as e:
         # Handle exceptions (e.g., invalid JSON format)
-        error_message = {"error": f"Error processing the request: {str(e)}"}
+        error_message = {"isSuccess":False,"message": f"Error processing the request: {str(e)}"}
         return json.dumps(error_message), 400
 
 

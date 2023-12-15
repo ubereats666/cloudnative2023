@@ -7,7 +7,7 @@ const Graph = ({ data, current, setSelected }) => {
   const spaces = data[current];
 
   return (
-    <div className="rounded-3xl bg-neutral-200 flex flex-1 flex-col justify-center">
+    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center">
       <RadioGroup
         className="flex justify-around items-center"
         onValueChange={(value) => {
@@ -29,7 +29,7 @@ const Graph = ({ data, current, setSelected }) => {
                 />
                 <Label
                   htmlFor={key}
-                  className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-neutral-200 peer-data-[state=checked]:border-[#75B066]"
+                  className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-slate-100 peer-data-[state=checked]:border-[#75B066]"
                 >
                   <p className="text-12">
                     {current + (parseInt(key) + 1).toString().padStart(2, "0")}
@@ -54,7 +54,7 @@ const Graph = ({ data, current, setSelected }) => {
                   />
                   <Label
                     htmlFor={key}
-                    className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-neutral-200 peer-data-[state=checked]:border-[#75B066]"
+                    className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-slate-100 peer-data-[state=checked]:border-[#75B066]"
                   >
                     <p className="text-12">
                       {current +
@@ -79,7 +79,7 @@ const Graph = ({ data, current, setSelected }) => {
                   />
                   <Label
                     htmlFor={key}
-                    className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-neutral-200 peer-data-[state=checked]:border-[#75B066]"
+                    className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-slate-100 peer-data-[state=checked]:border-[#75B066]"
                   >
                     <p className="text-12">
                       {current +
@@ -105,7 +105,7 @@ const Graph = ({ data, current, setSelected }) => {
                 />
                 <Label
                   htmlFor={key}
-                  className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-neutral-200 peer-data-[state=checked]:border-[#75B066]"
+                  className="w-14 bg-[#CFE8C6] peer-disabled:bg-neutral-400 rounded text-[#75B066] peer-disabled:text-neutral-300 flex justify-center px-1 py-2 lg:p-2 border-4 border-slate-100 peer-data-[state=checked]:border-[#75B066]"
                 >
                   <p className="text-12">
                     {current + (parseInt(key) + 1).toString().padStart(2, "0")}

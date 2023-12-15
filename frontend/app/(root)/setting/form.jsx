@@ -6,15 +6,17 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 
-const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
+import updatePreference from "./updatePreference";
+
+const Form = ({ userId, plate, floor, setPlate, setFloor, toast, router }) => {
   const [changed, setChanged] = useState(false);
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
+    // TODO: confirm the floor index is correct
     console.log(plate, floor);
 
-    // TODO: POST update_user_preference
-
-    const isSuccess = false;
+    const { isSuccess, message } = await updatePreference({ userId, plate, floor })
+    console.log(isSuccess, message)
 
     if (isSuccess) {
       toast({
@@ -65,20 +67,20 @@ const Form = ({ plate, floor, setPlate, setFloor, toast, router }) => {
               }}
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2F" id="r1" variant="setting" />
-                <Label htmlFor="r1">2F</Label>
+                <RadioGroupItem value="1" id="1" variant="setting" />
+                <Label htmlFor="1">2F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1F" id="r2" variant="setting" />
-                <Label htmlFor="r2">1F</Label>
+                <RadioGroupItem value="2" id="2" variant="setting" />
+                <Label htmlFor="2">1F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="B1F" id="r3" variant="setting" />
-                <Label htmlFor="r3">B1F</Label>
+                <RadioGroupItem value="3" id="3" variant="setting" />
+                <Label htmlFor="3">B1F</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="B2F" id="r4" variant="setting" />
-                <Label htmlFor="r4">B2F</Label>
+                <RadioGroupItem value="4" id="4" variant="setting" />
+                <Label htmlFor="4">B2F</Label>
               </div>
             </RadioGroup>
           </CardContent>
