@@ -325,7 +325,14 @@ def get_reserve_info():
         json_string = ""
         for row in rows:
             dic = {}
-            dic["floor"] = row[0]
+            if row[0] == 1:
+                dic["floor"] = "B2"
+            elif row[0] == 2:
+                dic["floor"] = "B1"
+            elif row[0] == 3:
+                dic["floor"] = "1F"
+            elif row[0] == 4:
+                dic["floor"] = "2F"
             dic["number"] = row[1]
 
             # Calculate the expired time by adding 30 minutes to the reverse_time
