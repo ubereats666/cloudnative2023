@@ -550,6 +550,7 @@ def create_user():
         return json.dumps({"isSuccess": False,"message":err_msg}), 500
     else:
         cursor = conn.cursor()
+                
         if preference_floor:
             sql = f"INSERT INTO users (user_id, name, priority, email, cellphone_number, plate, preference_floor) VALUES ( '{str(user_id)}'  ,  '{name}' , '0' , '{email}' , '{str(cellphone_number)}' , '{plate}' , '{preference_floor}');"
         else:
@@ -593,6 +594,23 @@ def create_record():
             return err
     else:
         cursor = conn.cursor()
+        # check if user has any 預約中未過期 or 進場未出場
+        sql = f"SELECT * FROM record WHERE user_id = '{user_id}' AND ((reserve_time + INTERVAL 30 MINUTE) > CURRENT_TIMESTAMP) "
+        
+
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        if len(rows) != 0:
+            return json.dumps({"isSuccess": False,'message':'User is already reserving a seat'}), 400
+        
+        # check if user has parked a car
+        sql = f"SELECT * FROM record WHERE user_id = '{user_id}' AND enter_time IS NOT NULL AND exit_time IS NULL"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        if len(rows) != 0:
+            return json.dumps({"isSuccess": False,'message':'User has parked a car'}), 400
+
+
         slot = None
         if parking_space_param:
             desired_floor, desired_number = mapping[parking_space_param[:2]], int(parking_space_param[2:].lstrip('0'))
