@@ -49,8 +49,8 @@ const CarInfo = () => {
               <CardTitle>停車資訊</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>車牌號碼: {plate}</p>
-              <p>車位編號: {parkingSpaceId}</p>
+              <p>車牌號碼: {plate === "" ? "無停車資料" : plate}</p>
+              <p>車位編號: {parkingSpaceId === "" ? "無停車資料" : parkingSpaceId}</p>
             </CardContent>
           </Card>
         </div>

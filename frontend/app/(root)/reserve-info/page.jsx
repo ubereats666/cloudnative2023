@@ -8,24 +8,33 @@ import { Button } from "@/components/ui/button";
 
 import StaticGraph from "./staticGraph";
 
-import useFetch from "@/hooks/useFetch";
+import useFetchReserveInfo from "./useFetchReserveInfo";
 import { useRouter } from 'next/navigation';
 import { useToast } from "@/components/ui/use-toast";
 
+const floor_name = { 1: "B2", 2: "B1", 3: "1F", 4: "2F" }
+
 const ReserveInfo = () => {
-  const [remainingTime, setRemainingTime] = useState(undefined)
+  const [remainingTime, setRemainingTime] = useState(undefined);
+  const [reservationExist, setReservationExist] = useState(false);
   // const [remainingTime, setRemainingTime] = useState(30 * 60)
 
   const { toast } = useToast();
   const router = useRouter();
 
-  const { data, isLoading, error } = useFetch("get_reserve_info");
+  const {
+    isLoading: isReserveInfoLoading,
+    error,
+    floor,
+    number,
+    expireTime
+  } = useFetchReserveInfo();
 
   useEffect(() => {
-    if (data && data.expire_time) {
-      const expireTime = new Date(data.expire_time);
+    if (floor && number && expireTime) {
       const currentTime = new Date();
-      const diff = expireTime - currentTime;
+      const diff = new Date(expireTime) - currentTime;
+
       if (diff > 0) {
         const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
         const seconds = Math.floor((diff % (60 * 1000)) / 1000);
@@ -34,15 +43,15 @@ const ReserveInfo = () => {
         setRemainingTime(0)
       }
     }
-  }, [data]);
+  }, [floor, number, expireTime]);
 
 
-  if (isLoading) {
+  if (isReserveInfoLoading) {
     return (
       <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
         <Skeleton className="w-full h-full" />
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -105,9 +114,8 @@ const ReserveInfo = () => {
                 }}
               </CountdownCircleTimer>
             </CardContent>
-            <CardFooter className="flex text-20 font-normal items-start justify-between">
-              <p>樓層: {data.floor}</p>
-              <p>車位: {data.number}</p>
+            <CardFooter className="flex text-20 font-normal justify-center">
+              <p>車位編號: {floor_name[floor] + number.padStart(2, '0')}</p>
             </CardFooter>
           </Card>
           <div className="flex justify-center px-9 py-6 w-full">
@@ -121,12 +129,11 @@ const ReserveInfo = () => {
           </div>
         </div>
         <div className="flex flex-1 justify-center items-start">
-          <StaticGraph number={data.number}></StaticGraph>
+          <StaticGraph floor={floor} number={number}></StaticGraph>
         </div>
       </div>
     )
-  }
-  else if (remainingTime === 0) {
+  } else if (remainingTime === 0) {
     return (
       <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
         <div className="bg-slate-200 rounded-3xl text-20 font-normal h-full w-full flex justify-center items-center">
@@ -138,7 +145,7 @@ const ReserveInfo = () => {
     return (
       <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
         <div className="bg-slate-200 rounded-3xl text-20 font-normal h-full w-full flex justify-center items-center">
-          發生錯誤，請稍後再試
+          尚無預約
         </div>
       </div>
     )
