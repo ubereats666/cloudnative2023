@@ -299,9 +299,9 @@
     }
   ],
   "get_reserve_info": {
-    "expire_time": "2023-12-09T23:50:00",
-    "floor": "2F",
-    "number": "2F11"
+    "expired_time": "2023-12-16T17:13:00",
+    "floor": "1",
+    "number": "1"
   },
   "get_user_info": [
     {
@@ -334,5 +334,6 @@
     "parking_space_id": "1F14"
   },
   "update_user_preference": [],
-  "create_record": []
+  "create_record": [],
+  "delete_record": []
 }

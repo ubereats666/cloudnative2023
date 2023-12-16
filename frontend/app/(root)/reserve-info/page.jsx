@@ -11,16 +11,20 @@ import StaticGraph from "./staticGraph";
 import useFetchReserveInfo from "./useFetchReserveInfo";
 import { useRouter } from 'next/navigation';
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@clerk/nextjs";
+
+import deleteRecord from "./deleteRecord";
 
 const floor_name = { 1: "B2", 2: "B1", 3: "1F", 4: "2F" }
 
 const ReserveInfo = () => {
   const [remainingTime, setRemainingTime] = useState(undefined);
-  const [reservationExist, setReservationExist] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // const [remainingTime, setRemainingTime] = useState(30 * 60)
 
   const { toast } = useToast();
   const router = useRouter();
+  const { userId } = useAuth();
 
   const {
     isLoading: isReserveInfoLoading,
@@ -46,7 +50,7 @@ const ReserveInfo = () => {
   }, [floor, number, expireTime]);
 
 
-  if (isReserveInfoLoading) {
+  if (isReserveInfoLoading || isLoading) {
     return (
       <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
         <Skeleton className="w-full h-full" />
@@ -65,15 +69,10 @@ const ReserveInfo = () => {
   }
 
   if (remainingTime > 0) {
-    const onComplete = () => {
-      setRemainingTime(0);
-      // TODO: delete reservation
-    };
-
-    const onCancel = () => {
-      // TODO: delete reservation
-
-      const isSuccess = false;
+    const onCancel = async () => {
+      // delete reservation
+      setIsLoading(true);
+      const { isSuccess } = await deleteRecord({ userId });
 
       if (isSuccess) {
         toast({
@@ -86,6 +85,23 @@ const ReserveInfo = () => {
           description: "發生錯誤，請稍後再試",
         });
       }
+
+      setIsLoading(false);
+    };
+
+    const onComplete = async () => {
+      setRemainingTime(0);
+      // delete reservation
+      setIsLoading(true);
+      const { isSuccess } = await deleteRecord({ userId });
+
+      if (isSuccess) {
+        toast({
+          description: "預約逾期，已為您取消",
+        });
+        router.replace("/home");
+      }
+      setIsLoading(false);
     };
 
     return (
