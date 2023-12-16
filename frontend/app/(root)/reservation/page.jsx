@@ -53,7 +53,7 @@ const Reservation = () => {
   const router = useRouter();
   const { userId } = useAuth();
 
-  const { data, isLoading, error } = useFetch("get_empty_parking_space");
+  let { data, isLoading, error } = useFetch("get_empty_parking_space");
 
   if (isLoading) {
     return (
@@ -106,7 +106,6 @@ const Reservation = () => {
   }, {});
 
   const onReserve = async () => {
-
     // TODO: POST create_record
     // const parking_space_id = "1F14"
 
