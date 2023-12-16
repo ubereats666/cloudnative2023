@@ -92,7 +92,6 @@ const ReserveInfo = () => {
     const onComplete = async () => {
       setRemainingTime(0);
       // delete reservation
-      setIsLoading(true);
       const { isSuccess } = await deleteRecord({ userId });
 
       if (isSuccess) {
@@ -101,7 +100,6 @@ const ReserveInfo = () => {
         });
         router.replace("/home");
       }
-      setIsLoading(false);
     };
 
     return (
