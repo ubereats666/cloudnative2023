@@ -6,6 +6,9 @@ from mysql.connector import errorcode
 import json
 from datetime import *
 from flask_cors import CORS
+import flask_monitoringdashboard as dashboard
+
+
 
 # set up config
 config = {
@@ -17,7 +20,8 @@ config = {
     "ssl_ca": "./DigiCertGlobalRootG2.crt.pem",
 }
 
-app = Flask(__name__)
+#app = Flask(__name__)
+app = Flask(__name__) 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
@@ -975,7 +979,10 @@ def car_leave():
             cursor.close()
             conn.close()
             return json.dumps({"isSuccess": True, "message":"car leave successfully"}), 200
-        
 
-if __name__ == "__main__":
+
+dashboard.config.enable_logging=True
+dashboard.bind(app)
+
+if __name__ == '__main__':
     app.run(debug=True)
