@@ -1,8 +1,8 @@
 import React from "react";
 
-const StaticGraph = ({ number }) => {
-  const current = number.slice(0, 2);
-  const selectedKey = parseInt(number.slice(2)) - 1;
+const StaticGraph = ({ floor, number }) => {
+  const floor_name = { 1: "B2", 2: "B1", 3: "1F", 4: "2F" }
+  const selectedKey = number - 1;
   const keys = Array.from(Array(20).keys());
 
   const selectedClassName = "lg:w-28 bg-[#CFE8C6] rounded text-[#75B066] flex justify-center border-4 border-[#75B066]";
@@ -17,13 +17,13 @@ const StaticGraph = ({ number }) => {
             key === selectedKey ? (
               <div key={key} className={selectedClassName}>
                 <p className="text-[18px] lg:text-32">
-                  {number}
+                  {floor_name[floor] + number.padStart(2, '0')}
                 </p>
               </div>
             ) : (
               <div key={key} className={othersClassName}>
                 <p className="text-[18px] lg:text-32">
-                  {current + (parseInt(key) + 1).toString().padStart(2, '0')}
+                  {floor_name[floor] + (parseInt(key) + 1).toString().padStart(2, '0')}
                 </p>
               </div>
             )
@@ -37,13 +37,13 @@ const StaticGraph = ({ number }) => {
               key === selectedKey ? (
                 <div key={key} className={selectedClassName}>
                   <p className="text-[18px] lg:text-32">
-                    {number}
+                    {floor_name[floor] + number.padStart(2, '0')}
                   </p>
                 </div>
               ) : (
                 <div key={key} className={othersClassName}>
                   <p className="text-[18px] lg:text-32">
-                    {current + (parseInt(key) + 1).toString().padStart(2, '0')}
+                    {floor_name[floor] + (parseInt(key) + 1).toString().padStart(2, '0')}
                   </p>
                 </div>
               )
@@ -56,13 +56,13 @@ const StaticGraph = ({ number }) => {
               key === selectedKey ? (
                 <div key={key} className={selectedClassName}>
                   <p className="text-[18px] lg:text-32">
-                    {number}
+                    {floor_name[floor] + number.padStart(2, '0')}
                   </p>
                 </div>
               ) : (
                 <div key={key} className={othersClassName}>
                   <p className="text-[18px] lg:text-32">
-                    {current + (parseInt(key) + 1).toString().padStart(2, '0')}
+                    {floor_name[floor] + (parseInt(key) + 1).toString().padStart(2, '0')}
                   </p>
                 </div>
               )
@@ -76,13 +76,13 @@ const StaticGraph = ({ number }) => {
             key === selectedKey ? (
               <div key={key} className={selectedClassName}>
                 <p className="text-[18px] lg:text-32">
-                  {number}
+                  {floor_name[floor] + number.padStart(2, '0')}
                 </p>
               </div>
             ) : (
               <div key={key} className={othersClassName}>
                 <p className="text-[18px] lg:text-32">
-                  {current + (parseInt(key) + 1).toString().padStart(2, '0')}
+                  {floor_name[floor] + (parseInt(key) + 1).toString().padStart(2, '0')}
                 </p>
               </div>
             )

@@ -3,6 +3,7 @@ import { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +13,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import Graph from "./graph";
 import { getRemainSpaceColor } from "@/constants/function";
+import customizeReserve from "./customizeReserve";
 // import { SPACE_DATA } from "@/constants";
+
 
 const FloorRadioButton = ({ data, index }) => {
   return (
@@ -43,11 +46,12 @@ const FloorRadioButton = ({ data, index }) => {
 };
 
 const Reservation = () => {
-  const [current, setCurrent] = useState("4");
+  const [current, setCurrent] = useState(4);
   const [selected, setSelected] = useState(null);
 
   const { toast } = useToast();
   const router = useRouter();
+  const { userId } = useAuth();
 
   const { data, isLoading, error } = useFetch("get_empty_parking_space");
 
@@ -101,12 +105,17 @@ const Reservation = () => {
     return result;
   }, {});
 
-  const onReserve = () => {
-    console.log(current, selected);
+  const onReserve = async () => {
 
     // TODO: POST create_record
+    // const parking_space_id = "1F14"
 
-    const isSuccess = false;
+    console.log(selected); // MUST BE ID LIKE "1F14"
+    const { isSuccess, message } = await customizeReserve({
+      user_id: userId,
+      parking_space_id: selected
+    });
+    console.log({ isSuccess, message })
 
     if (isSuccess) {
       toast({
@@ -116,7 +125,7 @@ const Reservation = () => {
     } else {
       toast({
         variant: "destructive",
-        description: "發生錯誤，請稍後再試",
+        description: message,
       });
       router.replace("/home");
     }

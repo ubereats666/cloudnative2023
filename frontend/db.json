@@ -2,7 +2,7 @@
   "get_empty_parking_space": [
     {
       "key": "space-1",
-      "floor": "2F",
+      "floor": "1",
       "num_parking_space": 5,
       "list_of_status": [
         false,
@@ -29,7 +29,7 @@
     },
     {
       "key": "space-2",
-      "floor": "1F",
+      "floor": "2",
       "num_parking_space": 3,
       "list_of_status": [
         false,
@@ -56,7 +56,7 @@
     },
     {
       "key": "space-3",
-      "floor": "B1",
+      "floor": "3",
       "num_parking_space": 20,
       "list_of_status": [
         true,
@@ -83,7 +83,7 @@
     },
     {
       "key": "space-4",
-      "floor": "B2",
+      "floor": "4",
       "num_parking_space": 9,
       "list_of_status": [
         false,
@@ -329,9 +329,10 @@
       "preference_floor": "B1F"
     }
   ],
-  "update_user_preference": [],
   "get_car_info": {
     "plate": "ABC-1234",
     "parking_space_id": "1F14"
-  }
+  },
+  "update_user_preference": [],
+  "create_record": []
 }
