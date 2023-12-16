@@ -48,7 +48,6 @@ class TestApp(unittest.TestCase):
         # 確認 HTTP 狀態碼是否為 200
         self.assertEqual(response.status_code, 200)
     
-
     def test_get_empty_parking_space(self):
         # 使用 Flask client 發送 GET 請求
         response = self.app.get('/get_empty_parking_space')
