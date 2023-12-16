@@ -347,7 +347,10 @@ def get_reserve_info():
             json_string += json.dumps(dic)
 
     # 回傳 json
-    response = json_string
+    if json_string == "":
+        response = json.dumps({})
+    else:
+        response = json_string
     return response, 200, {"Content-Type": "application/json"}
 
 @app.route("/get_car_info", methods=["GET"])
