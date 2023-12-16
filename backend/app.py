@@ -753,10 +753,12 @@ def create_record():
                 )
             else:
                 # record_id | user_id | parking_space_id | enter_time          | exit_time           | reserve_time
+                print(slot)
                 now_tm = datetime.now()
                 now_str = now_tm.strftime("%Y-%m-%d %H:%M:%S")
                 expire_tm = now_tm + timedelta(minutes=30)
                 expire_str = expire_tm.strftime("%Y-%m-%dT%H:%M:%S")
+                parking_space_id = slot[0]
                 cursor.execute(
                     f"UPDATE parking_space_status SET status = 1 WHERE parking_space_id = '{parking_space_id}';"
                 )
