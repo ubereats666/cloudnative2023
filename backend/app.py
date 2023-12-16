@@ -401,29 +401,33 @@ def get_car_info():
             latest_row = row
     
     # 包成 json 回傳
-    json_string = ""
-    plate, parking_space, exit_time, reserve_time = latest_row
-    dic = {}
-    dic["plate"] = plate
+    if latest_row is not None:
+        json_string = ""
+        plate, parking_space, exit_time, reserve_time = latest_row
+        dic = {}
+        dic["plate"] = plate
 
-    if exit_time is not None:
-        dic["parking_space_id"] = ""
-        json_string += json.dumps(dic)
-    else:
-        num = int(parking_space[-2:])
-        if num <= 20:
-            park = "B2"+str(num).zfill(2)
-        elif num <=40:
-            park = "B1"+str(num-20).zfill(2)
-        elif num<=60:
-            park = "1F"+str(num-40).zfill(2)
+        if exit_time is not None:
+            dic["parking_space_id"] = ""
+            json_string += json.dumps(dic)
         else:
-            park = "2F"+str(num-60).zfill(2)
-        dic["parking_space_id"] = park
-        json_string += json.dumps(dic)
+            num = int(parking_space[-2:])
+            if num <= 20:
+                park = "B2"+str(num).zfill(2)
+            elif num <=40:
+                park = "B1"+str(num-20).zfill(2)
+            elif num<=60:
+                park = "1F"+str(num-40).zfill(2)
+            else:
+                park = "2F"+str(num-60).zfill(2)
+            dic["parking_space_id"] = park
+            json_string += json.dumps(dic)
 
-    # 回傳 json
-    response = json_string
+            # 回傳 json
+            response = json_string
+    else:
+        response = json.dumps({})
+
     return response, 200, {"Content-Type": "application/json"}
 
 
