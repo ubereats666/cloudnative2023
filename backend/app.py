@@ -114,8 +114,8 @@ def get_space_history():
         dic["enter_time"] = str(row[3])
         dic["exit_time"] = str(row[4])
         dic["duration"] = (row[4] - row[3]).total_seconds() / 60
-        j = json.dumps(dic)
-        res.append(j)
+        #j = json.dumps(dic)
+        res.append(dic)
 
     # Cleanup
     conn.commit()
