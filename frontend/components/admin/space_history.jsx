@@ -1,8 +1,12 @@
 import React from "react";
 import useFetch from "@/hooks/useFetch";
 
-const SpaceHistory = () => {
+const SpaceHistory = ({ date, spaceSelected }) => {
   const { data, isLoading, error } = useFetch("get_space_history");
+
+  if (!spaceSelected) {
+    return <div className="w-full h-full bg-orange-100 rounded-2xl p-8 text-center text-gray-500">請先選擇車位</div>
+  }
 
   if (isLoading) {
     return <h1>Loading</h1>;
@@ -25,12 +29,12 @@ const SpaceHistory = () => {
   const numOfRecords = data.length;
 
   return (
-    <div className="flex flex-row flex-1 grow">
-      <div className="flex flex-col flex-1 items-center justify-center px-4">
-        <p className="text-[108px] text-green-4 h-[144px]">{numOfRecords}</p>
-        <p className="text-[32px] text-gray-6">records</p>
+    <div className="flex flex-row">
+      <div className="flex flex-col items-center justify-center px-4">
+        <p className="text-48 lg:text-[96px] text-green-4 font-medium">{numOfRecords}</p>
+        <p className="text-12 lg:text-[24px] text-gray-6 font-normal">資料筆數</p>
       </div>
-      <div className="overflow-y-auto w-[550px] max-h-[216px]">
+      <div className="overflow-y-auto flex-1 max-h-[216px]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 sticky top-0">
             <tr>

@@ -33,11 +33,12 @@ import Logo from "@/components/shared/logo";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({ date, setDate }) => {
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
 
-  const [date, setDate] = React.useState(new Date());
+  // const [date, setDate] = React.useState(new Date());
+
   const handleDateSelect = (selectedDate) => {
     setDate(selectedDate);
     if (isValid(selectedDate)) {
@@ -58,7 +59,7 @@ const Navbar = () => {
             <Button
               variant={"outline"}
               className={cn(
-                "w-[280px] justify-start text-left font-normal",
+                "w-fit justify-center text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >

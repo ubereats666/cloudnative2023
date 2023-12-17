@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const Graph = ({ data, current, setSelected }) => {
-  const spaces = data[current];
+const Graph = ({ current, setSelected }) => {
+  const spaces = Array.from(Array(20));
 
   const handleItemClick = (selectedValue) => {
     // 在這裡處理所點擊的項目，可以將其記錄下來或進行其他操作
@@ -13,7 +13,7 @@ const Graph = ({ data, current, setSelected }) => {
   };
 
   return (
-    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center">
+    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center py-2">
       <RadioGroup
         className="flex justify-around items-center"
         onValueChange={(value) => {
@@ -31,15 +31,13 @@ const Graph = ({ data, current, setSelected }) => {
                   }
                   onClick={() =>
                     handleItemClick(
-                      `${
-                        current +
-                        (parseInt(key) + 1).toString().padStart(2, "0")
+                      `${current +
+                      (parseInt(key) + 1).toString().padStart(2, "0")
                       }`
                     )
                   }
                   id={key}
                   className="peer sr-only"
-                  disabled={!spaces[key]}
                 />
                 <Label
                   htmlFor={key}
@@ -64,15 +62,13 @@ const Graph = ({ data, current, setSelected }) => {
                     }
                     onClick={() =>
                       handleItemClick(
-                        `${
-                          current +
-                          (parseInt(key) + 1).toString().padStart(2, "0")
+                        `${current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
                         }`
                       )
                     }
                     id={key}
                     className="peer sr-only"
-                    disabled={!spaces[key]}
                   />
                   <Label
                     htmlFor={key}
@@ -97,15 +93,13 @@ const Graph = ({ data, current, setSelected }) => {
                     }
                     onClick={() =>
                       handleItemClick(
-                        `${
-                          current +
-                          (parseInt(key) + 1).toString().padStart(2, "0")
+                        `${current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
                         }`
                       )
                     }
                     id={key}
                     className="peer sr-only"
-                    disabled={!spaces[key]}
                   />
                   <Label
                     htmlFor={key}
@@ -131,15 +125,13 @@ const Graph = ({ data, current, setSelected }) => {
                   }
                   onClick={() =>
                     handleItemClick(
-                      `${
-                        current +
-                        (parseInt(key) + 1).toString().padStart(2, "0")
+                      `${current +
+                      (parseInt(key) + 1).toString().padStart(2, "0")
                       }`
                     )
                   }
                   id={key}
                   className="peer sr-only"
-                  disabled={!spaces[key]}
                 />
                 <Label
                   htmlFor={key}
