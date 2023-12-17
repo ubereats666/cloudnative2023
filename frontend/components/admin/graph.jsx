@@ -6,6 +6,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const Graph = ({ data, current, setSelected }) => {
   const spaces = data[current];
 
+  const handleItemClick = (selectedValue) => {
+    // 在這裡處理所點擊的項目，可以將其記錄下來或進行其他操作
+    console.log("點擊了:", selectedValue);
+    // 或者將所選擇的值存儲到狀態中或呼叫一個回調函式等等
+  };
+
   return (
     <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center">
       <RadioGroup
@@ -22,6 +28,14 @@ const Graph = ({ data, current, setSelected }) => {
                 <RadioGroupItem
                   value={
                     current + (parseInt(key) + 1).toString().padStart(2, "0")
+                  }
+                  onClick={() =>
+                    handleItemClick(
+                      `${
+                        current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
+                      }`
+                    )
                   }
                   id={key}
                   className="peer sr-only"
@@ -48,6 +62,14 @@ const Graph = ({ data, current, setSelected }) => {
                     value={
                       current + (parseInt(key) + 1).toString().padStart(2, "0")
                     }
+                    onClick={() =>
+                      handleItemClick(
+                        `${
+                          current +
+                          (parseInt(key) + 1).toString().padStart(2, "0")
+                        }`
+                      )
+                    }
                     id={key}
                     className="peer sr-only"
                     disabled={!spaces[key]}
@@ -72,6 +94,14 @@ const Graph = ({ data, current, setSelected }) => {
                   <RadioGroupItem
                     value={
                       current + (parseInt(key) + 1).toString().padStart(2, "0")
+                    }
+                    onClick={() =>
+                      handleItemClick(
+                        `${
+                          current +
+                          (parseInt(key) + 1).toString().padStart(2, "0")
+                        }`
+                      )
                     }
                     id={key}
                     className="peer sr-only"
@@ -98,6 +128,14 @@ const Graph = ({ data, current, setSelected }) => {
                 <RadioGroupItem
                   value={
                     current + (parseInt(key) + 1).toString().padStart(2, "0")
+                  }
+                  onClick={() =>
+                    handleItemClick(
+                      `${
+                        current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
+                      }`
+                    )
                   }
                   id={key}
                   className="peer sr-only"
