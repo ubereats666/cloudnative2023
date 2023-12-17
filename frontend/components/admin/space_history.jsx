@@ -1,8 +1,15 @@
-import React from "react";
+"use client"
+
+import { useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
+
 
 const SpaceHistory = ({ date, spaceSelected }) => {
   const { data, isLoading, error } = useFetch("get_space_history");
+
+  useEffect(() => {
+    console.log(date, spaceSelected)
+  }, [date, spaceSelected])
 
   if (!spaceSelected) {
     return <div className="w-full h-full bg-orange-100 rounded-2xl p-8 text-center text-gray-500">請先選擇車位</div>
