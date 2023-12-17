@@ -278,7 +278,7 @@ def get_space_usage_rate():
     b1 = sum(time_stamp[20:40]) / 2000
     b2 = sum(time_stamp[0:20]) / 2000
     res = {"get_space_usage_rate": []}
-    d0 = {"floor": "all", "occupied": (f2 + f1 + b1 + b2) / 4, "vacant": 0.33}
+    d0 = {"floor": "all", "occupied": (f2 + f1 + b1 + b2) / 4, "vacant": 1-((f2 + f1 + b1 + b2) / 4)}
     d1 = {"floor": "2F", "occupied": f2, "vacant": 1 - f2}
     d2 = {"floor": "1F", "occupied": f1, "vacant": 1 - f1}
     d3 = {"floor": "B1", "occupied": b1, "vacant": 1 - b1}
