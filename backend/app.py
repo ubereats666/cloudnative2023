@@ -104,7 +104,7 @@ def get_space_history():
         rows = cursor.fetchall()
 
     # 包成 json 回傳
-    res = {"get_space_history": []}
+    res = []
     for row in rows:
         dic = {}
         sql = "SELECT plate FROM users WHERE user_id = '" + str(row[1]) + "';"
@@ -115,13 +115,13 @@ def get_space_history():
         dic["exit_time"] = str(row[4])
         dic["duration"] = (row[4] - row[3]).total_seconds() / 60
         j = json.dumps(dic)
-        res["get_space_history"].append(j)
+        res.append(j)
 
     # Cleanup
     conn.commit()
     cursor.close()
     conn.close()
-    print("Done.")
+    
 
     # 回傳 json
     response = res
