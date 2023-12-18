@@ -1,15 +1,21 @@
 import React from "react";
 import useFetch from "@/hooks/useFetch";
 
+import { Skeleton } from "../ui/skeleton";
+
 const AbnormalSpace = () => {
   const { data, isLoading, error } = useFetch("get_abnormal_space");
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-full w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   function convertToHoursAndMinutes(durationInMinutes) {
@@ -25,36 +31,36 @@ const AbnormalSpace = () => {
   const numOfRecords = data.length;
 
   return (
-    <div className="flex flex-row flex-1 grow ">
-      <div className="flex flex-col flex-1 items-center justify-center px-4">
-        <p className="text-[108px] h-[144px] text-green-4">{numOfRecords}</p>
-        <p className="text-[32px] text-gray-6">records</p>
+    <div className="flex flex-row grow">
+      <div className="flex flex-col items-center justify-center px-4">
+        <p className="text-48 lg:text-[96px] text-green-4 font-medium">{numOfRecords}</p>
+        <p className="text-12 lg:text-[24px] text-gray-6 font-normal">資料筆數</p>
       </div>
-      <div className="overflow-y-auto w-[550px] max-h-[216px]">
+      <div className="overflow-y-auto flex-1 max-h-[216px]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 sticky top-0">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 車牌號碼
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 車主姓名
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
               >
                 停靠車位
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
               >
                 停放時長
               </th>
@@ -63,12 +69,12 @@ const AbnormalSpace = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row, index) => (
               <tr key={index} className="text-center">
-                <td className="px-6 py-4 whitespace-nowrap">{row.plate}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{row.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-4 py-4 whitespace-nowrap">{row.plate}</td>
+                <td className="px-4 py-4 whitespace-nowrap">{row.name}</td>
+                <td className="px-4 py-4 whitespace-nowrap">
                   {row.parking_space_id}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-4 py-4 whitespace-nowrap">
                   {convertToHoursAndMinutes(row.duration)}
                 </td>
               </tr>

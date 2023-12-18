@@ -1,10 +1,10 @@
 import "../globals.css";
-import Navbar from "@/components/admin/guard_navbar";
+// import Navbar from "@/components/admin/guard_navbar";
 
 export default function UserLayout({ children }) {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       {children}
     </>
   );

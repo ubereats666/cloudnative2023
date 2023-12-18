@@ -2,7 +2,8 @@
 
 // import { useState } from "react";
 import * as React from "react";
-import { format } from "date-fns";
+import { useState } from "react";
+import { isValid, format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -32,10 +33,21 @@ import Logo from "@/components/shared/logo";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({ date, setDate }) => {
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
-  const [date, setDate] = React.useState(new Date());
+
+  // const [date, setDate] = React.useState(new Date());
+
+  const handleDateSelect = (selectedDate) => {
+    setDate(selectedDate);
+    if (isValid(selectedDate)) {
+      const formattedDate = format(selectedDate, "yyyy-MM-dd");
+      // console.log("Selected Date:", formattedDate);
+    } else {
+      console.error("Invalid date selected");
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -47,7 +59,7 @@ const Navbar = () => {
             <Button
               variant={"outline"}
               className={cn(
-                "w-[280px] justify-start text-left font-normal",
+                "w-fit justify-center text-left font-normal",
                 !date && "text-muted-foreground"
               )}
             >
@@ -59,7 +71,7 @@ const Navbar = () => {
             <Calendar
               mode="single"
               selected={date}
-              onSelect={setDate}
+              onSelect={handleDateSelect}
               initialFocus
             />
           </PopoverContent>

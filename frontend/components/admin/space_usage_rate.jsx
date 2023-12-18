@@ -1,22 +1,53 @@
 "use client";
-import { PieChart, Pie, Cell, Legend, Tooltip, Label } from "recharts";
-import React from "react";
+import { PieChart, Pie, Cell, Legend, Tooltip, Label, ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
+import { Skeleton } from "../ui/skeleton";
+import useFetchUsage from "./hooks/useFetchUsage";
 
 const COLORS = ["#7CA9ED", "#93E5AF"];
 
-const SpaceUsageRate = () => {
+const SpaceUsageRate = ({ date }) => {
   // const handleMouseEnter = () => {
   //   // 空函數 - 不做任何事情
   // };
-  const { data, isLoading, error } = useFetch("get_space_usage_rate");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState([]);
+
+  const onDateChange = async () => {
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+
+    const date_string = y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+
+    setIsLoading(true)
+    const res_data = await useFetchUsage({ date: date_string });
+    setIsLoading(false)
+
+    if (!res_data || res_data.err_msg) {
+      setError(true)
+    } else {
+      setData(res_data)
+    }
+  }
+
+  useEffect(() => {
+    onDateChange();
+  }, [date])
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-full w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   // 獲取all_floor的usage rate
@@ -97,7 +128,7 @@ const SpaceUsageRate = () => {
         textAnchor="middle"
         dominantBaseline="central"
         style={{
-          fontSize: "28px",
+          fontSize: "20px",
         }}
       >
         {`${(percent * 100).toFixed(0)}%`}
@@ -134,196 +165,214 @@ const SpaceUsageRate = () => {
   };
 
   return (
-    <div className="flex flex-row items-center gap-x-4">
-      <PieChart width={436} height={200}>
-        <Pie
-          data={all_pie_data}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          outerRadius={100}
-          label={allCustomizedLabel}
-          labelLine={false}
+    <div className="flex flex-row items-center gap-x-4 w-full h-full">
+      <div className="w-2/5 h-full">
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={all_pie_data}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius="40%"
+              outerRadius="100%"
+              label={allCustomizedLabel}
+              labelLine={false}
 
-          // onMouseEnter={handleMouseEnter} // 設置為空函數
-        >
-          {all_pie_data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <text
-          x="35.5%"
-          y="50%"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          style={{
-            fontSize: "32px",
-            fontFamily: "serif",
-            fontWeight: "bold",
-            fill: "#696969",
-          }}
-        >
-          All
-        </text>
-        <Tooltip />
-        <Legend
-          verticalAlign="middle" // 設置圖例在底部
-          align="right" // 水平居中對齊
-          layout="vertical" // 使用水平排列方式
-          wrapperStyle={{ fontSize: "20px" }}
-          iconSize={20}
-          iconType="square"
-          // wrapperStyle={{
-          //   paddingTop: "20px", // 調整圖例與圓餅圖的垂直距離
-          //   margin: "0 auto", // 調整圖例的外邊距，使其水平居中
-          // }}
-        />
-      </PieChart>
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-row items-center justify-center">
-          <PieChart width={108} height={100}>
-            <Pie
-              data={f2_pie_data}
-              dataKey="value"
-              nameKey="name"
-              cx="42.5%"
-              cy="46%"
-              outerRadius={46}
-              label={eachFloorCustomizedLabel}
-              labelLine={false}
-              // onMouseEnter={handleMouseEnter} // 設置為空函數
+            // onMouseEnter={handleMouseEnter} // 設置為空函數
             >
-              {f2_pie_data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
+              {all_pie_data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <text
-              x="42.5%"
-              y="46%"
+              x="50%"
+              y="50%"
               textAnchor="middle"
-              dominantBaseline="middle"
+              dominantBaseline="central"
               style={{
-                fontSize: "14px",
-                fontFamily: "serif",
-                fontWeight: "bold",
+                fontSize: "20px",
+                fontWeight: "normal",
                 fill: "#696969",
               }}
             >
-              2F
+              全部
             </text>
             <Tooltip />
+            {/* <Legend
+              verticalAlign="bottom" // 設置圖例在底部
+              wrapperStyle={{ fontSize: "14px", paddingTop: 8 }}
+              iconSize={14}
+              iconType="square"
+            // wrapperStyle={{
+            //   paddingTop: "20px", // 調整圖例與圓餅圖的垂直距離
+            //   margin: "0 auto", // 調整圖例的外邊距，使其水平居中
+            // }}
+            /> */}
           </PieChart>
-          <PieChart width={108} height={100}>
-            <Pie
-              data={f1_pie_data}
-              dataKey="value"
-              nameKey="name"
-              cx="57.5%"
-              cy="46%"
-              outerRadius={46}
-              label={eachFloorCustomizedLabel}
-              labelLine={false}
-              // onMouseEnter={handleMouseEnter} // 設置為空函數
-            >
-              {f1_pie_data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <text
-              x="57.5%"
-              y="46%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              style={{
-                fontSize: "14px",
-                fontFamily: "serif",
-                fontWeight: "bold",
-                fill: "#696969",
-              }}
-            >
-              F1
-            </text>
-            <Tooltip />
-          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="flex flex-col flex-1 h-full">
+        <div className="flex flex-1 justify-around">
+          <div className="h-full aspect-square">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={f2_pie_data}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="40%"
+                  outerRadius="100%"
+                  label={eachFloorCustomizedLabel}
+                  labelLine={false}
+                // onMouseEnter={handleMouseEnter} // 設置為空函數
+                >
+                  {f2_pie_data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "normal",
+                    fill: "#696969",
+                  }}
+                >
+                  2F
+                </text>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="h-full aspect-square">
+            <ResponsiveContainer>
+              <PieChart width={108} height={100}>
+                <Pie
+                  data={f1_pie_data}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="40%"
+                  outerRadius="100%"
+                  label={eachFloorCustomizedLabel}
+                  labelLine={false}
+                // onMouseEnter={handleMouseEnter} // 設置為空函數
+                >
+                  {f1_pie_data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "normal",
+                    fill: "#696969",
+                  }}
+                >
+                  1F
+                </text>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-        <div className="flex flex-row items-center justify-center">
-          <PieChart width={108} height={100}>
-            <Pie
-              data={b1_pie_data}
-              dataKey="value"
-              nameKey="name"
-              cx="42.5%"
-              cy="54%"
-              outerRadius={46}
-              label={eachFloorCustomizedLabel}
-              labelLine={false}
-              // onMouseEnter={handleMouseEnter} // 設置為空函數
-            >
-              {b1_pie_data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <text
-              x="42.5%"
-              y="54%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              style={{
-                fontSize: "14px",
-                fontFamily: "serif",
-                fontWeight: "bold",
-                fill: "#696969",
-              }}
-            >
-              B1
-            </text>
-            <Tooltip />
-          </PieChart>
-          <PieChart width={108} height={100}>
-            <Pie
-              data={b2_pie_data}
-              dataKey="value"
-              nameKey="name"
-              cx="57.5%"
-              cy="54%"
-              outerRadius={46}
-              label={eachFloorCustomizedLabel}
-              labelLine={false}
-              // onMouseEnter={handleMouseEnter} // 設置為空函數
-            >
-              {b2_pie_data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <text
-              x="57.5%"
-              y="54%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              style={{
-                fontSize: "14px",
-                fontFamily: "serif",
-                fontWeight: "bold",
-                fill: "#696969",
-              }}
-            >
-              B2
-            </text>
-            <Tooltip />
-          </PieChart>
+        <div className="flex flex-1 justify-around">
+          <div className="h-full aspect-square">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={b1_pie_data}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="40%"
+                  outerRadius="100%"
+                  label={eachFloorCustomizedLabel}
+                  labelLine={false}
+                // onMouseEnter={handleMouseEnter} // 設置為空函數
+                >
+                  {b1_pie_data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "normal",
+                    fill: "#696969",
+                  }}
+                >
+                  B1
+                </text>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="h-full aspect-square">
+            <ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={b2_pie_data}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="40%"
+                  outerRadius="100%"
+                  label={eachFloorCustomizedLabel}
+                  labelLine={false}
+                // onMouseEnter={handleMouseEnter} // 設置為空函數
+                >
+                  {b2_pie_data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "normal",
+                    fill: "#696969",
+                  }}
+                >
+                  B2
+                </text>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     </div>

@@ -3,18 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const Graph = ({ data, current, setSelected }) => {
-  const spaces = data[current];
+const Graph = ({ current, setSelected }) => {
+  const spaces = Array.from(Array(20));
+
+  const handleItemClick = (selectedValue) => {
+    // 在這裡處理所點擊的項目，可以將其記錄下來或進行其他操作
+    console.log("點擊了:", selectedValue);
+    // 或者將所選擇的值存儲到狀態中或呼叫一個回調函式等等
+  };
 
   return (
-    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center">
+    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center py-2 h-full">
       <RadioGroup
         className="flex justify-around items-center"
         onValueChange={(value) => {
           setSelected(value);
         }}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full justify-center">
           {Object.keys(spaces)
             .slice(0, 6)
             .map((key) => (
@@ -23,9 +29,15 @@ const Graph = ({ data, current, setSelected }) => {
                   value={
                     current + (parseInt(key) + 1).toString().padStart(2, "0")
                   }
+                  onClick={() =>
+                    handleItemClick(
+                      `${current +
+                      (parseInt(key) + 1).toString().padStart(2, "0")
+                      }`
+                    )
+                  }
                   id={key}
                   className="peer sr-only"
-                  disabled={!spaces[key]}
                 />
                 <Label
                   htmlFor={key}
@@ -39,7 +51,7 @@ const Graph = ({ data, current, setSelected }) => {
             ))}
         </div>
         <div className="flex">
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full justify-center">
             {Object.keys(spaces)
               .slice(6, 10)
               .map((key) => (
@@ -48,9 +60,15 @@ const Graph = ({ data, current, setSelected }) => {
                     value={
                       current + (parseInt(key) + 1).toString().padStart(2, "0")
                     }
+                    onClick={() =>
+                      handleItemClick(
+                        `${current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
+                        }`
+                      )
+                    }
                     id={key}
                     className="peer sr-only"
-                    disabled={!spaces[key]}
                   />
                   <Label
                     htmlFor={key}
@@ -64,7 +82,7 @@ const Graph = ({ data, current, setSelected }) => {
                 </div>
               ))}
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full justify-center">
             {Object.keys(spaces)
               .slice(10, 14)
               .map((key) => (
@@ -73,9 +91,15 @@ const Graph = ({ data, current, setSelected }) => {
                     value={
                       current + (parseInt(key) + 1).toString().padStart(2, "0")
                     }
+                    onClick={() =>
+                      handleItemClick(
+                        `${current +
+                        (parseInt(key) + 1).toString().padStart(2, "0")
+                        }`
+                      )
+                    }
                     id={key}
                     className="peer sr-only"
-                    disabled={!spaces[key]}
                   />
                   <Label
                     htmlFor={key}
@@ -90,7 +114,7 @@ const Graph = ({ data, current, setSelected }) => {
               ))}
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full justify-center">
           {Object.keys(spaces)
             .slice(14, 20)
             .map((key) => (
@@ -99,9 +123,15 @@ const Graph = ({ data, current, setSelected }) => {
                   value={
                     current + (parseInt(key) + 1).toString().padStart(2, "0")
                   }
+                  onClick={() =>
+                    handleItemClick(
+                      `${current +
+                      (parseInt(key) + 1).toString().padStart(2, "0")
+                      }`
+                    )
+                  }
                   id={key}
                   className="peer sr-only"
-                  disabled={!spaces[key]}
                 />
                 <Label
                   htmlFor={key}
