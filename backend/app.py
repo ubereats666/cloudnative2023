@@ -168,6 +168,8 @@ def get_abnormal_space():
     now = datetime.now()
     res = []
     for row in rows:
+        if row[4] == None:
+            continue
         diff = now - row[4]
         if diff.days >= 1: 
             dic = {}
