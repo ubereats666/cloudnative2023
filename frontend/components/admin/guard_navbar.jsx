@@ -43,7 +43,7 @@ const Navbar = ({ date, setDate }) => {
     setDate(selectedDate);
     if (isValid(selectedDate)) {
       const formattedDate = format(selectedDate, "yyyy-MM-dd");
-      console.log("Selected Date:", formattedDate);
+      // console.log("Selected Date:", formattedDate);
     } else {
       console.error("Invalid date selected");
     }

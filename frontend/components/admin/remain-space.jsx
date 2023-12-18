@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "../ui/skeleton";
 import { getRemainSpaceColor } from "@/constants/function";
 import useFetch from "@/hooks/useFetch";
 import { cn } from "@/lib/utils";
@@ -11,11 +12,17 @@ export default function RemainSpace() {
   const { data, isLoading, error } = useFetch("get_empty_parking_space");
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return (
+      <Skeleton className="w-full h-14" />
+    );
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-14 w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   return (

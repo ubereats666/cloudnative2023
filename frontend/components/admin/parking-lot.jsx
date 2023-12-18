@@ -37,12 +37,12 @@ const Reservation = ({ setSelected }) => {
   // console.log(graphData)
 
   return (
-    <div className="flex flex-row w-full items-center gap-x-2">
-      <Card className="border-none shadow-none rounded-3xl h-full">
-        <CardContent className="px-4 py-4 rounded-3xl bg-[#F1F9E7] h-full">
+    <div className="flex flex-row w-full items-center gap-x-2 h-full">
+      <Card className="border-none shadow-none rounded-3xl">
+        <CardContent className="px-8 py-4 rounded-3xl bg-[#F1F9E7]">
           <RadioGroup
             defaultValue={current}
-            className="flex flex-col justify-between h-full"
+            className="flex flex-col"
             onValueChange={(value) => {
               setCurrent(value);
             }}

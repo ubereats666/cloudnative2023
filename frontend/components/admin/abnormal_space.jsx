@@ -1,15 +1,21 @@
 import React from "react";
 import useFetch from "@/hooks/useFetch";
 
+import { Skeleton } from "../ui/skeleton";
+
 const AbnormalSpace = () => {
   const { data, isLoading, error } = useFetch("get_abnormal_space");
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-full w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   function convertToHoursAndMinutes(durationInMinutes) {

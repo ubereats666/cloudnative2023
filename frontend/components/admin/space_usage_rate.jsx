@@ -1,22 +1,53 @@
 "use client";
 import { PieChart, Pie, Cell, Legend, Tooltip, Label, ResponsiveContainer } from "recharts";
-import React from "react";
+import { useState, useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
+import { Skeleton } from "../ui/skeleton";
+import useFetchUsage from "./hooks/useFetchUsage";
 
 const COLORS = ["#7CA9ED", "#93E5AF"];
 
-const SpaceUsageRate = () => {
+const SpaceUsageRate = ({ date }) => {
   // const handleMouseEnter = () => {
   //   // 空函數 - 不做任何事情
   // };
-  const { data, isLoading, error } = useFetch("get_space_usage_rate");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState([]);
+
+  const onDateChange = async () => {
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+
+    const date_string = y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+
+    setIsLoading(true)
+    const res_data = await useFetchUsage({ date: date_string });
+    setIsLoading(false)
+
+    if (!res_data || res_data.err_msg) {
+      setError(true)
+    } else {
+      setData(res_data)
+    }
+  }
+
+  useEffect(() => {
+    onDateChange();
+  }, [date])
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-full w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   // 獲取all_floor的usage rate

@@ -1,14 +1,37 @@
 "use client"
 
-import { useEffect } from "react";
-import useFetch from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+import useFetchHistory from "./hooks/useFetchHistory";
 
 
 const SpaceHistory = ({ date, spaceSelected }) => {
-  const { data, isLoading, error } = useFetch("get_space_history");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [history, setHistory] = useState([]);
+
+  const onChange = async () => {
+    const y = date.getFullYear();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+
+    const date_string = y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+
+    setIsLoading(true)
+    const data = await useFetchHistory({ date: date_string, parking_space_id: spaceSelected });
+    setIsLoading(false)
+
+    if (!data || data.err_msg) {
+      setError(true)
+    } else {
+      setHistory(data)
+    }
+  }
 
   useEffect(() => {
-    console.log(date, spaceSelected)
+    if (spaceSelected) {
+      onChange();
+    }
   }, [date, spaceSelected])
 
   if (!spaceSelected) {
@@ -16,16 +39,20 @@ const SpaceHistory = ({ date, spaceSelected }) => {
   }
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Skeleton className="w-full h-full" />;
   }
 
   if (error) {
-    return <h1>Error</h1>;
+    return (
+      <div className="bg-slate-200 rounded-xl font-normal h-full w-full flex justify-center items-center">
+        發生錯誤，請稍後再試
+      </div>
+    );
   }
 
   function convertToHoursAndMinutes(durationInMinutes) {
     const hours = Math.floor(durationInMinutes / 60); // 取得小時數
-    const minutes = durationInMinutes % 60; // 取得剩餘的分鐘數
+    const minutes = Math.floor(durationInMinutes % 60); // 取得剩餘的分鐘數
 
     const formattedHours = String(hours).padStart(2, "0"); // 轉換成兩位數的小時
     const formattedMinutes = String(minutes).padStart(2, "0"); // 轉換成兩位數的分鐘
@@ -33,7 +60,7 @@ const SpaceHistory = ({ date, spaceSelected }) => {
     return `${formattedHours}h${formattedMinutes}m`; // 回傳格式化後的字串
   }
 
-  const numOfRecords = data.length;
+  const numOfRecords = history.length;
 
   return (
     <div className="flex flex-row">
@@ -72,7 +99,7 @@ const SpaceHistory = ({ date, spaceSelected }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((row, index) => (
+            {history.map((row, index) => (
               <tr key={index} className="text-center">
                 <td className="px-6 py-4 whitespace-nowrap">{row.plate}</td>
                 <td className="px-6 py-4 whitespace-nowrap">

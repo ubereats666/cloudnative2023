@@ -13,14 +13,14 @@ const Graph = ({ current, setSelected }) => {
   };
 
   return (
-    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center py-2">
+    <div className="rounded-3xl bg-slate-100 flex flex-1 flex-col justify-center py-2 h-full">
       <RadioGroup
         className="flex justify-around items-center"
         onValueChange={(value) => {
           setSelected(value);
         }}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full justify-center">
           {Object.keys(spaces)
             .slice(0, 6)
             .map((key) => (
@@ -51,7 +51,7 @@ const Graph = ({ current, setSelected }) => {
             ))}
         </div>
         <div className="flex">
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full justify-center">
             {Object.keys(spaces)
               .slice(6, 10)
               .map((key) => (
@@ -82,7 +82,7 @@ const Graph = ({ current, setSelected }) => {
                 </div>
               ))}
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full justify-center">
             {Object.keys(spaces)
               .slice(10, 14)
               .map((key) => (
@@ -114,7 +114,7 @@ const Graph = ({ current, setSelected }) => {
               ))}
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full justify-center">
           {Object.keys(spaces)
             .slice(14, 20)
             .map((key) => (
