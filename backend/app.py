@@ -645,13 +645,15 @@ def create_record():
             print(desired_floor)
             print(desired_number)
             cursor.execute(
-                f'''SELECT parking_space_status.parking_space_id, status FROM parking_space_status 
+                f'''SELECT parking_space_status.parking_space_id, status,parking_spaces.priority  FROM parking_space_status 
                 inner join parking_spaces ON parking_space_status.parking_space_id = parking_spaces.parking_space_id 
                 WHERE parking_spaces.floor = {desired_floor}
                 AND parking_spaces.number = {desired_number};'''
             )
             rows = cursor.fetchall()
             parking_space_id = rows[0][0]
+            cursor.execute(f"SELECT priority FROM users WHERE user_id = '{user_id}';")
+            priority_row = cursor.fetchall()
             if rows[0][1] == 1:
                 return (
                     json.dumps(
@@ -659,6 +661,14 @@ def create_record():
                     ),
                     200,
                 )
+            elif priority_row[0][0] != 1 and rows[0][2] == 1:
+                return (
+                    json.dumps(
+                        {"isSuccess": False, "error": "parking space is only available for priority user"}
+                    ),
+                    200,
+                )
+                
             else:
                 cursor.execute(
                     f"SELECT floor,number FROM parking_spaces WHERE parking_space_id = '{parking_space_id}';"
