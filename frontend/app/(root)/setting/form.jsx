@@ -38,7 +38,7 @@ const Form = ({ userId, plate, floor, priority, setPlate, setFloor, toast, route
           <h2 className="text-24 p-3">個人設定</h2>
           {
             priority === 1
-              ? <div className="px-4 py-1 bg-[#CFE8C6] rounded-full border-2 border-[#75B066]">友善</div>
+              ? <div className="px-4 py-1 bg-blue-100 rounded-full border-2 border-sky-600 text-sky-600">友善</div>
               : <div />
           }
         </div>

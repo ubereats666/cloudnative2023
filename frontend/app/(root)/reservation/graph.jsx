@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Graph = ({ priority, data, current, setSelected }) => {
   let spaces = data[current];
-  if (priority === 1) {
+  if (priority === 0) {
     spaces[18] = false;
     spaces[19] = false;
   }
