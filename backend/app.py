@@ -111,8 +111,8 @@ def get_space_history():
         cursor.execute(sql)
         single = cursor.fetchone()
         dic["plate"] = single[0]
-        dic["enter_time"] = str(row[3])
-        dic["exit_time"] = str(row[4])
+        dic["enter_time"] = str(row[3].strftime("%H:%M:%S"))
+        dic["exit_time"] = str(row[4].strftime("%H:%M:%S"))
         dic["duration"] = (row[4] - row[3]).total_seconds() / 60
         #j = json.dumps(dic)
         res.append(dic)
