@@ -258,7 +258,7 @@ def get_space_usage_rate():
             else:
                 duration = row[4].timestamp() - beg.timestamp()
         idx = int(row[2][2:])
-        time_stamp[idx] += (duration / divider) * 100
+        time_stamp[idx-1] += (duration / divider) * 100
 
     # 將樓層與停車位的使用率加進字典並轉成 json
     json_string = ""
