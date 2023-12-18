@@ -2,8 +2,13 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const Graph = ({ data, current, setSelected }) => {
-  const spaces = data[current];
+const Graph = ({ priority, data, current, setSelected }) => {
+  let spaces = data[current];
+  if (priority === 1) {
+    spaces[18] = false;
+    spaces[19] = false;
+  }
+
   const floor_name = { 1: "B2", 2: "B1", 3: "1F", 4: "2F" }
 
   return (
