@@ -166,7 +166,7 @@ def get_abnormal_space():
 
     # 抓超過一天的加進要回傳的 json
     now = datetime.now()
-    res = {"get_abnormal_space": []}
+    res = []
     for row in rows:
         diff = now - row[4]
         if diff.days >= 1: 
@@ -185,8 +185,8 @@ def get_abnormal_space():
             dic["name"] = row[0]
             dic["parking_space_id"] = park
             dic['duration'] = int((now - row[4]).total_seconds()/60)
-            json_string = json.dumps(dic)
-            res['get_abnormal_space'].append(json_string)
+            #json_string = json.dumps(dic)
+            res.append(dic)
 
 
     response = res
@@ -277,18 +277,18 @@ def get_space_usage_rate():
     f1 = sum(time_stamp[40:60]) / 2000
     b1 = sum(time_stamp[20:40]) / 2000
     b2 = sum(time_stamp[0:20]) / 2000
-    res = {"get_space_usage_rate": []}
+    res = []
     d0 = {"floor": "all", "occupied": (f2 + f1 + b1 + b2) / 4, "vacant": 1-((f2 + f1 + b1 + b2) / 4)}
     d1 = {"floor": "2F", "occupied": f2, "vacant": 1 - f2}
     d2 = {"floor": "1F", "occupied": f1, "vacant": 1 - f1}
     d3 = {"floor": "B1", "occupied": b1, "vacant": 1 - b1}
     d4 = {"floor": "B2", "occupied": b2, "vacant": 1 - b2}
 
-    res["get_space_usage_rate"].append(json.dumps(d0))
-    res["get_space_usage_rate"].append(json.dumps(d1))
-    res["get_space_usage_rate"].append(json.dumps(d2))
-    res["get_space_usage_rate"].append(json.dumps(d3))
-    res["get_space_usage_rate"].append(json.dumps(d4))
+    res.append(d0)
+    res.append(d1)
+    res.append(d2)
+    res.append(d3)
+    res.append(d4)
 
     response = res
     return response
