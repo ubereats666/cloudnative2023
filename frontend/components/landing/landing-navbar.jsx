@@ -12,8 +12,7 @@ import {
 import Link from "next/link";
 import Logo from "@/components/shared/logo";
 import { NAV_LINKS } from "@/constants";
-import { ChevronDown, Home, MenuIcon } from "lucide-react";
-import UserDropdown from "../shared/user-dropdown";
+import { Home, MenuIcon } from "lucide-react";
 
 const LandingNavbar = () => {
   const { isSignedIn } = useUser();

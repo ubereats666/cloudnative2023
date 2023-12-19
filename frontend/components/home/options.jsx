@@ -17,6 +17,8 @@ export default function Options() {
           src={"/home-preference-parking.png"}
           width={1440}
           height={0}
+          alt="image"
+          priority
           className="home-options-image"
         />
       </Link>

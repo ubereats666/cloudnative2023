@@ -53,11 +53,13 @@ const QuickButton = () => {
             src={"/home-quick-parking.png"}
             width={1440}
             height={0}
+            alt="image"
+            priority
             className="home-options-image"
           />
         </Skeleton>
       ) : (
-        <div className="home-options-button px-0">
+        <div className="home-options-button">
           <div className="gradient-section" />
           <div className="flex items-center flex-col">
             <h2 className="home-options-button-text">快速停車</h2>
@@ -67,6 +69,8 @@ const QuickButton = () => {
             src={"/home-quick-parking.png"}
             width={1440}
             height={0}
+            alt="image"
+            priority
             className="home-options-image"
           />
         </div>

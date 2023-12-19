@@ -50,7 +50,17 @@ const useFetchSetting = () => {
     fetchData();
   }, []);
 
-  return { data, isLoading, error, userId, plate, floor, priority, setPlate, setFloor };
+  return {
+    data,
+    isLoading,
+    error,
+    userId,
+    plate,
+    floor,
+    priority,
+    setPlate,
+    setFloor,
+  };
 };
 
 export default useFetchSetting;

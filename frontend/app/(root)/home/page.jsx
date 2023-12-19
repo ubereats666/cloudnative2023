@@ -36,6 +36,7 @@ export default function Home() {
               width={1440}
               height={0}
               alt="welcome"
+              priority={true}
               className="absolute bottom-0 w-full h-auto"
             />
             <h1 className="text-48 text-t-title text-center z-10 ">

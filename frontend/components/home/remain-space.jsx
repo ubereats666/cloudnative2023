@@ -10,14 +10,14 @@ import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 
 const RemainSpaceSkeleton = () => {
-  return <Skeleton className="h-40 w-full rounded-3xl" />;
+  return <Skeleton className="h-36 w-full rounded-3xl" />;
 };
 
 const RemainSpaceButton = ({ space, index }) => {
   return (
     <Link
       href={"/reservation"}
-      className="flex items-start justify-center bg-white w-full px-3 py-6 gap-8 rounded-3xl hover:scale-[1.02] transition-transform ease-in-out"
+      className="flex items-start justify-center bg-white w-full px-3 py-4 gap-8 rounded-3xl hover:scale-[1.02] transition-transform ease-in-out"
     >
       <h2 className="text-20 lg:text-40 text-t-title">{FLOOR_LIST[index]}</h2>
       <div className="flex-center flex-col">
@@ -50,12 +50,15 @@ export default function RemainSpace() {
   }
 
   return (
-    <div className="flex-between w-full gap-24">
+    <div className="flex-between w-full gap-12">
       <Image
         src={"/home-car.png"}
         width={1440}
         height={0}
         alt="bg"
+        priority
+        placeholder="blur"
+        blurDataURL={"/home-car.png"}
         className="hidden sm:block h-[200px] w-auto"
       />
 

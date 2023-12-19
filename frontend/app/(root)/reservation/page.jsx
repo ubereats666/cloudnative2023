@@ -1,9 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,10 +13,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import Graph from "./graph";
 import { getRemainSpaceColor } from "@/constants/function";
-import customizeReserve from "./customizeReserve";
 import useFetchSetting from "../setting/useFetchSetting";
+import { FLOOR_LIST } from "@/constants";
+import useCustomReserve from "./useCustomReserve";
 // import { SPACE_DATA } from "@/constants";
-
 
 const FloorRadioButton = ({ data, index }) => {
   return (
@@ -30,8 +30,8 @@ const FloorRadioButton = ({ data, index }) => {
         htmlFor={data.key}
         className="bg-white border-4 border-white peer-data-[state=checked]:border-[#75B066] flex items-center justify-between rounded-2xl w-[136px] p-2 lg:px-9 lg:py-3 lg:w-60"
       >
-        <p className="text-36 font-normal">{data.floor}</p>
-        <div className="flex flex-col items-center">
+        <p className="text-36 font-normal">{FLOOR_LIST[index]}</p>
+        <div className="flex flex-col items-center gap-2">
           <p
             className={`text-36 font-normal ${getRemainSpaceColor(
               data.num_parking_space
@@ -39,12 +39,16 @@ const FloorRadioButton = ({ data, index }) => {
           >
             {data.num_parking_space}
           </p>
-          <p className="text-12 font-light">剩餘車位</p>
+          <p className="text-14 font-light">剩餘車位</p>
         </div>
       </Label>
     </div>
   );
 };
+
+const FloorRadioButtonSkeleton = () => (
+  <Skeleton className="h-24 w-60 rounded-2xl" />
+);
 
 const Reservation = () => {
   const [current, setCurrent] = useState(4);
@@ -52,19 +56,10 @@ const Reservation = () => {
 
   const { toast } = useToast();
   const router = useRouter();
-  const { userId } = useAuth();
 
   const { priority } = useFetchSetting();
-
-  let { data, isLoading, error } = useFetch("get_empty_parking_space");
-
-  if (isLoading) {
-    return (
-      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
-        <Skeleton className="w-full h-full" />
-      </div>
-    );
-  }
+  const { data, isLoading, error } = useFetch("get_empty_parking_space");
+  const { isLoading: isReserveHandling, customReserve } = useCustomReserve();
 
   if (error) {
     return (
@@ -76,52 +71,20 @@ const Reservation = () => {
     );
   }
 
-  // const getRemain = (f) =>
-  //   data.filter((d) => d.floor === f)[0].num_parking_space;
-
-  // const remainColorMapping = (remain) =>
-  //   remain <= 5
-  //     ? "text-red-500"
-  //     : remain <= 10
-  //     ? "text-amber-400"
-  //     : "text-green-600";
-
-  // const getRemainCN = (floor) => {
-  //   const remain = getRemain(floor);
-  //   return "text-36 font-normal " + remainColorMapping(remain);
-  // };
-
-  // const getGraphData = (data) => {
-  //   let graphData = new Object();
-
-  //   graphData["2F"] = data.filter((d) => {
-  //     d.floor === "2F";
-  //   })[0].list_of_status;
-  //   graphData["1F"] = data.filter((d) => d.floor === "1F")[0].list_of_status;
-  //   graphData["B1F"] = data.filter((d) => d.floor === "B1F")[0].list_of_status;
-  //   graphData["B2F"] = data.filter((d) => d.floor === "B2F")[0].list_of_status;
-  //   return graphData;
-  // };
-
-  const graphData = data.reduce((result, floor, index) => {
-    result[index + 1] = floor.list_of_status;
-    return result;
-  }, {});
-
   const onReserve = async () => {
     // TODO: POST create_record
     // const parking_space_id = "1F14"
 
-    console.log(selected); // MUST BE ID LIKE "1F14"
-    const { isSuccess, message } = await customizeReserve({
-      user_id: userId,
-      parking_space_id: selected
-    });
-    console.log({ isSuccess, message })
+    const { isSuccess, message } = await customReserve(selected);
+    // const res = await customizeReserve({
+    //   user_id: userId,
+    //   parking_space_id: selected,
+    // });
+    // console.log(res);
 
     if (isSuccess) {
       toast({
-        description: "預約成功",
+        description: message,
       });
       router.replace("/reserve-info");
     } else {
@@ -129,7 +92,6 @@ const Reservation = () => {
         variant: "destructive",
         description: message,
       });
-      router.replace("/home");
     }
   };
 
@@ -147,21 +109,38 @@ const Reservation = () => {
                   setCurrent(value);
                 }}
               >
-                {data?.map((floorData, index) => (
-                  <FloorRadioButton data={floorData} index={index} />
-                ))}
+                {isLoading &&
+                  FLOOR_LIST.map((floor) => (
+                    <FloorRadioButtonSkeleton key={floor} />
+                  ))}
+                {!isLoading &&
+                  data.map((floorData, index) => (
+                    <FloorRadioButton
+                      key={floorData.key}
+                      data={floorData}
+                      index={index}
+                    />
+                  ))}
               </RadioGroup>
             </CardContent>
           </Card>
         </div>
-        <Graph priority={priority} data={graphData} current={current} setSelected={setSelected} />
+        {isLoading && <Skeleton className="h-[540px] w-full rounded-3xl" />}
+        {!isLoading && (
+          <Graph
+            priority={priority}
+            data={data}
+            current={current}
+            setSelected={setSelected}
+          />
+        )}
       </div>
       <div className="flex w-full justify-center items-center">
         <Button
           variant="setting"
           size="none"
-          disabled={!selected}
-          onClick={onReserve}
+          disabled={!selected || isReserveHandling}
+          onClick={() => onReserve(selected)}
         >
           <p className="text-20">確認車位</p>
         </Button>
