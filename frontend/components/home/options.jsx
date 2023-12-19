@@ -9,7 +9,10 @@ export default function Options() {
 
       <Link href="/reservation" className="home-options-button">
         <div className="gradient-section" />
-        <p className="home-options-button-text">自訂停車</p>
+        <div className="flex items-center flex-col">
+          <h2 className="home-options-button-text">自訂停車</h2>
+          <h3 className="home-options-button-subtitle">Custom Reservation</h3>
+        </div>
         <Image
           src={"/home-preference-parking.png"}
           width={1440}

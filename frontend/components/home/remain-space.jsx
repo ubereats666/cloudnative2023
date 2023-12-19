@@ -7,6 +7,7 @@ import useFetch from "@/hooks/useFetch";
 import Image from "next/image";
 import { FLOOR_LIST } from "@/constants";
 import { Skeleton } from "../ui/skeleton";
+import Link from "next/link";
 
 const RemainSpaceSkeleton = () => {
   return <Skeleton className="h-40 w-full rounded-3xl" />;
@@ -14,10 +15,9 @@ const RemainSpaceSkeleton = () => {
 
 const RemainSpaceButton = ({ space, index }) => {
   return (
-    <Button
-      key={space.key}
-      variant="white"
-      className="flex items-start justify-center w-full px-3 py-6 gap-6 rounded-3xl"
+    <Link
+      href={"/reservation"}
+      className="flex items-start justify-center bg-white w-full px-3 py-6 gap-8 rounded-3xl hover:scale-[1.02] transition-transform ease-in-out"
     >
       <h2 className="text-20 lg:text-40 text-t-title">{FLOOR_LIST[index]}</h2>
       <div className="flex-center flex-col">
@@ -29,7 +29,7 @@ const RemainSpaceButton = ({ space, index }) => {
         </p>
         <p className="text-14 lg:text-20 text-t-subtitle">剩餘車位</p>
       </div>
-    </Button>
+    </Link>
   );
 };
 

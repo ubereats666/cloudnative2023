@@ -62,6 +62,12 @@ body {
   .gradient-background {
     @apply h-[100vh] -z-50;
   }
+
+  .gradient-background-home {
+    @apply fixed top-0 w-full;
+    @apply bg-gradient-to-b from-[#FFFFFF] from-40% via-[#F7F5CF] via-60% to-[#E0B368] to-100%;
+    @apply h-[100vh] -z-50;
+  }
 }
 
 @layer components {
@@ -117,19 +123,25 @@ body {
   .home-options-button {
     @apply relative flex justify-center w-full;
     @apply overflow-hidden shadow-md rounded-2xl;
+    @apply hover:scale-105 transition-transform ease-in-out;
     @apply rounded-2xl md:rounded-[32px];
     @apply h-[160px] sm:h-[200px] md:h-full;
-    @apply pt-4 md:pt-12;
+    @apply pt-4 md:pt-24;
   }
 
   .home-options-button-text {
     @apply bg-clip-text text-transparent select-none z-10;
-    @apply bg-gradient-to-r from-green-4 from-20% to-green-8 to-80%;
-    @apply text-20 xs:text-24 sm:text-28 md:text-32 lg:text-36;
+    @apply bg-gradient-to-r from-t-title from-20% to-t-subtitle to-100%;
+    @apply text-20 xs:text-24 sm:text-28 md:text-32 lg:text-48;
+  }
+
+  .home-options-button-subtitle {
+    @apply bg-clip-text text-transparent select-none z-10;
+    @apply bg-gradient-to-r from-green-8 from-20% to-green-4 to-80%;
+    @apply text-20 xs:text-24 sm:text-28 md:text-32 lg:text-24;
   }
 
   .home-options-image {
     @apply absolute bottom-0 w-full h-auto opacity-90;
-    @apply translate-y-12 xs:translate-y-20 sm:translate-y-32 md:translate-y-36;
   }
 }

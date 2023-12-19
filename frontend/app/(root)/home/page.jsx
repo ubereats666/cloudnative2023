@@ -26,8 +26,8 @@ export default function Home() {
           {/* Welcome */}
           <div
             className={cn(
-              "relative flex-center w-full h-[180px] overflow-hidden",
-              "md:rounded-[32px] md:h-full md:w-full"
+              "relative flex justify-center items-start w-full h-[180px] overflow-hidden",
+              "md:rounded-[32px] md:h-full md:w-full md:py-28"
             )}
           >
             <div className="gradient-section" />
@@ -36,11 +36,12 @@ export default function Home() {
               width={1440}
               height={0}
               alt="welcome"
-              className="absolute top-4 w-full h-auto"
+              className="absolute bottom-0 w-full h-auto"
             />
-            <h1 className="text-32 text-t-title text-center z-10 ">
-              早安！ <br />
-              準備好開啟新的一天了嗎？
+            <h1 className="text-48 text-t-title text-center z-10 ">
+              在<span className="logo-text text-48"> Parkoasis </span>
+              <br />
+              開啟新的一天！
             </h1>
           </div>
 
@@ -48,14 +49,6 @@ export default function Home() {
         </div>
 
         <RemainSpace />
-
-        {/* <Image
-          src={"/oasis.png"}
-          width={1440}
-          height={0}
-          alt="welcome"
-          className="fixed bottom-0 translate-y-24 w-full h-auto -z-30"
-        /> */}
       </div>
     </section>
   );

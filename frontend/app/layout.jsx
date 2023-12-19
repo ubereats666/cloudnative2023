@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     >
       <html lang="en">
         <body className={inter.className}>
-          <div className="gradient-background" />
+          <div className="gradient-background-home" />
           <main>{children}</main>
           <Toaster />
         </body>
