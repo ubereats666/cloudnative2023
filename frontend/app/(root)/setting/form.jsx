@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import updatePreference from "./updatePreference";
 
-const Form = ({ userId, plate, floor, setPlate, setFloor, toast, router }) => {
+const Form = ({ userId, plate, floor, priority, setPlate, setFloor, toast, router }) => {
   const [changed, setChanged] = useState(false);
 
   const onUpdate = async () => {
@@ -34,7 +34,14 @@ const Form = ({ userId, plate, floor, setPlate, setFloor, toast, router }) => {
   return (
     <div className="flex flex-col w-full lg:w-fit justify-between">
       <div className="flex flex-col gap-y-5">
-        <h2 className="text-24 p-3">個人設定</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-24 p-3">個人設定</h2>
+          {
+            priority === 1
+              ? <div className="px-4 py-1 bg-blue-100 rounded-full border-2 border-sky-600 text-sky-600">友善</div>
+              : <div />
+          }
+        </div>
         <Card variant="setting">
           <CardHeader>
             <CardTitle>車牌號碼</CardTitle>

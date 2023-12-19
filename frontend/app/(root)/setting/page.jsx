@@ -20,6 +20,7 @@ const Setting = () => {
     userId,
     plate,
     floor,
+    priority,
     setPlate,
     setFloor,
   } = useFetchSetting();
@@ -48,6 +49,7 @@ const Setting = () => {
         userId={userId}
         plate={plate}
         floor={floor}
+        priority={priority}
         setPlate={setPlate}
         setFloor={setFloor}
         toast={toast}

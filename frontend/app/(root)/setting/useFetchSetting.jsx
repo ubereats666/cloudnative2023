@@ -11,6 +11,7 @@ const useFetchSetting = () => {
   const [error, setError] = useState(null);
   const [plate, setPlate] = useState("");
   const [floor, setFloor] = useState("2F");
+  const [priority, setPriority] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,10 @@ const useFetchSetting = () => {
         if (responseData.preference_floor) {
           setFloor(responseData.preference_floor);
         }
+
+        if (responseData.priority) {
+          setPriority(responseData.priority);
+        }
       } catch (error) {
         setError("發生錯誤，請稍後再試");
         console.error(error.message);
@@ -45,7 +50,7 @@ const useFetchSetting = () => {
     fetchData();
   }, []);
 
-  return { data, isLoading, error, userId, plate, floor, setPlate, setFloor };
+  return { data, isLoading, error, userId, plate, floor, priority, setPlate, setFloor };
 };
 
 export default useFetchSetting;

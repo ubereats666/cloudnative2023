@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Graph from "./graph";
 import { getRemainSpaceColor } from "@/constants/function";
 import customizeReserve from "./customizeReserve";
+import useFetchSetting from "../setting/useFetchSetting";
 // import { SPACE_DATA } from "@/constants";
 
 
@@ -52,6 +53,8 @@ const Reservation = () => {
   const { toast } = useToast();
   const router = useRouter();
   const { userId } = useAuth();
+
+  const { priority } = useFetchSetting();
 
   let { data, isLoading, error } = useFetch("get_empty_parking_space");
 
@@ -151,7 +154,7 @@ const Reservation = () => {
             </CardContent>
           </Card>
         </div>
-        <Graph data={graphData} current={current} setSelected={setSelected} />
+        <Graph priority={priority} data={graphData} current={current} setSelected={setSelected} />
       </div>
       <div className="flex w-full justify-center items-center">
         <Button
