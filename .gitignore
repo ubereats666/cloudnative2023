@@ -3,3 +3,4 @@
 # editer
 .vscode/
 /backend/__pycache__
+/backend/flask_monitoringdashboard.db

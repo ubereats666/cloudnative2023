@@ -5,7 +5,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: ["text-danger", "text-warning", "text-safe"],
+  safelist: ["text-t-invert", "text-danger", "text-warning", "text-safe"],
   theme: {
     fontSize: {
       12: ["0.75rem", { fontWeight: "700" }],

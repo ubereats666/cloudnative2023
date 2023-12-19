@@ -5,6 +5,8 @@ export const NAV_LINKS = [
   { key: "nav-sign-in", label: "登入", variant: "primary", href: "/sign-in" },
 ];
 
+export const FLOOR_LIST = ["2F", "1F", "B1F", "B2F"];
+
 export const SPACE_DATA = {
   "2F": {
     201: false,

@@ -334,6 +334,15 @@
     "parking_space_id": "1F14"
   },
   "update_user_preference": [],
-  "create_record": [],
+  "create_record": [
+    {
+      "user_id": "user_2ZTk0Ha1Z2qFlT35NO46sW2OnAj",
+      "id": 1
+    },
+    {
+      "user_id": "user_2ZTk0Ha1Z2qFlT35NO46sW2OnAj",
+      "id": 2
+    }
+  ],
   "delete_record": []
 }
