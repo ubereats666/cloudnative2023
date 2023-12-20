@@ -10,10 +10,16 @@ export default authMiddleware({
     }
 
     if (auth.userId && auth.userId === "user_2ZTg1sqwuuibR8c65tI3kPtoSpU") {
-      return NextResponse.rewrite(new URL("/admin", req.url));
+      if (!req.nextUrl.pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
+      return NextResponse.next();
     }
 
     if (auth.userId && auth.userId !== "user_2ZTg1sqwuuibR8c65tI3kPtoSpU") {
+      if (req.nextUrl.pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/home", req.url));
+      }
       return NextResponse.next();
     }
 
