@@ -48,7 +48,12 @@ const QuickButton = () => {
       {isLoading ? (
         <Skeleton className="w-full h-full home-options-button px-0 rounded-2xl md:rounded-[32px]">
           <div className="gradient-section" />
-          <p className="home-options-button-text">快速停車</p>
+          <div className="flex items-center flex-col">
+            <h2 className="home-options-button-text">快速停車</h2>
+            <h3 className="home-options-button-subtitle">
+              正在為您匹配車位...
+            </h3>
+          </div>
           <Image
             src={"/home-quick-parking.png"}
             width={1440}

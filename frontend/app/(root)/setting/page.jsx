@@ -25,14 +25,6 @@ const Setting = () => {
     setFloor,
   } = useFetchSetting();
 
-  if (isUserSettingLoading) {
-    return (
-      <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
-        <Skeleton className="w-full h-full" />
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="pt-28 lg:pt-32 px-8 lg:px-16 pb-8 w-screen h-screen">
@@ -45,16 +37,25 @@ const Setting = () => {
 
   return (
     <div className="flex flex-col-reverse gap-y-5 lg:flex-row w-screen h-fit lg:gap-x-16 pt-28 lg:pt-32 px-8 lg:px-16 pb-8">
-      <Form
-        userId={userId}
-        plate={plate}
-        floor={floor}
-        priority={priority}
-        setPlate={setPlate}
-        setFloor={setFloor}
-        toast={toast}
-        router={router}
-      />
+      {isUserSettingLoading && (
+        <div className="flex flex-col gap-6">
+          <p className="text-24 text-t-title">正在載入個人設定...</p>
+          <Skeleton className="w-[320px] h-[160px] rounded-2xl" />
+          <Skeleton className="w-[320px] h-[160px] rounded-2xl" />
+        </div>
+      )}
+      {!isUserSettingLoading && (
+        <Form
+          userId={userId}
+          plate={plate}
+          floor={floor}
+          priority={priority}
+          setPlate={setPlate}
+          setFloor={setFloor}
+          toast={toast}
+          router={router}
+        />
+      )}
       <div className="flex flex-1 justify-center items-start">
         <AspectRatio ratio={16 / 9}>
           <Image
