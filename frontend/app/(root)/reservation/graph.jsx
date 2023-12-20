@@ -4,9 +4,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Graph = ({ priority, data, current, setSelected }) => {
   const graphData = data.reduce((result, floor, index) => {
-    result[index + 1] = floor.list_of_status;
+    result[index + 1] = floor.list_of_status.map((e) => e.status);
     return result;
   }, {});
+
 
   let spaces = graphData[current];
   if (priority === 0) {
