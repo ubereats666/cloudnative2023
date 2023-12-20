@@ -12,13 +12,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, LogOut, MenuIcon, UserCog, Search, Info } from "lucide-react";
+import { ChevronDown, LogOut, UserCog, Search, Info } from "lucide-react";
 
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 const UserDropdown = () => {
   const { user, isLoaded } = useUser();
   const router = useRouter();
+  const { signOut } = useClerk();
 
   return (
     <DropdownMenu>
@@ -86,21 +87,16 @@ const UserDropdown = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <SignOutButton
-            signOutCallback={() => {
-              router.replace("/");
-            }}
+          <Button
+            variant="transparent"
+            size="none"
+            textSize="sm"
+            className="w-full justify-start gap-2"
+            onClick={() => signOut(() => router.push("/"))}
           >
-            <Button
-              variant="transparent"
-              size="none"
-              textSize="sm"
-              className="w-full justify-start gap-2"
-            >
-              <LogOut size={16} />
-              登出
-            </Button>
-          </SignOutButton>
+            <LogOut size={16} />
+            登出
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

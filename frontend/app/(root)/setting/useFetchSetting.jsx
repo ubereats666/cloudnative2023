@@ -18,7 +18,7 @@ const useFetchSetting = () => {
       setIsLoading(true);
       try {
         const requestUrl = `${process.env.NEXT_PUBLIC_API_URL}get_user_info?user_id=${userId}`;
-
+        console.log(requestUrl);
         const res = await fetch(requestUrl);
 
         if (!res.ok) {
@@ -26,6 +26,7 @@ const useFetchSetting = () => {
         }
 
         const responseData = await res.json();
+
         setData(responseData);
 
         if (responseData.plate) {

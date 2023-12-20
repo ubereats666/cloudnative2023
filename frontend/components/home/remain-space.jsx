@@ -1,7 +1,5 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
 import { getRemainSpaceColor } from "@/constants/function";
 import useFetch from "@/hooks/useFetch";
 import Image from "next/image";
@@ -34,20 +32,7 @@ const RemainSpaceButton = ({ space, index }) => {
 };
 
 export default function RemainSpace() {
-  const { isLoaded, userId } = useAuth();
-
-  // In case the user signs out while on the page.
-  if (!isLoaded || !userId) {
-    return null;
-  }
-
-  const { data, isLoading, error } = useFetch("get_empty_parking_space", {
-    userId: userId,
-  });
-
-  if (error) {
-    return <h1>Error</h1>;
-  }
+  const { data, isLoading, error } = useFetch("get_empty_parking_space");
 
   return (
     <div className="flex-between w-full gap-12">
@@ -71,7 +56,7 @@ export default function RemainSpace() {
               return <RemainSpaceSkeleton key={floor} />;
             })}
           {!isLoading &&
-            data.map((space, index) => {
+            data?.map((space, index) => {
               return (
                 <RemainSpaceButton
                   key={space.key}

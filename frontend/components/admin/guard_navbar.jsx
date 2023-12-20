@@ -4,7 +4,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { isValid, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, LogOut } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,17 +25,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 // import { motion, useScroll, useTransform, easeInOut } from "framer-motion";
 import Logo from "@/components/shared/logo";
 
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 const Navbar = ({ date, setDate }) => {
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter();
+  const { signOut } = useClerk();
 
   // const [date, setDate] = React.useState(new Date());
 
@@ -103,17 +104,16 @@ const Navbar = ({ date, setDate }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
             <DropdownMenuItem>
-              <Link href="/setting">個人設定</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <SignOutButton
-                signOutCallback={() => {
-                  router.replace("/");
-                }}
+              <Button
+                variant="transparent"
+                size="none"
+                textSize="sm"
+                className="w-full justify-start gap-2"
+                onClick={() => signOut(() => router.push("/"))}
               >
+                <LogOut size={16} />
                 登出
-              </SignOutButton>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

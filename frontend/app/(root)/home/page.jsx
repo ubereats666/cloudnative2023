@@ -3,15 +3,8 @@ import Options from "@/components/home/options";
 import RemainSpace from "@/components/home/remain-space";
 
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
 
 export default function Home() {
-  const isUser = true;
-
-  if (!isUser) {
-    redirect("/login");
-  }
-
   return (
     <section className="full-screen-container">
       <div className="flex-col flex-between w-full h-full px-12 pt-28 pb-16 gap-8 md:gap-10">

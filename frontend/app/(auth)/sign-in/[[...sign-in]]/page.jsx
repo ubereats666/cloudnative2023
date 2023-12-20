@@ -1,3 +1,5 @@
+"use client";
+
 import Logo from "@/components/shared/logo";
 import { SignIn } from "@clerk/nextjs";
 
@@ -14,7 +16,7 @@ const Login = () => {
 
         {/* <LoginForm /> */}
         <div className="flex flex-col items-start justify-center flex-grow gap-4 xs:gap-6 sm:gap-8">
-          <SignIn afterSignInUrl="/home" />
+          <SignIn afterSignInUrl={"/home"} />
         </div>
       </div>
 
